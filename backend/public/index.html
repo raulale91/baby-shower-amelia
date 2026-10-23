@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin · Baby Shower Amelia 🐰</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --pink: #F9C4D0; --pink-deep: #F4A0B5; --lilac: #E8D5F0;
+      --mint: #C8EDD9; --cream: #FFF8F0; --peach: #FDDCCC;
+      --white: #fff; --text: #5C3A2E; --text-mid: #8B5E52;
+      --success: #4CAF50; --error: #F44336; --warn: #FF9800;
+    }
+    body { font-family: 'Segoe UI', sans-serif; background: var(--cream); color: var(--text); min-height: 100vh; }
+
+    /* LOGIN */
+    #login-page {
+      min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      background: linear-gradient(135deg, var(--pink) 0%, var(--lilac) 100%);
+    }
+    .login-card {
+      background: var(--white); border-radius: 1.5rem; padding: 2.5rem 2rem;
+      max-width: 360px; width: 100%; text-align: center;
+      box-shadow: 0 8px 32px rgba(92,58,46,0.18);
+    }
+    .login-card h1 { font-size: 1.4rem; color: var(--pink-deep); margin-bottom: 0.3rem; }
+    .login-card p  { font-size: 0.85rem; color: var(--text-mid); margin-bottom: 1.5rem; }
+    .login-card input {
+      width: 100%; border: 2px solid var(--pink); border-radius: 0.8rem;
+      padding: 0.7rem 1rem; margin-bottom: 0.8rem; font-size: 0.95rem;
+      outline: none; color: var(--text);
+    }
+    .login-card input:focus { border-color: var(--pink-deep); }
+    .login-card button {
+      width: 100%; background: var(--pink-deep); color: var(--white);
+      border: none; border-radius: 0.8rem; padding: 0.8rem;
+      font-size: 1rem; font-weight: 700; cursor: pointer;
+    }
+    #login-error { color: var(--error); font-size: 0.85rem; margin-top: 0.5rem; }
+
+    /* APP */
+    #app-page { display: none; }
+
+    header {
+      background: var(--white); padding: 1rem 1.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+      box-shadow: 0 2px 8px rgba(92,58,46,0.10); position: sticky; top: 0; z-index: 100;
+    }
+    header h1 { font-size: 1.1rem; color: var(--pink-deep); }
+    header button {
+      background: var(--peach); border: none; border-radius: 0.5rem;
+      padding: 0.4rem 0.8rem; font-size: 0.8rem; cursor: pointer; color: var(--text);
+    }
+
+    /* TABS */
+    .tabs {
+      display: flex; gap: 0; overflow-x: auto;
+      background: var(--white); border-bottom: 2px solid var(--pink);
+    }
+    .tab-btn {
+      flex: 1; min-width: 90px; padding: 0.8rem 0.5rem;
+      border: none; background: none; cursor: pointer;
+      font-size: 0.8rem; font-weight: 600; color: var(--text-mid);
+      border-bottom: 3px solid transparent; transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .tab-btn.active { color: var(--pink-deep); border-bottom-color: var(--pink-deep); }
+
+    .tab-content { display: none; padding: 1.2rem 1rem; max-width: 700px; margin: 0 auto; }
+    .tab-content.active { display: block; }
+
+    /* WHATSAPP STATUS */
+    .status-bar {
+      display: flex; align-items: center; gap: 0.6rem;
+      background: var(--white); border-radius: 1rem; padding: 0.8rem 1.2rem;
+      margin-bottom: 1rem; box-shadow: 0 2px 8px rgba(92,58,46,0.08);
+    }
+    .status-dot { width: 12px; height: 12px; border-radius: 50%; }
+    .dot-connected { background: var(--success); }
+    .dot-qr        { background: var(--warn); }
+    .dot-init      { background: #999; }
+    .status-bar span { font-weight: 600; font-size: 0.9rem; }
+
+    #qr-container {
+      text-align: center; background: var(--white);
+      border-radius: 1rem; padding: 1.2rem; margin-bottom: 1rem;
+      box-shadow: 0 2px 8px rgba(92,58,46,0.08);
+    }
+    #qr-container img { max-width: 220px; border-radius: 0.5rem; }
+
+    .btn-action {
+      background: var(--pink-deep); color: var(--white);
+      border: none; border-radius: 0.8rem; padding: 0.6rem 1.2rem;
+      font-size: 0.85rem; font-weight: 700; cursor: pointer; margin: 0.2rem;
+    }
+    .btn-secondary { background: var(--lilac); color: var(--text); }
+    .btn-danger    { background: #F44336; }
+
+    /* SEND FORM */
+    .card {
+      background: var(--white); border-radius: 1rem; padding: 1.2rem;
+      margin-bottom: 1rem; box-shadow: 0 2px 8px rgba(92,58,46,0.08);
+    }
+    .card h3 { font-size: 1rem; color: var(--pink-deep); margin-bottom: 0.8rem; }
+    textarea, input[type=text], input[type=number], select {
+      width: 100%; border: 2px solid var(--pink); border-radius: 0.6rem;
+      padding: 0.6rem 0.8rem; font-size: 0.85rem; outline: none; color: var(--text);
+      font-family: inherit; background: var(--cream);
+    }
+    textarea:focus, input:focus, select:focus { border-color: var(--pink-deep); }
+    label { font-size: 0.8rem; font-weight: 600; color: var(--text-mid); display: block; margin-bottom: 0.3rem; }
+
+    /* CONTACT LIST */
+    .contact-search {
+      display: flex; gap: 0.5rem; margin-bottom: 0.8rem; align-items: center;
+    }
+    .contact-search input { flex: 1; }
+    #contacts-list { max-height: 280px; overflow-y: auto; border-radius: 0.6rem; border: 2px solid var(--pink); }
+    .contact-item {
+      display: flex; align-items: center; gap: 0.6rem;
+      padding: 0.6rem 0.8rem; border-bottom: 1px solid var(--pink);
+      background: var(--white); cursor: pointer; transition: background 0.15s;
+    }
+    .contact-item:last-child { border-bottom: none; }
+    .contact-item:hover { background: var(--pink); }
+    .contact-item input[type=checkbox] { width: 16px; height: 16px; accent-color: var(--pink-deep); }
+    .contact-item .c-name { font-weight: 600; font-size: 0.88rem; }
+    .contact-item .c-num  { font-size: 0.75rem; color: var(--text-mid); }
+    .contact-item .c-passes {
+      margin-left: auto; display: flex; align-items: center; gap: 0.3rem;
+    }
+    .contact-item .c-passes input {
+      width: 50px; text-align: center; padding: 0.2rem;
+      border-radius: 0.4rem; font-size: 0.8rem;
+    }
+    .contact-item .c-custom-name {
+      display: none; flex: 1;
+    }
+    .contact-item.selected .c-custom-name { display: block; }
+
+    .selected-count { font-size: 0.85rem; color: var(--text-mid); margin-bottom: 0.6rem; }
+
+    /* RSVP */
+    .metrics-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.8rem; margin-bottom: 1rem;
+    }
+    .metric-card {
+      background: var(--white); border-radius: 1rem; padding: 1rem 0.8rem;
+      text-align: center; box-shadow: 0 2px 8px rgba(92,58,46,0.08);
+    }
+    .metric-card .m-icon { font-size: 1.8rem; display: block; }
+    .metric-card .m-val  { font-size: 1.6rem; font-weight: 700; color: var(--pink-deep); }
+    .metric-card .m-label { font-size: 0.72rem; color: var(--text-mid); }
+
+    .filter-row { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 0.8rem; }
+    .filter-btn {
+      border: 2px solid var(--pink-deep); border-radius: 2rem;
+      padding: 0.3rem 0.9rem; font-size: 0.78rem; font-weight: 700;
+      background: none; cursor: pointer; color: var(--text);
+    }
+    .filter-btn.active { background: var(--pink-deep); color: var(--white); }
+
+    .rsvp-search { margin-bottom: 0.8rem; }
+
+    .rsvp-table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+    th { background: var(--pink); color: var(--text); padding: 0.5rem; text-align: left; }
+    td { padding: 0.5rem; border-bottom: 1px solid var(--pink); vertical-align: top; }
+    .badge {
+      display: inline-block; border-radius: 1rem; padding: 0.15rem 0.5rem;
+      font-size: 0.72rem; font-weight: 700;
+    }
+    .badge-confirmed { background: #C8F7C5; color: #2E7D32; }
+    .badge-declined  { background: #FFDDE1; color: #C62828; }
+    .badge-pending   { background: #FFF9C4; color: #F57F17; }
+
+    .toast {
+      position: fixed; bottom: 1rem; left: 50%; transform: translateX(-50%);
+      background: var(--text); color: var(--white);
+      padding: 0.7rem 1.5rem; border-radius: 2rem; font-size: 0.9rem;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.2); z-index: 9999;
+      opacity: 0; transition: opacity 0.3s; pointer-events: none;
+    }
+    .toast.show { opacity: 1; }
+  </style>
+</head>
+<body>
+
+<div class="toast" id="toast"></div>
+
+<!-- LOGIN -->
+<div id="login-page">
+  <div class="login-card">
+    <div style="font-size:3rem;margin-bottom:0.5rem">🐰</div>
+    <h1>Baby Shower Amelia</h1>
+    <p>Panel de administración WhatsApp</p>
+    <input type="text"     id="username" placeholder="Usuario" />
+    <input type="password" id="password" placeholder="Contraseña" />
+    <button onclick="doLogin()">Entrar</button>
+    <p id="login-error"></p>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app-page">
+  <header>
+    <h1>🐰 Admin · Baby Shower Amelia</h1>
+    <button onclick="doLogout()">Salir</button>
+  </header>
+
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('whatsapp')">📱 WhatsApp</button>
+    <button class="tab-btn"       onclick="switchTab('send')">📤 Enviar</button>
+    <button class="tab-btn"       onclick="switchTab('rsvp')">✅ RSVP</button>
+    <button class="tab-btn"       onclick="switchTab('history')">📋 Historial</button>
+  </div>
+
+  <!-- TAB: WHATSAPP -->
+  <div class="tab-content active" id="tab-whatsapp">
+    <div class="status-bar">
+      <div class="status-dot dot-init" id="status-dot"></div>
+      <span id="status-text">Verificando...</span>
+      <button class="btn-action btn-secondary" onclick="refreshStatus()" style="margin-left:auto;font-size:0.75rem">🔄</button>
+    </div>
+    <div id="qr-container" style="display:none">
+      <p style="margin-bottom:0.8rem;font-size:0.85rem">Escanea el QR con WhatsApp para conectar:</p>
+      <img id="qr-img" src="" alt="QR Code" />
+    </div>
+    <div style="margin-bottom:1rem">
+      <button class="btn-action btn-danger" onclick="doLogoutWA()">Desconectar WhatsApp</button>
+    </div>
+
+    <div class="card">
+      <h3>📥 Importar Contactos</h3>
+      <label>Pega el listado (Nombre, Teléfono) por línea:</label>
+      <textarea id="import-text" rows="5" placeholder="María García, 50688001234&#10;Juan Pérez, 50672005678"></textarea>
+      <button class="btn-action" style="margin-top:0.6rem" onclick="importContacts()">Importar</button>
+    </div>
+  </div>
+
+  <!-- TAB: ENVIAR -->
+  <div class="tab-content" id="tab-send">
+    <div class="card">
+      <h3>💬 Mensaje</h3>
+      <label>Texto de la invitación (usa {pases} y {link}):</label>
+      <textarea id="msg-text" rows="5">🐰 ¡Hola! 🌸
+
+Amanda tiene el placer de invitarte al Baby Shower de la pequeña Amelia. 👶
+
+🗓️ Sábado 22 de Noviembre · 10:00 am
+✨ Tienes {pases} reservado(s) para ti
+
+🔗 Tu invitación personalizada:
+{link}
+
+¡Con mucho amor te esperamos! 💕</textarea>
+    </div>
+
+    <div class="card">
+      <h3>👥 Contactos</h3>
+      <div class="contact-search">
+        <input type="text" id="contact-search" placeholder="Buscar..." oninput="filterContacts()" />
+        <button class="btn-action btn-secondary" onclick="loadContacts()">🔄</button>
+      </div>
+      <p class="selected-count" id="selected-count">0 seleccionados</p>
+      <div id="contacts-list"></div>
+    </div>
+
+    <div class="card">
+      <button class="btn-action" onclick="sendInvitations()" id="send-btn">📤 Enviar Invitaciones</button>
+      <p id="send-status" style="margin-top:0.5rem;font-size:0.82rem;color:var(--text-mid)"></p>
+    </div>
+  </div>
+
+  <!-- TAB: RSVP -->
+  <div class="tab-content" id="tab-rsvp">
+    <div class="metrics-grid" id="metrics-grid">
+      <div class="metric-card"><span class="m-icon">📨</span><div class="m-val" id="m-total">-</div><div class="m-label">Invitaciones</div></div>
+      <div class="metric-card"><span class="m-icon">✅</span><div class="m-val" id="m-confirmed">-</div><div class="m-label">Pases confirmados</div></div>
+      <div class="metric-card"><span class="m-icon">⏳</span><div class="m-val" id="m-pending">-</div><div class="m-label">Pendientes</div></div>
+      <div class="metric-card"><span class="m-icon">⚠️</span><div class="m-val" id="m-diet">-</div><div class="m-label">Restricciones dieta</div></div>
+    </div>
+
+    <div class="filter-row">
+      <button class="filter-btn active" onclick="setFilter('all',this)">Todos</button>
+      <button class="filter-btn" onclick="setFilter('confirmed',this)">✅ Confirmados</button>
+      <button class="filter-btn" onclick="setFilter('declined',this)">❌ Bajas</button>
+      <button class="filter-btn" onclick="setFilter('pending',this)">⏳ Pendientes</button>
+    </div>
+
+    <div class="rsvp-search">
+      <input type="text" id="rsvp-search" placeholder="Buscar invitado..." oninput="renderRsvpTable()" />
+    </div>
+
+    <button class="btn-action btn-secondary" onclick="exportCsv()" style="margin-bottom:0.8rem">⬇️ Exportar CSV</button>
+    <button class="btn-action" onclick="loadRsvp()" style="margin-bottom:0.8rem">🔄 Actualizar</button>
+
+    <div class="rsvp-table-wrap">
+      <table>
+        <thead><tr>
+          <th>Nombre</th><th>Pases</th><th>Estado</th><th>Restricción</th><th>Mensaje</th>
+        </tr></thead>
+        <tbody id="rsvp-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- TAB: HISTORIAL -->
+  <div class="tab-content" id="tab-history">
+    <button class="btn-action" onclick="loadHistory()" style="margin-bottom:0.8rem">🔄 Actualizar</button>
+    <div class="rsvp-table-wrap">
+      <table>
+        <thead><tr><th>Nombre</th><th>Pases</th><th>Estado</th><th>Fecha</th></tr></thead>
+        <tbody id="history-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// STATE
+// ============================================================
+let TOKEN         = localStorage.getItem('amelia_token') || '';
+let allContacts   = [];
+let allRsvp       = [];
+let rsvpFilter    = 'all';
+let statusTimer   = null;
+
+// ============================================================
+// INIT
+// ============================================================
+window.onload = () => {
+  if (TOKEN) showApp();
+  else       showLogin();
+};
+
+function showLogin() {
+  document.getElementById('login-page').style.display = 'flex';
+  document.getElementById('app-page').style.display   = 'none';
+}
+function showApp() {
+  document.getElementById('login-page').style.display = 'none';
+  document.getElementById('app-page').style.display   = 'block';
+  refreshStatus();
+  statusTimer = setInterval(refreshStatus, 8000);
+  loadContacts();
+}
+
+// ============================================================
+// AUTH
+// ============================================================
+async function doLogin() {
+  const u = document.getElementById('username').value.trim();
+  const p = document.getElementById('password').value.trim();
+  try {
+    const r = await api('/api/admin/login', 'POST', { username: u, password: p }, false);
+    if (r.success) {
+      TOKEN = r.token;
+      localStorage.setItem('amelia_token', TOKEN);
+      document.getElementById('login-error').textContent = '';
+      showApp();
+    } else {
+      document.getElementById('login-error').textContent = r.message || 'Error';
+    }
+  } catch(e) { document.getElementById('login-error').textContent = 'Error de conexión'; }
+}
+
+function doLogout() {
+  TOKEN = '';
+  localStorage.removeItem('amelia_token');
+  if (statusTimer) clearInterval(statusTimer);
+  showLogin();
+}
+
+// ============================================================
+// API HELPER
+// ============================================================
+async function api(url, method = 'GET', body = null, auth = true) {
+  const headers = { 'Content-Type': 'application/json' };
+  if (auth) headers['Authorization'] = `Bearer ${TOKEN}`;
+  const opts = { method, headers };
+  if (body) opts.body = JSON.stringify(body);
+  const r = await fetch(url, opts);
+  return r.json();
+}
+
+// ============================================================
+// WHATSAPP STATUS
+// ============================================================
+async function refreshStatus() {
+  try {
+    const d = await api('/api/whatsapp/status');
+    const dot  = document.getElementById('status-dot');
+    const text = document.getElementById('status-text');
+    const qrC  = document.getElementById('qr-container');
+
+    if (d.status === 'connected') {
+      dot.className  = 'status-dot dot-connected';
+      text.textContent = '✅ WhatsApp Conectado';
+      qrC.style.display = 'none';
+    } else if (d.status === 'qr') {
+      dot.className  = 'status-dot dot-qr';
+      text.textContent = '⚠️ Esperando QR';
+      qrC.style.display = 'block';
+      document.getElementById('qr-img').src = d.qrCode;
+    } else {
+      dot.className  = 'status-dot dot-init';
+      text.textContent = '⏳ Inicializando...';
+      qrC.style.display = 'none';
+    }
+  } catch(e) { /* silent */ }
+}
+
+async function doLogoutWA() {
+  if (!confirm('¿Desconectar WhatsApp?')) return;
+  await api('/api/whatsapp/logout', 'POST');
+  toast('WhatsApp desconectado');
+  refreshStatus();
+}
+
+// ============================================================
+// IMPORT CONTACTS
+// ============================================================
+async function importContacts() {
+  const text = document.getElementById('import-text').value.trim();
+  if (!text) { toast('Escribe el listado primero'); return; }
+  const r = await api('/api/whatsapp/import-contacts', 'POST', { text });
+  toast(r.message || 'Importado');
+  loadContacts();
+}
+
+// ============================================================
+// CONTACTS
+// ============================================================
+async function loadContacts() {
+  try {
+    const r = await api('/api/whatsapp/contacts');
+    allContacts = r.contacts || [];
+    renderContacts(allContacts);
+  } catch(e) { toast('Error cargando contactos'); }
+}
+
+function filterContacts() {
+  const q = document.getElementById('contact-search').value.toLowerCase();
+  renderContacts(allContacts.filter(c => (c.name||'').toLowerCase().includes(q) || (c.number||'').includes(q)));
+}
+
+function renderContacts(list) {
+  const el = document.getElementById('contacts-list');
+  el.innerHTML = '';
+  list.forEach(c => {
+    const div = document.createElement('div');
+    div.className = 'contact-item';
+    div.id = `ci-${c.id}`;
+    div.innerHTML = `
+      <input type="checkbox" id="chk-${c.id}" onchange="updateSelected()" />
+      <div>
+        <div class="c-name">${c.name}</div>
+        <div class="c-num">${c.number}</div>
+        <input class="c-custom-name" type="text" id="cname-${c.id}" placeholder="Nombre para sobre (ej: Familia Pérez)" style="margin-top:0.3rem;font-size:0.78rem;display:none" />
+      </div>
+      <div class="c-passes">
+        <span style="font-size:0.75rem;color:var(--text-mid)">Pases:</span>
+        <input type="number" id="pass-${c.id}" value="1" min="1" max="20" />
+      </div>`;
+    div.querySelector(`#chk-${c.id}`).addEventListener('change', () => {
+      const nameInput = div.querySelector(`#cname-${c.id}`);
+      nameInput.style.display = div.querySelector(`#chk-${c.id}`).checked ? 'block' : 'none';
+    });
+    el.appendChild(div);
+  });
+}
+
+function updateSelected() {
+  const count = document.querySelectorAll('#contacts-list input[type=checkbox]:checked').length;
+  document.getElementById('selected-count').textContent = `${count} seleccionado${count !== 1 ? 's' : ''}`;
+}
+
+// ============================================================
+// SEND
+// ============================================================
+async function sendInvitations() {
+  const message = document.getElementById('msg-text').value.trim();
+  if (!message) { toast('Escribe el mensaje primero'); return; }
+
+  const checks = document.querySelectorAll('#contacts-list input[type=checkbox]:checked');
+  if (checks.length === 0) { toast('Selecciona al menos un contacto'); return; }
+
+  const targets = [];
+  checks.forEach(ch => {
+    const cid = ch.id.replace('chk-', '');
+    const ct  = allContacts.find(c => c.id === cid);
+    if (!ct) return;
+    const passes     = document.getElementById(`pass-${cid}`)?.value || '1';
+    const customName = document.getElementById(`cname-${cid}`)?.value?.trim() || '';
+    targets.push({ id: cid, display: ct.name, count: passes, customName });
+  });
+
+  if (!confirm(`¿Enviar invitaciones a ${targets.length} contacto${targets.length > 1 ? 's' : ''}?`)) return;
+
+  const btn = document.getElementById('send-btn');
+  btn.disabled = true;
+  btn.textContent = '⏳ Enviando...';
+
+  try {
+    const r = await api('/api/whatsapp/send', 'POST', { targets, message });
+    document.getElementById('send-status').textContent = r.message || 'Envío iniciado';
+    toast('¡Envío iniciado con anti-ban! 🐰');
+  } catch(e) { toast('Error al enviar'); }
+
+  btn.disabled = false;
+  btn.textContent = '📤 Enviar Invitaciones';
+}
+
+// ============================================================
+// RSVP
+// ============================================================
+async function loadRsvp() {
+  try {
+    const r = await api('/api/admin/rsvp-summary');
+    const s = r.stats;
+    document.getElementById('m-total').textContent     = s.totalPassesAssigned || 0;
+    document.getElementById('m-confirmed').textContent = s.confirmedPasses || 0;
+    document.getElementById('m-pending').textContent   = s.pendingCount || 0;
+    document.getElementById('m-diet').textContent      = s.withDietaryCount || 0;
+    allRsvp = r.invitations || [];
+    renderRsvpTable();
+  } catch(e) { toast('Error cargando RSVP'); }
+}
+
+function setFilter(f, btn) {
+  rsvpFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderRsvpTable();
+}
+
+function renderRsvpTable() {
+  const q = (document.getElementById('rsvp-search')?.value || '').toLowerCase();
+  let list = allRsvp;
+  if (rsvpFilter !== 'all') list = list.filter(i => i.status === rsvpFilter);
+  if (q) list = list.filter(i => (i.name||'').toLowerCase().includes(q) || (i.phone||'').includes(q));
+
+  const tbody = document.getElementById('rsvp-tbody');
+  tbody.innerHTML = list.map(i => `
+    <tr>
+      <td><strong>${i.name}</strong><br><span style="font-size:0.72rem;color:var(--text-mid)">${i.phone?.split('@')[0]||''}</span></td>
+      <td>${i.status==='confirmed' ? i.confirmedPasses : '-'} / ${i.passes}</td>
+      <td><span class="badge badge-${i.status}">${i.status==='confirmed'?'✅ Sí':i.status==='declined'?'❌ No':'⏳ Pend.'}</span></td>
+      <td>${i.hasDietaryRestriction ? `⚠️ ${i.dietaryDetails||'Sí'}` : '—'}</td>
+      <td style="font-size:0.75rem;max-width:120px;overflow:hidden">${i.guestNote||'—'}</td>
+    </tr>`).join('');
+}
+
+function exportCsv() {
+  const headers = ['Nombre','Teléfono','Pases Asignados','Pases Confirmados','Estado','Restricción','Detalle','Mensaje','Fecha'];
+  const rows = allRsvp.map(i => [
+    i.name, (i.phone||'').split('@')[0], i.passes, i.confirmedPasses||0,
+    i.status, i.hasDietaryRestriction?'Sí':'No', i.dietaryDetails||'',
+    (i.guestNote||'').replace(/,/g,';'), i.submittedAt||''
+  ].join(','));
+  const csv = [headers.join(','), ...rows].join('\n');
+  const blob = new Blob([csv], { type: 'text/csv' });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href = url; a.download = 'rsvp-amelia.csv';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+// ============================================================
+// HISTORY
+// ============================================================
+async function loadHistory() {
+  try {
+    const r = await api('/api/admin/history');
+    const tbody = document.getElementById('history-tbody');
+    const list  = (r.history || []).reverse();
+    tbody.innerHTML = list.map(h => `
+      <tr>
+        <td>${h.name||'—'}</td>
+        <td>${h.passes||'1'}</td>
+        <td><span class="badge ${h.status==='success'?'badge-confirmed':'badge-declined'}">${h.status==='success'?'✅':'❌'}</span></td>
+        <td style="font-size:0.75rem">${h.date ? new Date(h.date).toLocaleString('es-CR') : '—'}</td>
+      </tr>`).join('');
+  } catch(e) { toast('Error cargando historial'); }
+}
+
+// ============================================================
+// TABS
+// ============================================================
+function switchTab(id) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  event.target.classList.add('active');
+  if (id === 'rsvp')    loadRsvp();
+  if (id === 'history') loadHistory();
+}
+
+// ============================================================
+// TOAST
+// ============================================================
+function toast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 3000);
+}
+</script>
+</body>
+</html>

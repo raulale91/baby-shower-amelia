@@ -1,0 +1,8 @@
+node_modules/
+baileys_auth_info/
+sent_history.json
+contacts_cache.json
+invitations.json
+.env
+*.log
+.DS_Store
