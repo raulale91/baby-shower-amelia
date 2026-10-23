@@ -5,92 +5,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Baby Shower · Amelia 🐰</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Great+Vibes&family=Quicksand:wght@400;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Great+Vibes&family=Montserrat:wght@400;600&display=swap');
 
         :root {
-            --bg-color:      #fdf4f7;
-            --pastel-pink:   #f9c4d0;
-            --vintage-rose:  #e8a0b0;
-            --cream:         #fff8f2;
-            --soft-lilac:    #e8d5f0;
-            --soft-mint:     #c8edd9;
-            --soft-yellow:   #fff0b3;
-            --text-brown:    #5c3a2e;
-            --paper-shadow:  drop-shadow(0px 15px 12px rgba(140, 80, 100, 0.18));
-            --white-border:  8px solid white;
+            --bg-color: #fdf8f5;
+            --pastel-pink: #f7c5cc;
+            --vintage-rose: #d99fa5;
+            --cream: #fbf5eb;
+            --soft-green: #c4d7b2;
+            --text-brown: #5c4a4d;
+            --paper-shadow: drop-shadow(0px 15px 12px rgba(100, 70, 70, 0.15));
+            --white-border: 8px solid white;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
         body {
             background-color: var(--bg-color);
-            font-family: 'Quicksand', sans-serif;
+            overflow: hidden;
+            font-family: 'Montserrat', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
             color: var(--text-brown);
-            min-height: 100vh;
-            overflow-x: hidden;
         }
 
-        /* ── PRIVACY SCREEN ── */
-        #privacy-screen {
-            position: fixed; inset: 0; z-index: 9999;
-            background: linear-gradient(145deg, var(--pastel-pink) 0%, var(--soft-lilac) 60%, var(--soft-mint) 100%);
-            display: flex; align-items: center; justify-content: center;
-            flex-direction: column; text-align: center; padding: 2rem;
-        }
-        #privacy-screen .priv-card {
-            background: white; border-radius: 2rem; padding: 2.5rem 2rem;
-            max-width: 340px; border: 4px solid var(--pastel-pink);
-            box-shadow: 0 8px 32px rgba(140,80,100,0.15);
-        }
-        #privacy-screen .priv-card .bunny { font-size: 4rem; display: block; margin-bottom: 0.8rem; }
-        #privacy-screen h2 { font-family: 'Pacifico', cursive; color: var(--vintage-rose); font-size: 1.4rem; margin-bottom: 0.6rem; }
-        #privacy-screen p  { font-size: 0.9rem; color: var(--text-brown); line-height: 1.6; }
-
-        /* ── LOADING ── */
-        #loading-screen {
-            position: fixed; inset: 0; z-index: 9990; background: var(--cream);
-            display: flex; align-items: center; justify-content: center;
-            flex-direction: column; gap: 1rem;
-        }
-        #loading-screen .load-bunny { font-size: 3.5rem; animation: bounce 0.8s infinite alternate; }
-        #loading-screen p { font-family: 'Pacifico', cursive; color: var(--vintage-rose); font-size: 1rem; }
-        #loading-screen.fade-out { opacity: 0; transition: opacity 0.5s; pointer-events: none; }
-
-        /* ── MUSIC BUTTON ── */
-        #music-btn {
-            position: fixed; bottom: 1.4rem; right: 1.4rem; z-index: 1000;
-            width: 54px; height: 54px; border-radius: 50%;
-            background: white; border: 3px solid var(--vintage-rose);
-            cursor: pointer; display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 4px 16px rgba(140,80,100,0.2);
-            transition: transform 0.2s;
-        }
-        #music-btn:hover { transform: scale(1.1); }
-        .vinyl {
-            width: 36px; height: 36px; border-radius: 50%;
-            background: conic-gradient(#3a1810 0deg 45deg,#7a4a40 45deg 90deg,#3a1810 90deg 135deg,#7a4a40 135deg 180deg,#3a1810 180deg 225deg,#7a4a40 225deg 270deg,#3a1810 270deg 315deg,#7a4a40 315deg 360deg);
-            display: flex; align-items: center; justify-content: center;
-        }
-        .vinyl::after { content:''; width:12px; height:12px; border-radius:50%; background:var(--vintage-rose); }
-        #music-btn.playing .vinyl { animation: spin 3s linear infinite; }
-        #music-btn.paused  .music-icon-txt { display:block; }
-        #music-btn.playing .music-icon-txt { display:none; }
-        .music-icon-txt { font-size: 1.1rem; display: none; position: absolute; }
-        #yt-music-player { position:fixed; bottom:-9999px; left:-9999px; opacity:0; pointer-events:none; width:1px; height:1px; }
-
-        /* ── MAIN CONTENT ── */
-        #main-content { display: none; }
-
-        /* ── SVG Noise ── */
+        /* SVG Noise Filter for Paper Texture */
         .paper-texture {
-            position: fixed; top:0; left:0; width:100%; height:100%;
-            pointer-events:none; z-index:500; opacity:0.35; mix-blend-mode:multiply;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 100;
+            opacity: 0.4;
+            mix-blend-mode: multiply;
         }
 
-        /* ══════════════════════════════
-           HERO — PAPER CRAFT 3D SCENE
-        ══════════════════════════════ */
-        .hero-scene {
+        /* 3D Scene Setup */
+        .scene-container {
             width: 100vw;
             height: 100vh;
             perspective: 1200px;
@@ -98,11 +57,90 @@
             justify-content: center;
             align-items: center;
             position: relative;
-            overflow: hidden;
-            background: linear-gradient(180deg, #fde8f0 0%, #f5e0f8 40%, #e0f4eb 100%);
         }
 
-        /* Cover / Envelope */
+        /* Privacy Screen */
+        #privacy-screen {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background: var(--bg-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+            padding: 2rem;
+            gap: 1.2rem;
+        }
+        #privacy-screen .priv-box {
+            background: var(--cream);
+            border: var(--white-border);
+            border-radius: 20px;
+            padding: 2.5rem 2rem;
+            max-width: 320px;
+            filter: var(--paper-shadow);
+        }
+        #privacy-screen .priv-icon { font-size: 3rem; display: block; margin-bottom: 0.6rem; }
+        #privacy-screen h2 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2rem;
+            color: var(--vintage-rose);
+            margin-bottom: 0.5rem;
+        }
+        #privacy-screen p {
+            font-family: 'Cinzel', serif;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            line-height: 1.7;
+            color: var(--text-brown);
+        }
+
+        /* Music button */
+        #music-btn {
+            position: fixed;
+            bottom: 1.2rem;
+            right: 1.2rem;
+            z-index: 1000;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--cream);
+            border: var(--white-border);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            filter: var(--paper-shadow);
+            transition: transform 0.2s;
+        }
+        #music-btn:hover { transform: scale(1.1); }
+        .vinyl {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: conic-gradient(#3a1810 0deg 45deg,#6a3a30 45deg 90deg,#3a1810 90deg 135deg,#6a3a30 135deg 180deg,#3a1810 180deg 225deg,#6a3a30 225deg 270deg,#3a1810 270deg 315deg,#6a3a30 315deg 360deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .vinyl::after {
+            content: '';
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+            background: var(--vintage-rose);
+        }
+        #music-btn.playing .vinyl { animation: spin 3s linear infinite; }
+        #music-btn.paused  .vinyl { animation: none; }
+        .music-note { font-size: 1rem; position: absolute; display: none; }
+        #music-btn.paused  .vinyl { display: none; }
+        #music-btn.paused  .music-note { display: block; }
+        #yt-player { position: fixed; bottom: -9999px; left: -9999px; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* The Envelope / Cover */
         .cover {
             position: absolute;
             z-index: 50;
@@ -121,41 +159,34 @@
             text-align: center;
             padding: 20px;
         }
+
         .cover.open {
             transform: translateY(-150vh) rotateX(45deg);
             opacity: 0;
             pointer-events: none;
         }
-        .cover-name {
-            font-family: 'Pacifico', cursive;
-            font-size: 1rem;
-            color: var(--vintage-rose);
-            letter-spacing: 1px;
-            margin-bottom: 4px;
-        }
-        .cover-title {
+
+        .cover-text {
             font-family: 'Great Vibes', cursive;
-            font-size: 3.2rem;
+            font-size: 3rem;
             color: var(--vintage-rose);
-            line-height: 1;
-            margin-bottom: 12px;
-        }
-        .cover-instruction {
-            font-family: 'Quicksand', sans-serif;
-            font-size: 0.82rem;
-            font-weight: 700;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            color: var(--text-brown);
-            opacity: 0.7;
-            animation: pulse 1.5s infinite;
-        }
-        @keyframes pulse {
-            0%,100% { transform: scale(1); opacity: 0.7; }
-            50%      { transform: scale(1.05); opacity: 1; }
+            margin-bottom: 20px;
         }
 
-        /* 3D World */
+        .cover-instruction {
+            font-family: 'Cinzel', serif;
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.7; }
+        }
+
+        /* 3D World / Pop-up Book */
         .world {
             position: relative;
             width: 400px;
@@ -164,18 +195,21 @@
             transform: rotateX(15deg) rotateY(-10deg);
             transition: transform 1s ease;
         }
+
         .world.floating {
             animation: floatWorld 6s ease-in-out infinite alternate;
         }
+
         @keyframes floatWorld {
-            0%   { transform: rotateX(15deg) rotateY(-10deg) translateY(0); }
+            0% { transform: rotateX(15deg) rotateY(-10deg) translateY(0); }
             100% { transform: rotateX(18deg) rotateY(-5deg) translateY(-15px); }
         }
 
-        /* Layers */
+        /* Layer Base Styles */
         .layer {
             position: absolute;
-            bottom: 0; left: 0;
+            bottom: 0;
+            left: 0;
             width: 100%;
             display: flex;
             justify-content: center;
@@ -185,6 +219,7 @@
             transform: rotateX(-90deg);
             opacity: 0;
         }
+
         .cutout { filter: var(--paper-shadow); }
         .cutout svg { overflow: visible; }
         .cutout svg * { stroke: white; stroke-width: 6px; stroke-linejoin: round; }
@@ -192,12 +227,12 @@
         .is-open .layer {
             animation: popUp 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
         }
+
         @keyframes popUp {
             0%   { transform: rotateX(-90deg); opacity: 0; }
             100% { opacity: 1; }
         }
 
-        /* Layer 1 — Arch background */
         .layer-1 { z-index: 1; height: 100%; }
         .is-open .layer-1 { animation-name: popUpLayer1; animation-delay: 0.1s; }
         @keyframes popUpLayer1 { to { transform: rotateX(0deg) translateZ(-80px); opacity: 1; } }
@@ -216,779 +251,251 @@
             border-top-left-radius: 140px; border-top-right-radius: 140px;
         }
 
-        /* Layer 2 — Sky / clouds */
         .layer-2 { z-index: 2; }
         .is-open .layer-2 { animation-name: popUpLayer2; animation-delay: 0.3s; }
         @keyframes popUpLayer2 { to { transform: rotateX(0deg) translateZ(-40px); opacity: 1; } }
 
-        /* Layer 3 — Rabbit */
         .layer-3 { z-index: 3; bottom: 50px; }
         .is-open .layer-3 { animation-name: popUpLayer3; animation-delay: 0.6s; }
         @keyframes popUpLayer3 { to { transform: rotateX(0deg) translateZ(20px); opacity: 1; } }
 
-        /* Layer 4 — Title card */
         .layer-4 { z-index: 4; bottom: 120px; }
         .is-open .layer-4 { animation-name: popUpLayer4; animation-delay: 0.9s; }
         @keyframes popUpLayer4 { to { transform: rotateX(0deg) translateZ(70px); opacity: 1; } }
         .text-card {
             background: white; border: var(--white-border);
-            border-radius: 15px; padding: 12px 28px;
+            border-radius: 15px; padding: 15px 30px;
             text-align: center; filter: var(--paper-shadow);
-        }
-        .text-card .tc-pre {
-            font-family: 'Quicksand', sans-serif;
-            font-size: 0.68rem; font-weight: 700;
-            letter-spacing: 2px; text-transform: uppercase;
-            color: var(--vintage-rose); margin-bottom: 2px;
         }
         .text-card h1 {
             font-family: 'Great Vibes', cursive;
-            font-size: 2.6rem; color: var(--vintage-rose);
-            line-height: 1; margin-bottom: 2px;
+            font-size: 2.8rem; color: var(--vintage-rose);
+            margin-bottom: 5px; line-height: 1;
         }
-        .text-card .tc-name {
-            font-family: 'Pacifico', cursive;
-            font-size: 1.2rem; color: var(--text-brown);
+        .text-card p {
+            font-family: 'Cinzel', serif;
+            font-size: 0.85rem; font-weight: 700;
+            color: var(--pastel-pink); letter-spacing: 1px;
         }
 
-        /* Layer 5 — Foreground florals */
         .layer-5 { z-index: 5; bottom: -20px; }
         .is-open .layer-5 { animation-name: popUpLayer5; animation-delay: 1.1s; }
         @keyframes popUpLayer5 { to { transform: rotateX(0deg) translateZ(120px); opacity: 1; } }
 
-        /* Layer 6 — Info card */
         .layer-6 { z-index: 6; bottom: -50px; }
         .is-open .layer-6 { animation-name: popUpLayer6; animation-delay: 1.4s; }
         @keyframes popUpLayer6 { to { transform: rotateX(0deg) translateZ(160px); opacity: 1; } }
         .info-card {
             background: var(--cream); border: var(--white-border);
-            border-radius: 30px; padding: 10px 30px;
-            display: flex; gap: 16px; filter: var(--paper-shadow);
+            border-radius: 30px; padding: 10px 40px;
+            display: flex; gap: 20px; filter: var(--paper-shadow);
         }
         .info-item { text-align: center; }
         .info-item h3 {
-            font-family: 'Quicksand', sans-serif; font-size: 0.62rem;
-            font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+            font-family: 'Cinzel', serif; font-size: 0.7rem;
             color: var(--vintage-rose); margin-bottom: 2px;
         }
-        .info-item p {
-            font-size: 0.78rem; font-weight: 700; color: var(--text-brown);
-        }
-
-        /* Scroll arrow */
-        .scroll-hint {
-            position: absolute; bottom: 2.5rem; left: 50%;
-            transform: translateX(-50%);
-            display: none; flex-direction: column; align-items: center;
-            gap: 0.4rem; cursor: pointer; z-index: 10;
-        }
-        .scroll-hint.visible { display: flex; }
-        .scroll-hint span { font-size: 0.72rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-brown); opacity: 0.6; }
-        .scroll-hint .arrow { font-size: 1.4rem; animation: bounce 0.7s infinite alternate; }
-
-        /* ══════════════════════════════
-           SECTIONS BELOW HERO
-        ══════════════════════════════ */
-        section {
-            padding: 3rem 1.5rem;
-            position: relative;
-            max-width: 560px;
-            margin: 0 auto;
-        }
-
-        .section-title {
-            font-family: 'Pacifico', cursive;
-            font-size: 1.6rem;
-            color: var(--vintage-rose);
-            text-align: center;
-            margin-bottom: 0.4rem;
-        }
-        .section-divider {
-            text-align: center;
-            font-size: 1.2rem;
-            letter-spacing: 5px;
-            margin-bottom: 1.8rem;
-            opacity: 0.6;
-        }
-
-        /* Paper card base */
-        .paper-card {
-            background: white;
-            border-radius: 1.5rem;
-            padding: 1.5rem;
-            margin-bottom: 1.2rem;
-            box-shadow: 0 6px 24px rgba(140,80,100,0.12);
-            border: 3px solid var(--pastel-pink);
-            position: relative;
-        }
-        .paper-card::before {
-            content: '';
-            position: absolute;
-            inset: -5px;
-            border-radius: 1.8rem;
-            background: var(--pastel-pink);
-            z-index: -1;
-            opacity: 0.4;
-        }
-        .paper-card::after {
-            content: '';
-            position: absolute;
-            inset: -9px;
-            border-radius: 2.1rem;
-            background: var(--soft-lilac);
-            z-index: -2;
-            opacity: 0.25;
-        }
-
-        /* ── GUEST GREETING ── */
-        .greeting-section { background: linear-gradient(160deg, #fde8f0 0%, #f5e0f8 100%); border-radius: 2rem; }
-        .greeting-card { text-align: center; }
-        .greeting-card .g-hi   { font-family: 'Great Vibes', cursive; font-size: 2.2rem; color: var(--vintage-rose); }
-        .greeting-card .g-name { font-family: 'Pacifico', cursive; font-size: 1.4rem; color: var(--text-brown); }
-        .greeting-card .g-passes { font-size: 0.88rem; color: var(--text-brown); margin-top: 0.4rem; line-height: 1.6; }
-        .passes-badge {
-            display: inline-block;
-            background: var(--soft-lilac); color: var(--text-brown);
-            font-weight: 700; border-radius: 2rem;
-            padding: 0.3rem 1rem; font-size: 0.82rem;
-            margin-top: 0.4rem;
-        }
-
-        /* ── SCHEDULE ── */
-        .schedule-list { display: flex; flex-direction: column; gap: 0.7rem; }
-        .sched-item {
-            display: flex; align-items: center; gap: 1rem;
-            background: white; border-radius: 1rem; padding: 0.8rem 1rem;
-            border-left: 4px solid var(--pastel-pink);
-            box-shadow: 0 2px 8px rgba(140,80,100,0.08);
-        }
-        .sched-item .si-icon { font-size: 1.5rem; flex-shrink: 0; }
-        .sched-item .si-time { font-family: 'Pacifico', cursive; font-size: 0.85rem; color: var(--vintage-rose); min-width: 52px; }
-        .sched-item .si-text { font-size: 0.88rem; font-weight: 600; color: var(--text-brown); }
-
-        /* ── LOCATION ── */
-        .map-btns { display: flex; gap: 0.7rem; flex-wrap: wrap; justify-content: center; margin-top: 1rem; }
-        .map-btn {
-            display: inline-flex; align-items: center; gap: 0.4rem;
-            padding: 0.6rem 1.2rem; border-radius: 2rem; border: none;
-            font-family: 'Quicksand', sans-serif; font-weight: 700; font-size: 0.82rem;
-            cursor: pointer; text-decoration: none; transition: transform 0.2s;
-            box-shadow: 0 3px 10px rgba(140,80,100,0.15);
-        }
-        .map-btn:hover { transform: translateY(-2px); }
-        .btn-maps { background: var(--vintage-rose); color: white; }
-        .btn-waze { background: #29a8e0; color: white; }
-        .btn-cal  { background: var(--soft-yellow); color: var(--text-brown); }
-
-        /* ── RSVP ── */
-        .attend-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 0.7rem; margin-bottom: 1rem; }
-        .attend-btn {
-            border: 3px solid transparent; border-radius: 1.2rem;
-            padding: 0.9rem 0.5rem;
-            font-family: 'Quicksand', sans-serif; font-weight: 700; font-size: 0.88rem;
-            cursor: pointer; background: var(--cream); color: var(--text-brown);
-            transition: all 0.2s; display: flex; flex-direction: column; align-items: center; gap: 0.3rem;
-        }
-        .attend-btn .ab-icon { font-size: 1.8rem; }
-        .attend-btn.sel-yes { background: var(--soft-mint); border-color: #82c4a0; }
-        .attend-btn.sel-no  { background: var(--pastel-pink); border-color: var(--vintage-rose); }
-
-        .passes-section { margin-bottom: 1rem; display: none; }
-        .passes-section label { font-size: 0.82rem; font-weight: 700; color: var(--text-brown); display: block; margin-bottom: 0.5rem; }
-        .passes-row { display: flex; align-items: center; gap: 1rem; justify-content: center; }
-        .passes-row button {
-            width: 34px; height: 34px; border-radius: 50%;
-            border: 2px solid var(--vintage-rose); background: var(--pastel-pink);
-            font-size: 1.2rem; font-weight: 700; cursor: pointer; color: var(--text-brown);
-            transition: background 0.2s;
-        }
-        .passes-row button:hover { background: var(--vintage-rose); color: white; }
-        .passes-count { font-family: 'Pacifico', cursive; font-size: 1.4rem; color: var(--vintage-rose); min-width: 28px; text-align: center; }
-        .passes-max { font-size: 0.72rem; color: #aaa; text-align: center; margin-top: 0.3rem; }
-
-        .diet-section { margin-bottom: 1rem; }
-        .diet-section label { font-size: 0.82rem; font-weight: 700; color: var(--text-brown); display: block; margin-bottom: 0.5rem; }
-        .radio-row { display: flex; gap: 0.6rem; }
-        .radio-chip {
-            flex: 1; border: 2px solid var(--soft-lilac); border-radius: 0.8rem;
-            padding: 0.5rem; text-align: center; cursor: pointer;
-            font-size: 0.82rem; font-weight: 600; background: white; color: var(--text-brown);
-            transition: all 0.2s;
-        }
-        .radio-chip.active { background: var(--soft-lilac); border-color: #c4a0d8; }
-        .radio-chip input { display: none; }
-        #diet-detail { display: none; margin-top: 0.5rem; }
-        #diet-detail textarea {
-            width: 100%; border-radius: 0.8rem; border: 2px solid var(--soft-lilac);
-            padding: 0.6rem 0.8rem; font-family: 'Quicksand', sans-serif;
-            font-size: 0.82rem; color: var(--text-brown); resize: none; outline: none;
-            background: #f9f2ff;
-        }
-
-        .note-section { margin-bottom: 1.2rem; }
-        .note-section label { font-size: 0.82rem; font-weight: 700; color: var(--text-brown); display: block; margin-bottom: 0.5rem; }
-        .note-section textarea {
-            width: 100%; border-radius: 0.8rem; border: 2px solid var(--pastel-pink);
-            padding: 0.6rem 0.8rem; font-family: 'Quicksand', sans-serif;
-            font-size: 0.82rem; color: var(--text-brown); resize: none; outline: none;
-            background: #fff5f8;
-        }
-
-        .rsvp-submit {
-            width: 100%;
-            background: linear-gradient(135deg, var(--vintage-rose) 0%, #c4a0d8 100%);
-            color: white; border: none; border-radius: 2rem;
-            padding: 0.9rem; font-family: 'Quicksand', sans-serif;
-            font-size: 1rem; font-weight: 700; cursor: pointer;
-            box-shadow: 0 6px 20px rgba(140,80,100,0.25); transition: transform 0.2s;
-        }
-        .rsvp-submit:hover { transform: translateY(-2px); }
-        .rsvp-submit:disabled { opacity: 0.5; cursor: default; transform: none; }
-        .rsvp-success {
-            display: none; text-align: center;
-            flex-direction: column; align-items: center; gap: 0.6rem;
-        }
-        .rsvp-success .rs-icon { font-size: 3rem; animation: bounce 1s infinite; }
-        .rsvp-success p { font-family: 'Pacifico', cursive; color: var(--vintage-rose); font-size: 1.1rem; }
-        .rsvp-success small { color: #aaa; font-size: 0.82rem; }
-
-        /* ── FOOTER ── */
-        footer {
-            background: white; text-align: center; padding: 2.5rem 1.5rem;
-            position: relative;
-        }
-        footer::before {
-            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
-            background: linear-gradient(90deg, var(--vintage-rose), #c4a0d8, var(--soft-mint), var(--pastel-pink));
-        }
-        footer p { color: #bbb; font-size: 0.82rem; line-height: 1.8; }
-        footer strong { font-family: 'Pacifico', cursive; color: var(--vintage-rose); font-size: 1rem; }
-
-        /* ── ANIMATIONS ── */
-        @keyframes bounce { from { transform: translateY(0); } to { transform: translateY(-10px); } }
-        @keyframes spin   { to { transform: rotate(360deg); } }
-        .fade-in { opacity: 0; }
-        .fade-in.visible { animation: fadeInUp 0.6s ease forwards; }
-        @keyframes fadeInUp { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:translateY(0); } }
+        .info-item p { font-size: 0.8rem; font-weight: 600; color: var(--text-brown); }
     </style>
 </head>
 <body>
 
-<!-- ── YT Player (invisible) ── -->
-<div id="yt-music-player"></div>
+    <!-- Hidden YT player -->
+    <div id="yt-player"></div>
 
-<!-- ── Paper Texture Filter ── -->
-<svg class="paper-texture">
-    <filter id="noiseFilter">
-        <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" stitchTiles="stitch"/>
-        <feColorMatrix type="matrix" values="1 0 0 0 0, 0 1 0 0 0, 0 0 1 0 0, 0 0 0 0.07 0" />
-    </filter>
-    <rect width="100%" height="100%" filter="url(#noiseFilter)"></rect>
-</svg>
+    <!-- SVG Filter for Paper Grain Texture -->
+    <svg class="paper-texture">
+        <filter id="noiseFilter">
+            <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" stitchTiles="stitch"/>
+            <feColorMatrix type="matrix" values="
+                1 0 0 0 0, 
+                0 1 0 0 0, 
+                0 0 1 0 0, 
+                0 0 0 0.08 0" />
+        </filter>
+        <rect width="100%" height="100%" filter="url(#noiseFilter)"></rect>
+    </svg>
 
-<!-- ── PRIVACY SCREEN ── -->
-<div id="privacy-screen">
-    <div class="priv-card">
-        <span class="bunny">🐰</span>
-        <h2>Invitación Privada</h2>
-        <p>Esta invitación es personal y llegó por WhatsApp. 💕<br>Ingresa desde el enlace que te enviamos.</p>
+    <!-- Privacy Screen -->
+    <div id="privacy-screen">
+        <div class="priv-box">
+            <span class="priv-icon">🐰</span>
+            <h2>Invitación Privada</h2>
+            <p>Esta invitación es personal.<br>Ingresa desde el enlace<br>que recibiste por WhatsApp.</p>
+        </div>
     </div>
-</div>
 
-<!-- ── LOADING ── -->
-<div id="loading-screen">
-    <span class="load-bunny">🐰</span>
-    <p>Cargando tu invitación...</p>
-</div>
+    <!-- Music button -->
+    <button id="music-btn" class="paused" title="Música" aria-label="Música">
+        <div class="vinyl"></div>
+        <span class="music-note">🎵</span>
+    </button>
 
-<!-- ── MUSIC BUTTON ── -->
-<button id="music-btn" class="paused" title="Música" aria-label="Música">
-    <div class="vinyl"></div>
-    <span class="music-icon-txt">🎵</span>
-</button>
+    <div class="scene-container" id="scene">
 
-<!-- ══════════════════════════════════════
-     MAIN CONTENT
-══════════════════════════════════════ -->
-<div id="main-content">
-
-    <!-- ══ HERO PAPER CRAFT SCENE ══ -->
-    <div class="hero-scene" id="hero-scene">
-
-        <!-- Closed envelope -->
+        <!-- The Closed Envelope/Cover -->
         <div class="cover" id="cover" onclick="openInvitation()">
-            <p class="cover-name" id="cover-guest-name"></p>
-            <div class="cover-title">Amelia</div>
-            <!-- Bunny on cover -->
-            <svg width="70" height="70" viewBox="0 0 180 180" style="margin:4px 0 12px">
-                <!-- ears -->
-                <path d="M 75 90 C 60 30, 70 5, 85 10 C 100 15, 95 75, 90 90 Z" fill="#fff8f2" stroke="white" stroke-width="4"/>
-                <path d="M 78 85 C 68 40, 75 20, 83 22 C 91 24, 88 75, 86 85 Z" fill="#f9c4d0" stroke="none"/>
-                <path d="M 105 90 C 120 40, 138 35, 143 50 C 148 65, 118 80, 110 90 Z" fill="#fff8f2" stroke="white" stroke-width="4"/>
-                <path d="M 108 85 C 120 50, 133 47, 136 57 C 139 67, 116 75, 112 85 Z" fill="#f9c4d0" stroke="none"/>
-                <!-- head -->
-                <circle cx="90" cy="105" r="32" fill="#fff8f2" stroke="white" stroke-width="4"/>
-                <circle cx="72" cy="110" r="7" fill="#f9c4d0" stroke="none" opacity="0.6"/>
-                <circle cx="108" cy="110" r="7" fill="#f9c4d0" stroke="none" opacity="0.6"/>
-                <path d="M 85 110 Q 90 115 95 110 Z" fill="#e8a0b0" stroke="none"/>
-                <path d="M 68 100 Q 73 95 78 100" fill="none" stroke="#5c3a2e" stroke-width="2.5" stroke-linecap="round"/>
-                <path d="M 102 100 Q 107 95 112 100" fill="none" stroke="#5c3a2e" stroke-width="2.5" stroke-linecap="round"/>
-                <!-- bow -->
-                <path d="M 78 138 L 90 143 L 78 148 Z" fill="#e8d5f0"/>
-                <path d="M 102 138 L 90 143 L 102 148 Z" fill="#e8d5f0"/>
-                <circle cx="90" cy="143" r="4" fill="#e8a0b0"/>
+            <div class="cover-text" id="cover-text">Para Ti</div>
+            <div class="cover-instruction">Toca para abrir</div>
+            <svg width="60" height="60" viewBox="0 0 100 100" style="margin-top:20px;">
+                <path d="M50 80 C 20 50, 10 20, 30 10 C 40 5, 50 20, 50 20 C 50 20, 60 5, 70 10 C 90 20, 80 50, 50 80 Z" fill="var(--vintage-rose)" stroke="white" stroke-width="4"/>
             </svg>
-            <p class="cover-instruction">Toca para abrir ✨</p>
         </div>
 
-        <!-- 3D Pop-up World -->
+        <!-- The 3D Pop-up World -->
         <div class="world" id="world">
 
-            <!-- Layer 1: Arch bg -->
+            <!-- Layer 1: Background Arch -->
             <div class="layer layer-1 cutout">
                 <div class="bg-arch"></div>
             </div>
 
-            <!-- Layer 2: Sky / pastel clouds -->
-            <div class="layer layer-2 cutout" style="bottom:300px;">
-                <svg width="260" height="110" viewBox="0 0 260 110">
-                    <!-- soft sun -->
-                    <circle cx="130" cy="55" r="38" fill="#fff0b3" stroke="white" stroke-width="5"/>
-                    <!-- cloud left -->
-                    <path d="M 15 90 Q 15 65 38 62 Q 48 42 70 52 Q 88 47 93 63 Q 112 63 102 90 Z" fill="white"/>
-                    <!-- cloud right -->
-                    <path d="M 165 90 Q 155 65 174 58 Q 183 38 203 48 Q 222 43 232 63 Q 252 67 243 90 Z" fill="white"/>
-                    <!-- small stars / sparkles -->
-                    <text x="102" y="30" font-size="14" fill="#f9c4d0" stroke="none">✿</text>
-                    <text x="148" y="25" font-size="10" fill="#e8d5f0" stroke="none">✿</text>
+            <!-- Layer 2: Sun and Clouds -->
+            <div class="layer layer-2 cutout" style="bottom: 300px;">
+                <svg width="250" height="100" viewBox="0 0 250 100">
+                    <circle cx="125" cy="50" r="40" fill="#fcf0c2" />
+                    <path d="M 20 80 Q 20 60 40 60 Q 50 40 70 50 Q 85 45 90 60 Q 110 60 100 80 Z" fill="white" />
+                    <path d="M 160 80 Q 150 60 170 55 Q 180 35 200 45 Q 220 40 230 60 Q 250 65 240 80 Z" fill="white" />
                 </svg>
             </div>
 
-            <!-- Layer 3: Rabbit centerpiece -->
+            <!-- Layer 3: Vintage Rabbit -->
             <div class="layer layer-3 cutout">
-                <svg width="185" height="290" viewBox="0 0 180 280">
-                    <!-- body -->
-                    <path d="M 50 260 C 30 200, 40 140, 90 130 C 140 140, 150 200, 130 260 Z" fill="#fff8f2"/>
-                    <!-- left ear -->
-                    <path d="M 75 100 C 60 40, 70 10, 85 15 C 100 20, 95 80, 90 100 Z" fill="#fff8f2"/>
-                    <path d="M 78 95 C 68 50, 75 25, 83 28 C 91 30, 88 80, 86 95 Z" fill="#f9c4d0" stroke="none"/>
-                    <!-- right ear (flopped) -->
-                    <path d="M 105 100 C 120 50, 140 40, 145 55 C 150 70, 120 90, 110 100 Z" fill="#fff8f2"/>
-                    <path d="M 108 95 C 120 60, 135 52, 138 62 C 141 72, 118 85, 112 95 Z" fill="#f9c4d0" stroke="none"/>
-                    <!-- head -->
-                    <circle cx="90" cy="110" r="35" fill="#fff8f2"/>
-                    <!-- cheeks -->
-                    <circle cx="70" cy="116" r="8" fill="#f9c4d0" stroke="none" opacity="0.6"/>
-                    <circle cx="110" cy="116" r="8" fill="#f9c4d0" stroke="none" opacity="0.6"/>
-                    <!-- nose -->
-                    <path d="M 85 116 Q 90 121 95 116 Z" fill="#e8a0b0" stroke="none"/>
-                    <!-- eyes -->
-                    <path d="M 66 105 Q 71 100 76 105" fill="none" stroke="#5c3a2e" stroke-width="3" stroke-linecap="round"/>
-                    <path d="M 104 105 Q 109 100 114 105" fill="none" stroke="#5c3a2e" stroke-width="3" stroke-linecap="round"/>
-                    <!-- lilac bowtie -->
-                    <path d="M 76 145 L 90 150 L 76 155 Z" fill="#e8d5f0"/>
-                    <path d="M 104 145 L 90 150 L 104 155 Z" fill="#e8d5f0"/>
-                    <circle cx="90" cy="150" r="5" fill="#e8a0b0"/>
-                    <!-- paws -->
-                    <path d="M 64 182 C 58 192, 74 198, 79 188 Z" fill="#fff8f2"/>
-                    <path d="M 116 182 C 122 192, 106 198, 101 188 Z" fill="#fff8f2"/>
+                <svg width="180" height="280" viewBox="0 0 180 280">
+                    <path d="M 50 260 C 30 200, 40 140, 90 130 C 140 140, 150 200, 130 260 Z" fill="var(--cream)" />
+                    <path d="M 75 100 C 60 40, 70 10, 85 15 C 100 20, 95 80, 90 100 Z" fill="var(--cream)" />
+                    <path d="M 78 95 C 68 50, 75 25, 83 28 C 91 30, 88 80, 86 95 Z" fill="var(--pastel-pink)" stroke="none" />
+                    <path d="M 105 100 C 120 50, 140 40, 145 55 C 150 70, 120 90, 110 100 Z" fill="var(--cream)" />
+                    <path d="M 108 95 C 120 60, 135 52, 138 62 C 141 72, 118 85, 112 95 Z" fill="var(--pastel-pink)" stroke="none" />
+                    <circle cx="90" cy="110" r="35" fill="var(--cream)" />
+                    <circle cx="70" cy="115" r="8" fill="var(--pastel-pink)" stroke="none" opacity="0.6"/>
+                    <circle cx="110" cy="115" r="8" fill="var(--pastel-pink)" stroke="none" opacity="0.6"/>
+                    <path d="M 85 115 Q 90 120 95 115 Z" fill="var(--vintage-rose)" stroke="none" />
+                    <path d="M 65 105 Q 70 100 75 105" fill="none" stroke="#5c4a4d" stroke-width="3" stroke-linecap="round"/>
+                    <path d="M 105 105 Q 110 100 115 105" fill="none" stroke="#5c4a4d" stroke-width="3" stroke-linecap="round"/>
+                    <path d="M 75 145 L 90 150 L 75 155 Z" fill="var(--soft-green)" />
+                    <path d="M 105 145 L 90 150 L 105 155 Z" fill="var(--soft-green)" />
+                    <circle cx="90" cy="150" r="5" fill="var(--vintage-rose)" />
+                    <path d="M 65 180 C 60 190, 75 195, 80 185 Z" fill="var(--cream)" />
+                    <path d="M 115 180 C 120 190, 105 195, 100 185 Z" fill="var(--cream)" />
                 </svg>
             </div>
 
-            <!-- Layer 4: Title card -->
+            <!-- Layer 4: Text Invitation — AMELIA -->
             <div class="layer layer-4 cutout">
                 <div class="text-card">
-                    <p class="tc-pre">Baby Shower ✨</p>
-                    <h1>Amelia</h1>
-                    <p class="tc-name" id="tc-guest-name"></p>
+                    <h1>¡Baby Shower!</h1>
+                    <p id="text-card-sub">DE LA PEQUEÑA AMELIA</p>
                 </div>
             </div>
 
-            <!-- Layer 5: Floral foreground -->
+            <!-- Layer 5: Floral Foreground Elements -->
             <div class="layer layer-5 cutout">
-                <svg width="360" height="155" viewBox="0 0 360 155">
-                    <!-- left leaves -->
-                    <path d="M 22 155 Q 2 105 32 72 Q 52 92 42 155 Z" fill="#c8edd9"/>
-                    <path d="M 42 155 Q 32 112 62 82 Q 77 102 62 155 Z" fill="#a2d8b8"/>
-                    <!-- left flower -->
-                    <circle cx="47" cy="77" r="14" fill="#f9c4d0"/>
-                    <circle cx="47" cy="77" r="5"  fill="white" stroke="none"/>
-                    <!-- left small flower -->
-                    <circle cx="22" cy="100" r="9" fill="#e8d5f0"/>
-                    <circle cx="22" cy="100" r="3" fill="white" stroke="none"/>
-                    <!-- right leaves -->
-                    <path d="M 338 155 Q 358 105 328 72 Q 308 92 318 155 Z" fill="#c8edd9"/>
-                    <path d="M 318 155 Q 328 112 298 82 Q 283 102 298 155 Z" fill="#a2d8b8"/>
-                    <!-- right flower -->
-                    <circle cx="313" cy="77" r="14" fill="#e8a0b0"/>
-                    <circle cx="313" cy="77" r="5"  fill="white" stroke="none"/>
-                    <!-- right small flower -->
-                    <circle cx="338" cy="100" r="9" fill="#f9c4d0"/>
-                    <circle cx="338" cy="100" r="3" fill="white" stroke="none"/>
-                    <!-- center hill -->
-                    <path d="M -50 155 Q 180 100 410 155 Z" fill="#fff8f2"/>
+                <svg width="350" height="150" viewBox="0 0 350 150">
+                    <path d="M 20 150 Q 0 100 30 70 Q 50 90 40 150 Z" fill="var(--soft-green)" />
+                    <path d="M 40 150 Q 30 110 60 80 Q 75 100 60 150 Z" fill="#a8c396" />
+                    <circle cx="45" cy="75" r="15" fill="var(--pastel-pink)" />
+                    <circle cx="45" cy="75" r="5" fill="var(--cream)" stroke="none"/>
+                    <path d="M 330 150 Q 350 100 320 70 Q 300 90 310 150 Z" fill="var(--soft-green)" />
+                    <path d="M 310 150 Q 320 110 290 80 Q 275 100 290 150 Z" fill="#a8c396" />
+                    <circle cx="305" cy="75" r="15" fill="var(--vintage-rose)" />
+                    <circle cx="305" cy="75" r="5" fill="var(--cream)" stroke="none"/>
+                    <path d="M -50 150 Q 175 100 400 150 Z" fill="var(--cream)" />
                 </svg>
             </div>
 
-            <!-- Layer 6: Info card -->
+            <!-- Layer 6: Details — AMELIA -->
             <div class="layer layer-6 cutout">
                 <div class="info-card">
                     <div class="info-item">
-                        <h3>Fecha</h3>
-                        <p>22 Nov</p>
+                        <h3>FECHA</h3>
+                        <p>22 NOV</p>
                     </div>
                     <div class="info-item">
-                        <h3>Hora</h3>
-                        <p>10:00 am</p>
+                        <h3>HORA</h3>
+                        <p>10:00 AM</p>
                     </div>
                     <div class="info-item">
-                        <h3>Bebé</h3>
-                        <p>Amelia 🐰</p>
+                        <h3>INVITADO</h3>
+                        <p id="info-guest">—</p>
                     </div>
                 </div>
             </div>
 
-        </div><!-- end .world -->
-
-        <!-- Scroll hint -->
-        <div class="scroll-hint" id="scroll-hint" onclick="document.getElementById('greeting-section').scrollIntoView({behavior:'smooth'})">
-            <span>Ver detalles</span>
-            <span class="arrow">🐾</span>
         </div>
+    </div>
 
-    </div><!-- end hero-scene -->
+    <script>
+        // ── Config ──
+        const BACKEND  = window.location.origin;
+        const YT_ID    = 'wqnmSN8UMrk'; // A Thousand Years - Piano Instrumental
 
-    <!-- ══ GUEST GREETING ══ -->
-    <section id="greeting-section" class="greeting-section" style="display:none">
-        <div class="paper-card greeting-card fade-in">
-            <div class="g-hi">Hola,</div>
-            <div class="g-name" id="guest-name-big">Invitado</div>
-            <div class="g-passes">
-                Tienes reservado:<br>
-                <span class="passes-badge" id="passes-badge">1 espacio</span>
-            </div>
-        </div>
-    </section>
+        // ── State ──
+        let ytPlayer = null, ytReady = false, ytPlaying = false, interacted = false;
 
-    <!-- ══ PROGRAMA ══ -->
-    <section>
-        <h2 class="section-title fade-in">Programa del Día</h2>
-        <div class="section-divider">🌷 ✿ 🌷</div>
-        <div class="schedule-list">
-            <div class="sched-item fade-in"><span class="si-icon">🎀</span><span class="si-time">10:00</span><span class="si-text">Recepción de invitados</span></div>
-            <div class="sched-item fade-in"><span class="si-icon">🎮</span><span class="si-time">10:30</span><span class="si-text">Juegos y actividades</span></div>
-            <div class="sched-item fade-in"><span class="si-icon">🥐</span><span class="si-time">11:00</span><span class="si-text">Desayuno / Brunch</span></div>
-            <div class="sched-item fade-in"><span class="si-icon">🎁</span><span class="si-time">12:00</span><span class="si-text">Apertura de regalos</span></div>
-            <div class="sched-item fade-in"><span class="si-icon">🎂</span><span class="si-time">12:30</span><span class="si-text">Pastel y celebración</span></div>
-            <div class="sched-item fade-in"><span class="si-icon">📸</span><span class="si-time">13:00</span><span class="si-text">Sesión de fotos</span></div>
-            <div class="sched-item fade-in"><span class="si-icon">💌</span><span class="si-time">13:30</span><span class="si-text">Recuerditos y despedida</span></div>
-        </div>
-    </section>
+        // ── Privacy / ID check ──
+        (function() {
+            const id = new URLSearchParams(window.location.search).get('id');
+            if (!id) return; // privacy screen stays visible
 
-    <!-- ══ UBICACIÓN ══ -->
-    <section>
-        <h2 class="section-title fade-in">¿Dónde nos vemos?</h2>
-        <div class="section-divider">🗺️ ✿ 🗺️</div>
-        <div class="paper-card fade-in" style="text-align:center">
-            <span style="font-size:2.4rem;display:block;margin-bottom:0.5rem">📍</span>
-            <p id="event-address" style="font-size:0.88rem;line-height:1.7;color:var(--text-brown)">
-                La dirección exacta del evento<br>será confirmada por WhatsApp 💬
-            </p>
-            <div class="map-btns">
-                <a id="btn-gmaps" href="#" target="_blank" class="map-btn btn-maps" onclick="return false;">🗺️ Google Maps</a>
-                <a id="btn-waze"  href="#" target="_blank" class="map-btn btn-waze"  onclick="return false;">🚗 Waze</a>
-                <a id="btn-cal"   href="#"                 class="map-btn btn-cal">📅 Calendario</a>
-            </div>
-        </div>
-    </section>
+            fetch(BACKEND + '/api/invitation/' + id)
+                .then(r => r.json())
+                .then(data => {
+                    if (!data.success) return;
+                    const inv = data.invitation;
 
-    <!-- ══ RSVP ══ -->
-    <section>
-        <h2 class="section-title fade-in">Confirmación</h2>
-        <div class="section-divider">🎀 🐰 🎀</div>
-        <div class="paper-card fade-in" id="rsvp-card">
-            <div id="rsvp-form-container">
-                <p style="font-size:0.88rem;color:#aaa;text-align:center;margin-bottom:1rem;">¿Podrás acompañarnos? 🌸</p>
+                    // Personalise cover & card with guest name
+                    const name = inv.name || '';
+                    if (name) {
+                        document.getElementById('cover-text').textContent = 'Para ' + name;
+                        document.getElementById('info-guest').textContent = name.split(' ')[0].toUpperCase();
+                    }
 
-                <div class="attend-btns">
-                    <button class="attend-btn" id="btn-yes" onclick="selectAttend(true)">
-                        <span class="ab-icon">🎉</span>¡Asistiré!
-                    </button>
-                    <button class="attend-btn" id="btn-no" onclick="selectAttend(false)">
-                        <span class="ab-icon">😢</span>No podré
-                    </button>
-                </div>
+                    // Hide privacy screen and show scene
+                    document.getElementById('privacy-screen').style.display = 'none';
+                    loadYT();
+                })
+                .catch(() => { /* privacy screen stays */ });
+        })();
 
-                <div class="passes-section" id="passes-section">
-                    <label>¿Cuántos espacios necesitan?</label>
-                    <div class="passes-row">
-                        <button onclick="changePasses(-1)">−</button>
-                        <span class="passes-count" id="passes-count">1</span>
-                        <button onclick="changePasses(1)">+</button>
-                    </div>
-                    <p class="passes-max">Máximo <span id="passes-max-num">1</span> espacio(s)</p>
-                </div>
-
-                <div class="diet-section">
-                    <label>¿Tienes alguna restricción alimentaria?</label>
-                    <div class="radio-row">
-                        <label class="radio-chip" id="chip-diet-no"  onclick="selectDiet(false)"><input type="radio" name="diet" value="no"/>  ✅ No</label>
-                        <label class="radio-chip" id="chip-diet-yes" onclick="selectDiet(true)"> <input type="radio" name="diet" value="yes"/> ⚠️ Sí</label>
-                    </div>
-                    <div id="diet-detail">
-                        <textarea id="diet-detail-text" rows="2" placeholder="Ej: alergia al maní, vegetariana..."></textarea>
-                    </div>
-                </div>
-
-                <div class="note-section">
-                    <label>💌 Dedicatoria para Amelia y Amanda (opcional)</label>
-                    <textarea id="guest-note" rows="3" placeholder="Escribe un mensaje de amor..."></textarea>
-                </div>
-
-                <button class="rsvp-submit" id="rsvp-submit-btn" onclick="submitRsvp()">🐰 Enviar Confirmación</button>
-            </div>
-
-            <div class="rsvp-success" id="rsvp-success">
-                <div class="rs-icon">🎀</div>
-                <p id="rsvp-success-msg">¡Gracias!</p>
-                <small id="rsvp-success-sub"></small>
-            </div>
-        </div>
-    </section>
-
-    <!-- ══ FOOTER ══ -->
-    <footer>
-        <div style="font-size:2.2rem;margin-bottom:0.5rem">🐇</div>
-        <strong>Baby Shower · Amelia</strong>
-        <p>22 de Noviembre 2025 · 10:00 am<br>con todo el amor de <span style="color:var(--vintage-rose);font-weight:700;">Amanda</span> 💕</p>
-        <p style="margin-top:1rem;font-size:0.72rem;opacity:0.4">🌸 🐰 🌷 🐇 🌼 🎀 🐰 🌸</p>
-    </footer>
-
-</div><!-- end #main-content -->
-
-<script>
-// ── CONFIG ──
-const BACKEND_BASE    = window.location.origin;
-const YOUTUBE_VIDEO_ID = 'wqnmSN8UMrk'; // A Thousand Years - Piano Instrumental
-
-// ── STATE ──
-let invitationData   = null;
-let musicPlayer      = null;
-let musicInitialized = false;
-let musicPlaying     = false;
-let userInteracted   = false;
-let rsvpAttending    = null;
-let rsvpPasses       = 1;
-let rsvpMaxPasses    = 1;
-let rsvpHasDiet      = false;
-let rsvpDietChosen   = false;
-
-// ── INIT ──
-document.addEventListener('DOMContentLoaded', () => {
-    const params = new URLSearchParams(window.location.search);
-    const invId  = params.get('id');
-
-    if (!invId) {
-        document.getElementById('privacy-screen').style.display = 'flex';
-        document.getElementById('loading-screen').style.display = 'none';
-        return;
-    }
-
-    fetch(`${BACKEND_BASE}/api/invitation/${invId}`)
-        .then(r => r.json())
-        .then(data => {
-            if (!data.success) throw new Error('not found');
-            invitationData = data.invitation;
-            initInvitation();
-        })
-        .catch(() => {
-            document.getElementById('privacy-screen').style.display = 'flex';
-            document.getElementById('loading-screen').style.display = 'none';
-        });
-});
-
-function initInvitation() {
-    document.getElementById('privacy-screen').style.display = 'none';
-
-    const guestName = invitationData.name || 'Invitado';
-    const passes    = parseInt(invitationData.passes) || 1;
-    rsvpMaxPasses   = passes;
-    rsvpPasses      = Math.min(1, passes);
-
-    // Populate cover & text card
-    const coverName = document.getElementById('cover-guest-name');
-    if (coverName) { coverName.textContent = 'Para ' + guestName; }
-    const tcName = document.getElementById('tc-guest-name');
-    if (tcName) { tcName.textContent = guestName; }
-
-    // Greeting section
-    document.getElementById('guest-name-big').textContent = guestName;
-    const badge = document.getElementById('passes-badge');
-    badge.textContent = passes + (passes === 1 ? ' espacio' : ' espacios');
-    document.getElementById('passes-max-num').textContent = passes;
-
-    // RSVP already submitted?
-    if (invitationData.rsvp && invitationData.rsvp.submittedAt) {
-        showRsvpAlreadySubmitted();
-    }
-
-    setTimeout(() => {
-        const ls = document.getElementById('loading-screen');
-        ls.classList.add('fade-out');
-        setTimeout(() => {
-            ls.style.display = 'none';
-            document.getElementById('main-content').style.display = 'block';
-            document.getElementById('greeting-section').style.display = '';
-            initScrollObserver();
-            loadYouTubeAPI();
-        }, 500);
-    }, 700);
-}
-
-// ── PAPER CRAFT: open animation ──
-function openInvitation() {
-    if (!userInteracted) {
-        userInteracted = true;
-        tryPlayMusic();
-    }
-    const cover = document.getElementById('cover');
-    const world = document.getElementById('world');
-    cover.classList.add('open');
-    setTimeout(() => {
-        world.classList.add('is-open');
-        setTimeout(() => {
-            world.classList.add('floating');
-            document.getElementById('scroll-hint').classList.add('visible');
-        }, 2500);
-    }, 200);
-}
-
-// ── YOUTUBE ──
-function loadYouTubeAPI() {
-    if (window.YT) { onYouTubeIframeAPIReady(); return; }
-    const tag  = document.createElement('script');
-    tag.src    = 'https://www.youtube.com/iframe_api';
-    document.head.appendChild(tag);
-}
-window.onYouTubeIframeAPIReady = function() {
-    musicPlayer = new YT.Player('yt-music-player', {
-        height: '1', width: '1',
-        videoId: YOUTUBE_VIDEO_ID,
-        playerVars: { autoplay: 0, loop: 1, playlist: YOUTUBE_VIDEO_ID },
-        events: {
-            onReady: () => {
-                musicInitialized = true;
-                if (userInteracted) tryPlayMusic();
-            },
-            onStateChange: (e) => {
-                const btn = document.getElementById('music-btn');
-                if (e.data === YT.PlayerState.PLAYING) {
-                    musicPlaying = true;
-                    btn.className = 'playing';
-                } else {
-                    musicPlaying = false;
-                    btn.className = 'paused';
-                }
-            }
+        // ── Open animation ──
+        function openInvitation() {
+            if (!interacted) { interacted = true; tryPlay(); }
+            document.getElementById('cover').classList.add('open');
+            setTimeout(() => {
+                document.getElementById('world').classList.add('is-open');
+                setTimeout(() => document.getElementById('world').classList.add('floating'), 2500);
+            }, 200);
         }
-    });
-};
-function tryPlayMusic() {
-    if (musicInitialized && musicPlayer) {
-        musicPlayer.setVolume(65);
-        musicPlayer.playVideo();
-    }
-}
-document.getElementById('music-btn').addEventListener('click', () => {
-    userInteracted = true;
-    if (!musicInitialized) { tryPlayMusic(); return; }
-    musicPlaying ? musicPlayer.pauseVideo() : tryPlayMusic();
-});
 
-// ── CALENDAR .ICS ──
-document.getElementById('btn-cal').addEventListener('click', e => {
-    e.preventDefault();
-    const ics = ['BEGIN:VCALENDAR','VERSION:2.0','BEGIN:VEVENT',
-        'DTSTART:20251122T100000','DTEND:20251122T140000',
-        'SUMMARY:Baby Shower Amelia 🐰',
-        'DESCRIPTION:¡Baby Shower de Amelia! Con todo el amor de Amanda.',
-        'END:VEVENT','END:VCALENDAR'].join('\r\n');
-    const blob = new Blob([ics], { type: 'text/calendar' });
-    const a    = Object.assign(document.createElement('a'), { href: URL.createObjectURL(blob), download: 'baby-shower-amelia.ics' });
-    a.click();
-    URL.revokeObjectURL(a.href);
-});
+        // ── YouTube ──
+        function loadYT() {
+            const tag = document.createElement('script');
+            tag.src   = 'https://www.youtube.com/iframe_api';
+            document.head.appendChild(tag);
+        }
+        window.onYouTubeIframeAPIReady = function() {
+            ytPlayer = new YT.Player('yt-player', {
+                height: '1', width: '1',
+                videoId: YT_ID,
+                playerVars: { autoplay: 0, loop: 1, playlist: YT_ID },
+                events: {
+                    onReady: () => { ytReady = true; if (interacted) tryPlay(); },
+                    onStateChange: e => {
+                        const btn = document.getElementById('music-btn');
+                        if (e.data === YT.PlayerState.PLAYING) { ytPlaying = true;  btn.className = 'playing'; }
+                        else                                    { ytPlaying = false; btn.className = 'paused';  }
+                    }
+                }
+            });
+        };
+        function tryPlay() { if (ytReady && ytPlayer) { ytPlayer.setVolume(65); ytPlayer.playVideo(); } }
 
-// ── RSVP ──
-function selectAttend(val) {
-    rsvpAttending = val;
-    document.getElementById('btn-yes').className = 'attend-btn' + (val ? ' sel-yes' : '');
-    document.getElementById('btn-no').className  = 'attend-btn' + (!val ? ' sel-no' : '');
-    document.getElementById('passes-section').style.display = val ? 'block' : 'none';
-    if (val) { rsvpPasses = Math.min(1, rsvpMaxPasses); document.getElementById('passes-count').textContent = rsvpPasses; }
-}
-function changePasses(d) {
-    rsvpPasses = Math.max(1, Math.min(rsvpMaxPasses, rsvpPasses + d));
-    document.getElementById('passes-count').textContent = rsvpPasses;
-}
-function selectDiet(val) {
-    rsvpHasDiet = val; rsvpDietChosen = true;
-    document.getElementById('chip-diet-yes').className = 'radio-chip' + (val  ? ' active' : '');
-    document.getElementById('chip-diet-no').className  = 'radio-chip' + (!val ? ' active' : '');
-    document.getElementById('diet-detail').style.display = val ? 'block' : 'none';
-}
-function submitRsvp() {
-    if (rsvpAttending === null) { alert('🐰 Por favor indica si asistirás.'); return; }
-    if (!rsvpDietChosen)        { alert('🐰 Por favor responde si tienes restricción alimentaria.'); return; }
-
-    const btn = document.getElementById('rsvp-submit-btn');
-    btn.disabled = true; btn.textContent = '⏳ Enviando...';
-
-    const invId = new URLSearchParams(window.location.search).get('id');
-    fetch(`${BACKEND_BASE}/api/invitation/${invId}/rsvp`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            attending:             rsvpAttending,
-            confirmedPasses:       rsvpAttending ? rsvpPasses : 0,
-            hasDietaryRestriction: rsvpHasDiet,
-            dietaryDetails:        document.getElementById('diet-detail-text').value.trim(),
-            guestNote:             document.getElementById('guest-note').value.trim()
-        })
-    })
-    .then(r => r.json())
-    .then(data => {
-        document.getElementById('rsvp-form-container').style.display = 'none';
-        const succ = document.getElementById('rsvp-success');
-        succ.style.display = 'flex';
-        document.getElementById('rsvp-success-msg').textContent = data.message || '¡Gracias!';
-        document.getElementById('rsvp-success-sub').textContent = '¡Te esperamos con mucho cariño! 🐰💕';
-    })
-    .catch(() => { btn.disabled = false; btn.textContent = '🐰 Enviar Confirmación'; alert('Error. Intenta de nuevo.'); });
-}
-function showRsvpAlreadySubmitted() {
-    const r = invitationData.rsvp;
-    document.getElementById('rsvp-form-container').style.display = 'none';
-    const succ = document.getElementById('rsvp-success');
-    succ.style.display = 'flex';
-    document.getElementById('rsvp-success-msg').textContent =
-        r.attending ? `¡Ya confirmaste ${r.confirmedPasses} espacio(s)! 🎉` : '¡Ya registramos que no podrás asistir! 💕';
-    document.getElementById('rsvp-success-sub').textContent = 'Gracias por avisarnos. 🐰';
-}
-
-// ── SCROLL ANIMATIONS ──
-function initScrollObserver() {
-    const obs = new IntersectionObserver(entries => {
-        entries.forEach(e => {
-            if (e.isIntersecting) {
-                e.target.classList.add('visible');
-                obs.unobserve(e.target);
-            }
+        document.getElementById('music-btn').addEventListener('click', () => {
+            interacted = true;
+            if (!ytReady) return;
+            ytPlaying ? ytPlayer.pauseVideo() : tryPlay();
         });
-    }, { threshold: 0.15 });
-    document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
-}
-</script>
-
+    </script>
 </body>
 </html>
