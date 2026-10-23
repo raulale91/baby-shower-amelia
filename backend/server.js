@@ -418,4 +418,4 @@ app.post('/api/whatsapp/send', authenticate, async (req, res) => {
   })();
 });
 
-app.listen(port, '127.0.0.1', () => console.log(`Baby Shower Amelia - Admin en http://127.0.0.1:${port}/admin`));
+app.listen(port, () => console.log(`Baby Shower Amelia - Admin en http://localhost:${port}/admin`));
