@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Baby Shower · Amelia</title>
+    <title>Invitación Baby Shower - Patito Vintage</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap');
 
@@ -16,11 +16,16 @@
             --text-color: #5c4a4d;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
         body {
+            /* Patrón Gingham (Cuadros Vichy) suave para el fondo general */
             background-color: #fff;
-            background-image:
+            background-image: 
                 linear-gradient(90deg, var(--gingham-pink) 50%, transparent 50%),
                 linear-gradient(var(--gingham-pink) 50%, transparent 50%);
             background-size: 60px 60px;
@@ -32,7 +37,138 @@
             padding: 20px;
         }
 
-        /* ───── PANTALLA PRIVACIDAD ───── */
+        .invitation-card {
+            width: 100%;
+            max-width: 480px;
+            height: 750px;
+            background-color: var(--cream);
+            position: relative;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            /* Textura sutil de acuarela/papel */
+            background-image: radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.02) 100%);
+        }
+
+        /* Marco curvo interno */
+        .inner-frame {
+            position: absolute;
+            top: 25px; left: 25px; right: 25px; bottom: 25px;
+            border: 1px solid var(--soft-green);
+            border-radius: 200px 200px 15px 15px; /* Forma de arco superior */
+            pointer-events: none;
+        }
+        
+        .inner-frame::before {
+            content: '';
+            position: absolute;
+            top: 5px; left: 5px; right: 5px; bottom: 5px;
+            border: 1px dashed var(--dark-pink);
+            border-radius: 195px 195px 10px 10px;
+            opacity: 0.5;
+        }
+
+        /* Contenedor de Texto */
+        .text-content {
+            margin-top: 100px;
+            text-align: center;
+            z-index: 10;
+        }
+
+        .title-pre {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            color: var(--text-color);
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .title-main {
+            font-family: 'Great Vibes', cursive;
+            font-size: 4.5rem;
+            color: var(--dark-pink);
+            line-height: 0.9;
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 2px rgba(217, 136, 150, 0.2);
+        }
+
+        .subtitle {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            color: var(--text-color);
+            letter-spacing: 3px;
+            margin-bottom: 25px;
+        }
+
+        .details {
+            font-size: 1rem;
+            color: var(--text-color);
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .details strong {
+            color: var(--dark-pink);
+            font-weight: 600;
+        }
+
+        .separator {
+            width: 40px;
+            height: 2px;
+            background-color: var(--soft-green);
+            margin: 15px auto;
+            border-radius: 2px;
+        }
+
+        /* SVGs Absolutos para la decoración */
+        .decor-svg {
+            position: absolute;
+            pointer-events: none;
+        }
+
+        .top-bow {
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 180px;
+            z-index: 15;
+        }
+
+        .bottom-bow {
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 320px;
+            z-index: 15;
+        }
+
+        .duck-container {
+            bottom: 70px;
+            left: 20px;
+            width: 220px;
+            z-index: 12;
+            filter: drop-shadow(2px 5px 6px rgba(0,0,0,0.08));
+            animation: gentleFloat 4s ease-in-out infinite alternate;
+        }
+
+        .floral-right {
+            bottom: 60px;
+            right: 0px;
+            width: 180px;
+            z-index: 11;
+        }
+
+        @keyframes gentleFloat {
+            0% { transform: translateY(0px); }
+            100% { transform: translateY(-5px); }
+        }
+
+        /* ── AÑADIDOS: Privacidad, Invitado, RSVP, Música ── */
+
         #privacy-screen {
             display: none;
             position: fixed;
@@ -61,259 +197,153 @@
             line-height: 1.6;
         }
 
-        /* ───── TARJETA ───── */
-        .invitation-card {
-            width: 100%;
-            max-width: 480px;
-            min-height: 750px;
-            background-color: var(--cream);
-            position: relative;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            background-image: radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.02) 100%);
-        }
-
-        .inner-frame {
-            position: absolute;
-            top: 25px; left: 25px; right: 25px; bottom: 25px;
-            border: 1px solid var(--soft-green);
-            border-radius: 200px 200px 15px 15px;
-            pointer-events: none;
-            z-index: 5;
-        }
-        .inner-frame::before {
-            content: '';
-            position: absolute;
-            top: 5px; left: 5px; right: 5px; bottom: 5px;
-            border: 1px dashed var(--dark-pink);
-            border-radius: 195px 195px 10px 10px;
-            opacity: 0.5;
-        }
-
-        /* ───── TEXTO INVITACIÓN ───── */
-        .text-content {
-            margin-top: 100px;
-            text-align: center;
-            z-index: 10;
-            padding: 0 50px;
-        }
-        .title-pre {
-            font-family: 'Playfair Display', serif;
-            font-style: italic;
-            color: var(--text-color);
-            font-size: 1.1rem;
-            letter-spacing: 1px;
-            margin-bottom: 5px;
-        }
-        .title-main {
-            font-family: 'Great Vibes', cursive;
-            font-size: 4.5rem;
-            color: var(--dark-pink);
-            line-height: 0.9;
-            margin-bottom: 10px;
-            text-shadow: 1px 1px 2px rgba(217, 136, 150, 0.2);
-        }
-        .subtitle {
-            font-family: 'Cinzel', serif;
-            font-size: 1.5rem;
-            color: var(--text-color);
-            letter-spacing: 3px;
-            margin-bottom: 25px;
-        }
-        .details {
-            font-size: 1rem;
-            color: var(--text-color);
-            line-height: 1.6;
-            margin-bottom: 15px;
-        }
-        .details strong { color: var(--dark-pink); font-weight: 600; }
-        .separator {
-            width: 40px; height: 2px;
-            background-color: var(--soft-green);
-            margin: 15px auto; border-radius: 2px;
-        }
         .guest-greeting {
             font-family: 'Playfair Display', serif;
             font-style: italic;
             color: var(--dark-pink);
-            font-size: 1rem;
-            margin-bottom: 6px;
+            font-size: 0.95rem;
+            margin-bottom: 2px;
         }
         .guest-name-display {
             font-family: 'Great Vibes', cursive;
-            font-size: 2.4rem;
+            font-size: 2.2rem;
             color: var(--text-color);
             line-height: 1.1;
-            margin-bottom: 4px;
+            margin-bottom: 2px;
         }
         .guest-passes {
             font-family: 'Playfair Display', serif;
             font-style: italic;
-            font-size: 0.88rem;
+            font-size: 0.8rem;
             color: var(--soft-green);
+            margin-bottom: 8px;
         }
 
-        /* ───── SVGs absolutos ───── */
-        .decor-svg {
-            position: absolute;
-            pointer-events: none;
-        }
-        .top-bow {
-            top: 10px; left: 50%;
-            transform: translateX(-50%);
-            width: 180px; z-index: 15;
-        }
-        .bottom-bow {
-            bottom: -20px; left: 50%;
-            transform: translateX(-50%);
-            width: 320px; z-index: 15;
-        }
-        .duck-container {
-            bottom: 70px; left: 20px;
-            width: 220px; z-index: 12;
-            filter: drop-shadow(2px 5px 6px rgba(0,0,0,0.08));
-            animation: gentleFloat 4s ease-in-out infinite alternate;
-        }
-        .floral-right {
-            bottom: 60px; right: 0px;
-            width: 180px; z-index: 11;
-        }
-        @keyframes gentleFloat {
-            0%   { transform: translateY(0px); }
-            100% { transform: translateY(-5px); }
-        }
-
-        /* ───── RSVP ───── */
         .rsvp-section {
             width: 100%;
-            padding: 20px 45px 30px;
+            padding: 8px 40px 12px;
             z-index: 10;
-            margin-top: 10px;
         }
         .rsvp-title {
             font-family: 'Cinzel', serif;
-            font-size: 0.85rem;
+            font-size: 0.72rem;
             letter-spacing: 2px;
             color: var(--dark-pink);
             text-align: center;
-            margin-bottom: 14px;
+            margin-bottom: 10px;
         }
         .rsvp-options {
             display: flex;
-            gap: 10px;
-            margin-bottom: 14px;
+            gap: 8px;
+            margin-bottom: 10px;
         }
         .rsvp-btn {
             flex: 1;
-            padding: 10px 8px;
+            padding: 8px 6px;
             border: 1.5px solid var(--dark-pink);
             background: transparent;
             border-radius: 30px;
             font-family: 'Playfair Display', serif;
-            font-size: 0.85rem;
+            font-size: 0.78rem;
             color: var(--text-color);
             cursor: pointer;
             transition: all 0.25s;
         }
-        .rsvp-btn.selected,
-        .rsvp-btn:hover {
+        .rsvp-btn.selected, .rsvp-btn:hover {
             background: var(--dark-pink);
             color: white;
         }
-        .rsvp-row {
-            margin-bottom: 12px;
-        }
+        .rsvp-row { margin-bottom: 8px; }
         .rsvp-label {
             display: block;
             font-family: 'Playfair Display', serif;
             font-style: italic;
-            font-size: 0.82rem;
+            font-size: 0.75rem;
             color: var(--text-color);
-            margin-bottom: 5px;
+            margin-bottom: 3px;
         }
         .rsvp-select, .rsvp-textarea, .rsvp-input {
             width: 100%;
             border: 1px solid #e2c5cb;
             border-radius: 10px;
-            padding: 8px 12px;
+            padding: 6px 10px;
             font-family: 'Playfair Display', serif;
-            font-size: 0.85rem;
+            font-size: 0.78rem;
             color: var(--text-color);
             background: white;
             outline: none;
         }
-        .rsvp-textarea { resize: none; height: 62px; }
+        .rsvp-textarea { resize: none; height: 48px; }
         .rsvp-submit {
             width: 100%;
-            padding: 12px;
+            padding: 9px;
             background: var(--dark-pink);
             color: white;
             border: none;
             border-radius: 30px;
             font-family: 'Cinzel', serif;
-            font-size: 0.88rem;
+            font-size: 0.75rem;
             letter-spacing: 1.5px;
             cursor: pointer;
-            margin-top: 6px;
+            margin-top: 4px;
             transition: opacity 0.2s;
         }
         .rsvp-submit:disabled { opacity: 0.6; cursor: default; }
         .rsvp-msg {
             text-align: center;
             font-style: italic;
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             color: var(--soft-green);
-            margin-top: 8px;
-            min-height: 20px;
+            margin-top: 5px;
+            min-height: 16px;
         }
-        /* Ocultar sección de pases si no asiste */
         .rsvp-attending-only { display: none; }
 
-        /* ───── VINILO MÚSICA ───── */
         #vinyl-btn {
             position: fixed;
             bottom: 22px; right: 22px;
-            width: 56px; height: 56px;
+            width: 52px; height: 52px;
             border-radius: 50%;
             background: var(--dark-pink);
             border: none; cursor: pointer;
             box-shadow: 0 4px 14px rgba(217,136,150,0.5);
             z-index: 9000;
-            display: flex; justify-content: center; align-items: center;
+            display: none;
+            justify-content: center;
+            align-items: center;
             transition: transform 0.2s;
         }
         #vinyl-btn:hover { transform: scale(1.08); }
-        #vinyl-btn svg { width: 30px; height: 30px; }
-        #vinyl-btn.spinning svg.vinyl-disc {
-            animation: spin 3s linear infinite;
-        }
-        @keyframes spin {
-            from { transform: rotate(0deg); }
-            to   { transform: rotate(360deg); }
-        }
-        /* YouTube player invisible */
-        #yt-player {
-            width: 1px; height: 1px;
-            position: fixed; bottom: -9999px; left: -9999px;
-        }
+        #vinyl-btn svg { width: 28px; height: 28px; }
+        #vinyl-btn.spinning .vinyl-disc { animation: spinDisc 3s linear infinite; }
+        @keyframes spinDisc { from { transform-origin: center; transform: rotate(0deg); } to { transform-origin: center; transform: rotate(360deg); } }
+        #yt-player { width: 1px; height: 1px; position: fixed; bottom: -9999px; left: -9999px; }
     </style>
 </head>
 <body>
 
-    <!-- ───── PANTALLA PRIVACIDAD ───── -->
+    <!-- ── Pantalla de privacidad ── -->
     <div id="privacy-screen">
         <div class="lock-icon">🔒</div>
         <h2>Invitación Privada</h2>
         <p>Esta invitación es personal. Por favor revisá el enlace que recibiste por WhatsApp para acceder.</p>
     </div>
 
-    <!-- ───── TARJETA ───── -->
-    <div class="invitation-card" id="invitation-card" style="opacity:0; transition: opacity 0.6s;">
+    <!-- ── Botón vinilo música ── -->
+    <button id="vinyl-btn" onclick="toggleMusic()" title="Música">
+        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle class="vinyl-disc" cx="20" cy="20" r="18" fill="#2c1a1d" stroke="#f7d4d9" stroke-width="1.5"/>
+            <circle cx="20" cy="20" r="6" fill="#f7d4d9" opacity="0.2"/>
+            <circle cx="20" cy="20" r="3" fill="#f7d4d9" opacity="0.6"/>
+            <circle cx="20" cy="20" r="1.5" fill="#d98896"/>
+        </svg>
+    </button>
 
+    <!-- ── YouTube player invisible ── -->
+    <div id="yt-player"></div>
+
+    <div class="invitation-card" id="invitation-card">
+        
         <!-- Marco Decorativo -->
         <div class="inner-frame"></div>
 
@@ -325,42 +355,49 @@
                     <stop offset="100%" stop-color="#e69cac" />
                 </linearGradient>
             </defs>
+            <!-- Cintas cayendo -->
             <path d="M 100 50 Q 70 80 40 90 Q 60 70 90 40 Z" fill="url(#bowGrad)"/>
             <path d="M 100 50 Q 130 80 160 90 Q 140 70 110 40 Z" fill="url(#bowGrad)"/>
+            <!-- Orejas del lazo -->
             <path d="M 100 45 C 50 10 10 50 85 55 C 95 55 100 45 100 45 Z" fill="url(#bowGrad)" />
             <path d="M 100 45 C 150 10 190 50 115 55 C 105 55 100 45 100 45 Z" fill="url(#bowGrad)" />
+            <!-- Nudo central -->
             <ellipse cx="100" cy="48" rx="12" ry="15" fill="#d98896" />
+            <!-- Pliegues -->
             <path d="M 80 50 Q 50 35 30 45" fill="none" stroke="#c4707e" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
             <path d="M 120 50 Q 150 35 170 45" fill="none" stroke="#c4707e" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
         </svg>
 
-        <!-- Texto -->
+        <!-- Texto de la Invitación -->
         <div class="text-content">
             <p class="title-pre">Acompáñanos a celebrar el</p>
             <h1 class="title-main">Baby Shower</h1>
             <p class="title-pre">en honor a</p>
             <h2 class="subtitle">Amelia</h2>
-
-            <div class="separator"></div>
-
-            <div id="guest-block" style="display:none; margin-bottom: 10px;">
+            
+            <!-- Bloque del invitado (se muestra solo con ID válido) -->
+            <div id="guest-block" style="display:none;">
                 <p class="guest-greeting">Para:</p>
                 <p class="guest-name-display" id="guest-name-el"></p>
                 <p class="guest-passes" id="guest-passes-el"></p>
             </div>
 
+            <div class="separator"></div>
+            
             <div class="details">
                 <p><strong>DOMINGO, 20 DE JULIO</strong></p>
                 <p>A las 3:00 de la tarde</p>
             </div>
+            
             <div class="details" style="font-size: 0.9rem;">
                 <p>Salón Giardino</p>
                 <p>Av. Siempreviva #742</p>
             </div>
+            
             <p class="title-pre" style="margin-top: 15px; font-size: 1rem;">¡Te esperamos con cariño!</p>
         </div>
 
-        <!-- RSVP -->
+        <!-- RSVP (integrado dentro de la tarjeta) -->
         <div class="rsvp-section" id="rsvp-section">
             <p class="rsvp-title">CONFIRMACIÓN DE ASISTENCIA</p>
             <div class="rsvp-options">
@@ -370,12 +407,10 @@
             <div class="rsvp-attending-only" id="rsvp-passes-row">
                 <div class="rsvp-row">
                     <label class="rsvp-label">Número de pases</label>
-                    <select class="rsvp-select" id="rsvp-passes">
-                        <option value="1">1</option>
-                    </select>
+                    <select class="rsvp-select" id="rsvp-passes"><option value="1">1</option></select>
                 </div>
                 <div class="rsvp-row">
-                    <label class="rsvp-label">¿Tienes restricción o alergia alimentaria?</label>
+                    <label class="rsvp-label">¿Restricción o alergia alimentaria?</label>
                     <select class="rsvp-select" id="rsvp-diet" onchange="toggleDietDetail()">
                         <option value="no">No</option>
                         <option value="si">Sí</option>
@@ -383,7 +418,7 @@
                 </div>
                 <div class="rsvp-row" id="diet-detail-row" style="display:none;">
                     <label class="rsvp-label">¿Cuál?</label>
-                    <input class="rsvp-input" type="text" id="rsvp-diet-detail" placeholder="ej: vegetariana, sin gluten..." />
+                    <input class="rsvp-input" type="text" id="rsvp-diet-detail" placeholder="ej: vegetariana, sin gluten..."/>
                 </div>
             </div>
             <div class="rsvp-row">
@@ -394,7 +429,7 @@
             <p class="rsvp-msg" id="rsvp-msg"></p>
         </div>
 
-        <!-- Patito -->
+        <!-- Patito Bebé con Lazo de Lunares y Flores (Estilo Acuarela Vectorial) -->
         <svg class="decor-svg duck-container" viewBox="0 0 250 300">
             <defs>
                 <radialGradient id="duckBody" cx="40%" cy="40%" r="60%">
@@ -411,39 +446,67 @@
                     <stop offset="100%" stop-color="#f59a38" />
                 </linearGradient>
             </defs>
+
+            <!-- Patas -->
             <path d="M 100 250 L 80 275 L 110 275 Z" fill="url(#beak)" />
             <path d="M 130 245 L 120 275 L 150 275 Z" fill="url(#beak)" />
+
+            <!-- Cuerpo Esponjoso (curvas superpuestas) -->
             <path d="M 70 230 C 20 180, 50 120, 110 130 C 160 130, 170 190, 140 230 C 120 250, 90 250, 70 230 Z" fill="url(#duckBody)" />
-            <path d="M 70 210 C 30 220, 20 180, 50 160 C 40 180, 55 195, 70 210 Z" fill="url(#duckBody)" />
+            <path d="M 70 210 C 30 220, 20 180, 50 160 C 40 180, 55 195, 70 210 Z" fill="url(#duckBody)" /> <!-- Colita -->
+
+            <!-- Cabeza -->
             <circle cx="125" cy="100" r="55" fill="url(#duckBody)" />
+            
+            <!-- Pico -->
             <path d="M 170 100 C 205 105, 200 125, 180 125 C 165 125, 155 110, 170 100 Z" fill="url(#beak)" />
-            <path d="M 175 115 C 190 120, 180 135, 165 125 Z" fill="#e08022" />
+            <path d="M 175 115 C 190 120, 180 135, 165 125 Z" fill="#e08022" /> <!-- Parte inferior del pico -->
+
+            <!-- Ojo tierno (grande) -->
             <circle cx="150" cy="85" r="10" fill="#3a2e2f" />
             <circle cx="147" cy="81" r="3.5" fill="#ffffff" />
             <circle cx="153" cy="88" r="1.5" fill="#ffffff" />
+            
+            <!-- Pestañas -->
             <path d="M 155 75 Q 160 70 165 76" fill="none" stroke="#3a2e2f" stroke-width="1.5" stroke-linecap="round"/>
+
+            <!-- Rubor en la mejilla -->
             <circle cx="120" cy="115" r="18" fill="url(#blush)" />
-            <path d="M 100 160 C 140 160, 160 185, 155 210 C 125 195, 100 180, 100 160 Z" fill="url(#duckBody)" />
+
+            <!-- Ala sosteniendo flores -->
+            <path d="M 100 160 C 140 160, 160 185, 155 210 C 125 195, 100 180, 100 160 Z" fill="url(#duckBody)" filter="drop-shadow(0px 3px 3px rgba(0,0,0,0.05))"/>
+
+            <!-- Lazo Grande en la Cabeza (Estilo Imagen 2) -->
             <g transform="translate(90, 25) rotate(-15)">
                 <path d="M 45 45 C 5 -10, -20 50, 30 55 Z" fill="#f4aeb9" />
                 <path d="M 45 45 C 85 -10, 110 50, 60 55 Z" fill="#f4aeb9" />
+                <!-- Lunares blancos en el lazo -->
                 <circle cx="20" cy="25" r="3.5" fill="white" opacity="0.8"/>
                 <circle cx="30" cy="40" r="4" fill="white" opacity="0.8"/>
                 <circle cx="10" cy="45" r="3" fill="white" opacity="0.8"/>
                 <circle cx="65" cy="25" r="3.5" fill="white" opacity="0.8"/>
                 <circle cx="75" cy="45" r="4" fill="white" opacity="0.8"/>
                 <circle cx="55" cy="38" r="3" fill="white" opacity="0.8"/>
+                
                 <ellipse cx="45" cy="48" rx="10" ry="12" fill="#e691a0" />
             </g>
+
+            <!-- Ramo de Margaritas (Debajo del ala) -->
             <g transform="translate(135, 160)">
+                <!-- Tallos -->
                 <path d="M 10 10 Q 20 40 5 60 M 15 15 Q 30 45 20 65 M 5 20 Q 5 50 -10 60" fill="none" stroke="#8ba87e" stroke-width="2.5" stroke-linecap="round"/>
+                
+                <!-- Margarita 1 -->
                 <g transform="translate(0, 5) scale(0.8)">
+                    <!-- Pétalos -->
                     <circle cx="0" cy="-12" r="6" fill="white"/> <circle cx="0" cy="12" r="6" fill="white"/>
                     <circle cx="-12" cy="0" r="6" fill="white"/> <circle cx="12" cy="0" r="6" fill="white"/>
                     <circle cx="-9" cy="-9" r="6" fill="white"/> <circle cx="9" cy="9" r="6" fill="white"/>
                     <circle cx="9" cy="-9" r="6" fill="white"/> <circle cx="-9" cy="9" r="6" fill="white"/>
+                    <!-- Centro -->
                     <circle cx="0" cy="0" r="6" fill="#f4c95d"/>
                 </g>
+                <!-- Margarita 2 -->
                 <g transform="translate(18, 15) scale(0.9)">
                     <circle cx="0" cy="-12" r="6" fill="white"/> <circle cx="0" cy="12" r="6" fill="white"/>
                     <circle cx="-12" cy="0" r="6" fill="white"/> <circle cx="12" cy="0" r="6" fill="white"/>
@@ -451,6 +514,7 @@
                     <circle cx="9" cy="-9" r="6" fill="white"/> <circle cx="-9" cy="9" r="6" fill="white"/>
                     <circle cx="0" cy="0" r="6" fill="#f4c95d"/>
                 </g>
+                <!-- Margarita 3 -->
                 <g transform="translate(-5, 25) scale(0.7)">
                     <circle cx="0" cy="-12" r="6" fill="white"/> <circle cx="0" cy="12" r="6" fill="white"/>
                     <circle cx="-12" cy="0" r="6" fill="white"/> <circle cx="12" cy="0" r="6" fill="white"/>
@@ -463,12 +527,18 @@
 
         <!-- Arreglo Floral Derecho -->
         <svg class="decor-svg floral-right" viewBox="0 0 150 250">
+            <!-- Hojas verdes suaves -->
             <path d="M 120 200 Q 80 150 140 120 Q 150 160 120 200 Z" fill="#b9c9b0" />
             <path d="M 130 180 Q 90 120 150 80 Q 160 130 130 180 Z" fill="#9db391" />
+            
+            <!-- Flores rosas tipo acuarela -->
             <circle cx="120" cy="140" r="18" fill="#f2b6c1" opacity="0.9"/>
             <circle cx="120" cy="140" r="10" fill="#e693a3" opacity="0.8"/>
+            
             <circle cx="140" cy="100" r="15" fill="#f7d4d9" opacity="0.9"/>
             <circle cx="140" cy="100" r="8" fill="#f2b6c1" opacity="0.8"/>
+
+            <!-- Margarita grande -->
             <g transform="translate(100, 180) scale(1.2)">
                 <circle cx="0" cy="-12" r="6" fill="white"/> <circle cx="0" cy="12" r="6" fill="white"/>
                 <circle cx="-12" cy="0" r="6" fill="white"/> <circle cx="12" cy="0" r="6" fill="white"/>
@@ -478,7 +548,7 @@
             </g>
         </svg>
 
-        <!-- Lazo Inferior -->
+        <!-- Lazo Gigante Inferior (Estilo Imagen 4) -->
         <svg class="decor-svg bottom-bow" viewBox="0 0 350 150">
             <defs>
                 <linearGradient id="hugeBow" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -487,99 +557,64 @@
                     <stop offset="100%" stop-color="#de8e9e" />
                 </linearGradient>
             </defs>
+            
+            <!-- Cola del lazo izquierda y derecha -->
             <path d="M 175 60 Q 70 100, 20 140 Q 90 120, 140 80 Z" fill="url(#hugeBow)"/>
             <path d="M 175 60 Q 280 100, 330 140 Q 260 120, 210 80 Z" fill="url(#hugeBow)"/>
+            
+            <!-- Lazadas principales super grandes -->
             <path d="M 175 70 C 40 -20, -30 90, 145 85 C 155 85, 175 70, 175 70 Z" fill="url(#hugeBow)" />
             <path d="M 175 70 C 310 -20, 380 90, 205 85 C 195 85, 175 70, 175 70 Z" fill="url(#hugeBow)" />
+            
+            <!-- Nudo central con detalle -->
             <rect x="155" y="55" width="40" height="35" rx="15" fill="#d98896" />
             <path d="M 165 55 L 165 90 M 185 55 L 185 90" stroke="#c4707e" stroke-width="2" opacity="0.5"/>
+            
+            <!-- Sombreado de pliegues para realismo -->
             <path d="M 145 80 Q 80 40, 50 60" fill="none" stroke="#c4707e" stroke-width="3" stroke-linecap="round" opacity="0.4"/>
             <path d="M 205 80 Q 270 40, 300 60" fill="none" stroke="#c4707e" stroke-width="3" stroke-linecap="round" opacity="0.4"/>
         </svg>
 
     </div>
 
-    <!-- ───── BOTÓN VINILO ───── -->
-    <button id="vinyl-btn" onclick="toggleMusic()" title="Música" style="display:none;">
-        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle class="vinyl-disc" cx="20" cy="20" r="18" fill="#2c1a1d" stroke="#f7d4d9" stroke-width="1.5"/>
-            <circle cx="20" cy="20" r="6" fill="#f7d4d9" opacity="0.2"/>
-            <circle cx="20" cy="20" r="3" fill="#f7d4d9" opacity="0.6"/>
-            <circle cx="20" cy="20" r="1.5" fill="#d98896"/>
-        </svg>
-    </button>
-
-    <!-- ───── YouTube Player invisible ───── -->
-    <div id="yt-player"></div>
     <script src="https://www.youtube.com/iframe_api"></script>
-
     <script>
-    /* ══════════════════════════════════════════════
-       PRIVACIDAD + CARGA DE DATOS DEL INVITADO
-    ══════════════════════════════════════════════ */
-    let guestData = null;
+    /* ══ PRIVACIDAD + DATOS DEL INVITADO ══ */
     let attendanceChoice = null;
 
     async function init() {
-        const params = new URLSearchParams(window.location.search);
-        const id = params.get('id');
-
-        if (!id) {
-            showPrivacyScreen();
-            return;
-        }
-
+        const id = new URLSearchParams(window.location.search).get('id');
+        if (!id) { showPrivacy(); return; }
         try {
-            const res = await fetch(`/api/invitation/${id}`);
-            if (!res.ok) throw new Error('not found');
+            const res = await fetch('/api/invitation/' + id);
+            if (!res.ok) throw new Error();
             const data = await res.json();
-            guestData = data;
             renderGuest(data);
-            showCard();
-        } catch (e) {
-            showPrivacyScreen();
-        }
+        } catch(e) { showPrivacy(); }
     }
 
-    function showPrivacyScreen() {
-        const ps = document.getElementById('privacy-screen');
-        ps.style.display = 'flex';
+    function showPrivacy() {
+        document.getElementById('privacy-screen').style.display = 'flex';
     }
 
     function renderGuest(data) {
-        const nameEl = document.getElementById('guest-name-el');
-        const passesEl = document.getElementById('guest-passes-el');
-        const guestBlock = document.getElementById('guest-block');
-
         if (data.name) {
-            nameEl.textContent = data.name;
+            document.getElementById('guest-name-el').textContent = data.name;
             const passes = data.passes || 1;
-            passesEl.textContent = passes === 1
-                ? '1 pase incluido'
-                : `${passes} pases incluidos`;
-
-            // Poblar select de pases
+            document.getElementById('guest-passes-el').textContent =
+                passes === 1 ? '1 pase incluido' : passes + ' pases incluidos';
+            // Poblar selector de pases hasta el máximo asignado
             const sel = document.getElementById('rsvp-passes');
             sel.innerHTML = '';
             for (let i = 1; i <= passes; i++) {
-                const opt = document.createElement('option');
-                opt.value = i;
-                opt.textContent = i;
-                sel.appendChild(opt);
+                const o = document.createElement('option');
+                o.value = i; o.textContent = i;
+                sel.appendChild(o);
             }
-
-            guestBlock.style.display = 'block';
+            document.getElementById('guest-block').style.display = 'block';
         }
-
-        // Si ya respondió, mostrar respuesta previa
-        if (data.rsvp) {
-            prefillRSVP(data.rsvp);
-        }
-    }
-
-    function showCard() {
-        const card = document.getElementById('invitation-card');
-        card.style.opacity = '1';
+        if (data.rsvp) prefillRSVP(data.rsvp);
+        // Mostrar botón vinilo una vez cargada la invitación
         document.getElementById('vinyl-btn').style.display = 'flex';
     }
 
@@ -587,8 +622,9 @@
         selectAttendance(rsvp.attending);
         if (rsvp.attending) {
             document.getElementById('rsvp-passes').value = rsvp.guestsCount || 1;
-            document.getElementById('rsvp-diet').value = rsvp.dietaryRestriction ? 'si' : 'no';
-            if (rsvp.dietaryRestriction) {
+            const hasDiet = !!rsvp.dietaryRestriction;
+            document.getElementById('rsvp-diet').value = hasDiet ? 'si' : 'no';
+            if (hasDiet) {
                 document.getElementById('diet-detail-row').style.display = 'block';
                 document.getElementById('rsvp-diet-detail').value = rsvp.dietaryRestriction;
             }
@@ -599,22 +635,18 @@
         document.getElementById('rsvp-submit-btn').disabled = false;
     }
 
-    /* ══════════════════════════════════════════════
-       RSVP LOGIC
-    ══════════════════════════════════════════════ */
+    /* ══ RSVP ══ */
     function selectAttendance(attending) {
         attendanceChoice = attending;
         document.getElementById('btn-yes').classList.toggle('selected', attending);
         document.getElementById('btn-no').classList.toggle('selected', !attending);
-
-        const passesRow = document.getElementById('rsvp-passes-row');
-        passesRow.style.display = attending ? 'block' : 'none';
+        document.getElementById('rsvp-passes-row').style.display = attending ? 'block' : 'none';
         document.getElementById('rsvp-submit-btn').disabled = false;
     }
 
     function toggleDietDetail() {
-        const val = document.getElementById('rsvp-diet').value;
-        document.getElementById('diet-detail-row').style.display = val === 'si' ? 'block' : 'none';
+        const v = document.getElementById('rsvp-diet').value;
+        document.getElementById('diet-detail-row').style.display = v === 'si' ? 'block' : 'none';
     }
 
     async function submitRSVP() {
@@ -623,22 +655,17 @@
         const msg = document.getElementById('rsvp-msg');
         btn.disabled = true;
         msg.textContent = 'Enviando...';
-
-        const params = new URLSearchParams(window.location.search);
-        const id = params.get('id');
-
+        const id = new URLSearchParams(window.location.search).get('id');
         const dietVal = document.getElementById('rsvp-diet').value;
         const payload = {
             attending: attendanceChoice,
             guestsCount: attendanceChoice ? parseInt(document.getElementById('rsvp-passes').value) : 0,
             dietaryRestriction: (attendanceChoice && dietVal === 'si')
-                ? document.getElementById('rsvp-diet-detail').value
-                : '',
+                ? document.getElementById('rsvp-diet-detail').value : '',
             note: document.getElementById('rsvp-note').value.trim()
         };
-
         try {
-            const res = await fetch(`/api/invitation/${id}/rsvp`, {
+            const res = await fetch('/api/invitation/' + id + '/rsvp', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)
@@ -649,65 +676,53 @@
                 : '💛 Gracias por avisarnos. ¡Será en otra ocasión!';
             btn.textContent = 'Actualizar confirmación';
             btn.disabled = false;
-        } catch (e) {
-            msg.textContent = 'Hubo un error. Por favor intentá de nuevo.';
+        } catch(e) {
+            msg.textContent = 'Error al enviar. Intentá de nuevo.';
             btn.disabled = false;
         }
     }
 
-    /* ══════════════════════════════════════════════
-       MÚSICA — YouTube IFrame API
-    ══════════════════════════════════════════════ */
-    let ytPlayer = null;
-    let musicReady = false;
-    let musicPlaying = false;
-    let musicUnlocked = false;
+    /* ══ MÚSICA — YouTube IFrame API ══ */
+    let ytPlayer = null, ytReady = false, ytPlaying = false;
 
     function onYouTubeIframeAPIReady() {
         ytPlayer = new YT.Player('yt-player', {
             videoId: 'wqnmSN8UMrk',
             playerVars: { autoplay: 0, controls: 0, loop: 1, playlist: 'wqnmSN8UMrk' },
             events: {
-                onReady: () => { musicReady = true; }
+                onReady: () => { ytReady = true; }
             }
         });
     }
 
     function unlockMusic() {
-        if (!musicUnlocked && musicReady && ytPlayer) {
+        if (ytReady && ytPlayer && !ytPlaying) {
+            ytPlayer.setVolume(65);
             ytPlayer.playVideo();
-            musicUnlocked = true;
-            musicPlaying = true;
+            ytPlaying = true;
             document.getElementById('vinyl-btn').classList.add('spinning');
         }
     }
 
     function toggleMusic() {
-        if (!musicReady || !ytPlayer) return;
-        if (!musicUnlocked) {
-            unlockMusic();
-            return;
-        }
-        if (musicPlaying) {
+        if (!ytReady || !ytPlayer) return;
+        if (ytPlaying) {
             ytPlayer.pauseVideo();
-            musicPlaying = false;
+            ytPlaying = false;
             document.getElementById('vinyl-btn').classList.remove('spinning');
         } else {
             ytPlayer.playVideo();
-            musicPlaying = true;
+            ytPlaying = true;
             document.getElementById('vinyl-btn').classList.add('spinning');
         }
     }
 
-    // Desbloquear con primera interacción
-    document.addEventListener('click', function onFirstClick() {
+    // Desbloquear música con la primera interacción del usuario
+    document.addEventListener('click', function unlock() {
         unlockMusic();
-        document.removeEventListener('click', onFirstClick);
+        document.removeEventListener('click', unlock);
     }, { once: true });
 
-    /* ══════════════════════════════════════════════
-       ARRANCAR
-    ══════════════════════════════════════════════ */
     init();
     </script>
 </body>
