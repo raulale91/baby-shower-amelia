@@ -404,6 +404,19 @@
             opacity: 0; pointer-events: none;
         }
 
+        /* ─── BORDE FLORAL LATERAL ─── */
+        .floral-border {
+            position: absolute;
+            top: 0; bottom: 0;
+            width: 90px;
+            pointer-events: none;
+            z-index: 6;
+            opacity: 0;
+            animation: fadeIn 2s ease-out 1.8s forwards;
+        }
+        .floral-border.left  { left: 0; }
+        .floral-border.right { right: 0; transform: scaleX(-1); }
+
         /* ─── HOJAS DE EUCALIPTO ─── */
         #leaves-container {
             position: fixed;
@@ -459,6 +472,163 @@
 
             <div class="inner-frame"></div>
             <img src="lazo_arriba.png" alt="" class="img-top-bow">
+
+            <!-- ── Borde floral izquierdo ── -->
+            <svg class="floral-border left" viewBox="0 0 90 700" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+              <defs>
+                <radialGradient id="dc1" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#fff"/><stop offset="100%" stop-color="#f4c95d"/></radialGradient>
+                <radialGradient id="dc2" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#fff"/><stop offset="100%" stop-color="#f0b84d"/></radialGradient>
+              </defs>
+
+              <!-- ── Tallo principal ── -->
+              <path d="M 45 700 C 42 580, 38 460, 44 350 C 50 240, 40 130, 45 20" fill="none" stroke="#8ba87e" stroke-width="2" opacity="0.6"/>
+
+              <!-- ── Ramas secundarias ── -->
+              <path d="M 44 620 Q 20 600 10 580" fill="none" stroke="#8ba87e" stroke-width="1.5" opacity="0.5"/>
+              <path d="M 44 550 Q 65 530 75 510" fill="none" stroke="#8ba87e" stroke-width="1.5" opacity="0.5"/>
+              <path d="M 44 470 Q 18 450 8 430" fill="none" stroke="#8ba87e" stroke-width="1.5" opacity="0.5"/>
+              <path d="M 44 400 Q 68 385 78 365" fill="none" stroke="#8ba87e" stroke-width="1.5" opacity="0.5"/>
+              <path d="M 44 320 Q 15 305 5 285" fill="none" stroke="#8ba87e" stroke-width="1.5" opacity="0.5"/>
+              <path d="M 44 250 Q 70 235 80 215" fill="none" stroke="#8ba87e" stroke-width="1.5" opacity="0.5"/>
+              <path d="M 44 175 Q 18 160 8 140" fill="none" stroke="#8ba87e" stroke-width="1.5" opacity="0.5"/>
+              <path d="M 44 100 Q 65 85 74 65"  fill="none" stroke="#8ba87e" stroke-width="1.5" opacity="0.5"/>
+
+              <!-- ── Hojas de eucalipto ── -->
+              <!-- hoja 1 → rama izq 620 -->
+              <ellipse cx="14" cy="574" rx="9" ry="16" transform="rotate(-35 14 574)" fill="#a8bba2" opacity="0.7"/>
+              <!-- hoja 2 → rama der 550 -->
+              <ellipse cx="72" cy="514" rx="9" ry="16" transform="rotate(30 72 514)"  fill="#8ba87e" opacity="0.65"/>
+              <!-- hoja 3 → rama izq 470 -->
+              <ellipse cx="12" cy="428" rx="8" ry="14" transform="rotate(-40 12 428)" fill="#a8bba2" opacity="0.6"/>
+              <!-- hoja 4 → rama der 400 -->
+              <ellipse cx="75" cy="368" rx="9" ry="15" transform="rotate(25 75 368)"  fill="#8ba87e" opacity="0.7"/>
+              <!-- hoja 5 → rama izq 320 -->
+              <ellipse cx="10" cy="283" rx="8" ry="14" transform="rotate(-38 10 283)" fill="#a8bba2" opacity="0.65"/>
+              <!-- hoja 6 → rama der 250 -->
+              <ellipse cx="77" cy="218" rx="9" ry="16" transform="rotate(28 77 218)"  fill="#8ba87e" opacity="0.6"/>
+              <!-- hoja 7 → rama izq 175 -->
+              <ellipse cx="12" cy="138" rx="8" ry="14" transform="rotate(-42 12 138)" fill="#a8bba2" opacity="0.7"/>
+              <!-- hoja 8 → rama der 100 -->
+              <ellipse cx="71" cy="68"  rx="8" ry="14" transform="rotate(32 71 68)"   fill="#8ba87e" opacity="0.65"/>
+
+              <!-- ── Margaritas ── -->
+              <!-- margarita grande 580 -->
+              <g transform="translate(22,570)">
+                <circle cx="0" cy="-11" r="5.5" fill="white"/><circle cx="0" cy="11" r="5.5" fill="white"/>
+                <circle cx="-11" cy="0" r="5.5" fill="white"/><circle cx="11" cy="0" r="5.5" fill="white"/>
+                <circle cx="-8" cy="-8" r="5" fill="white"/><circle cx="8" cy="8" r="5" fill="white"/>
+                <circle cx="8" cy="-8" r="5" fill="white"/><circle cx="-8" cy="8" r="5" fill="white"/>
+                <circle cx="0" cy="0" r="5.5" fill="url(#dc1)"/>
+              </g>
+              <!-- margarita pequeña 500 -->
+              <g transform="translate(58,498) scale(0.75)">
+                <circle cx="0" cy="-11" r="5.5" fill="white"/><circle cx="0" cy="11" r="5.5" fill="white"/>
+                <circle cx="-11" cy="0" r="5.5" fill="white"/><circle cx="11" cy="0" r="5.5" fill="white"/>
+                <circle cx="-8" cy="-8" r="5" fill="white"/><circle cx="8" cy="8" r="5" fill="white"/>
+                <circle cx="8" cy="-8" r="5" fill="white"/><circle cx="-8" cy="8" r="5" fill="white"/>
+                <circle cx="0" cy="0" r="5.5" fill="url(#dc2)"/>
+              </g>
+              <!-- margarita grande 420 -->
+              <g transform="translate(18,415)">
+                <circle cx="0" cy="-11" r="5.5" fill="white"/><circle cx="0" cy="11" r="5.5" fill="white"/>
+                <circle cx="-11" cy="0" r="5.5" fill="white"/><circle cx="11" cy="0" r="5.5" fill="white"/>
+                <circle cx="-8" cy="-8" r="5" fill="white"/><circle cx="8" cy="8" r="5" fill="white"/>
+                <circle cx="8" cy="-8" r="5" fill="white"/><circle cx="-8" cy="8" r="5" fill="white"/>
+                <circle cx="0" cy="0" r="5.5" fill="url(#dc1)"/>
+              </g>
+              <!-- margarita media 355 -->
+              <g transform="translate(62,360) scale(0.8)">
+                <circle cx="0" cy="-11" r="5.5" fill="white"/><circle cx="0" cy="11" r="5.5" fill="white"/>
+                <circle cx="-11" cy="0" r="5.5" fill="white"/><circle cx="11" cy="0" r="5.5" fill="white"/>
+                <circle cx="-8" cy="-8" r="5" fill="white"/><circle cx="8" cy="8" r="5" fill="white"/>
+                <circle cx="8" cy="-8" r="5" fill="white"/><circle cx="-8" cy="8" r="5" fill="white"/>
+                <circle cx="0" cy="0" r="5.5" fill="url(#dc2)"/>
+              </g>
+              <!-- margarita 270 -->
+              <g transform="translate(20,270)">
+                <circle cx="0" cy="-11" r="5.5" fill="white"/><circle cx="0" cy="11" r="5.5" fill="white"/>
+                <circle cx="-11" cy="0" r="5.5" fill="white"/><circle cx="11" cy="0" r="5.5" fill="white"/>
+                <circle cx="-8" cy="-8" r="5" fill="white"/><circle cx="8" cy="8" r="5" fill="white"/>
+                <circle cx="8" cy="-8" r="5" fill="white"/><circle cx="-8" cy="8" r="5" fill="white"/>
+                <circle cx="0" cy="0" r="5.5" fill="url(#dc1)"/>
+              </g>
+              <!-- margarita pequeña 210 -->
+              <g transform="translate(64,205) scale(0.7)">
+                <circle cx="0" cy="-11" r="5.5" fill="white"/><circle cx="0" cy="11" r="5.5" fill="white"/>
+                <circle cx="-11" cy="0" r="5.5" fill="white"/><circle cx="11" cy="0" r="5.5" fill="white"/>
+                <circle cx="-8" cy="-8" r="5" fill="white"/><circle cx="8" cy="8" r="5" fill="white"/>
+                <circle cx="8" cy="-8" r="5" fill="white"/><circle cx="-8" cy="8" r="5" fill="white"/>
+                <circle cx="0" cy="0" r="5.5" fill="url(#dc2)"/>
+              </g>
+              <!-- margarita 130 -->
+              <g transform="translate(18,128) scale(0.85)">
+                <circle cx="0" cy="-11" r="5.5" fill="white"/><circle cx="0" cy="11" r="5.5" fill="white"/>
+                <circle cx="-11" cy="0" r="5.5" fill="white"/><circle cx="11" cy="0" r="5.5" fill="white"/>
+                <circle cx="-8" cy="-8" r="5" fill="white"/><circle cx="8" cy="8" r="5" fill="white"/>
+                <circle cx="8" cy="-8" r="5" fill="white"/><circle cx="-8" cy="8" r="5" fill="white"/>
+                <circle cx="0" cy="0" r="5.5" fill="url(#dc1)"/>
+              </g>
+
+              <!-- ── Flores rosas pequeñas ── -->
+              <circle cx="30" cy="540" r="6"  fill="#f2b6c1" opacity="0.85"/>
+              <circle cx="30" cy="532" r="3.5" fill="#e693a3" opacity="0.8"/>
+              <circle cx="52" cy="460" r="5.5" fill="#f7d4d9" opacity="0.9"/>
+              <circle cx="52" cy="453" r="3"  fill="#f2b6c1" opacity="0.8"/>
+              <circle cx="28" cy="380" r="6"  fill="#f2b6c1" opacity="0.85"/>
+              <circle cx="28" cy="372" r="3.5" fill="#e693a3" opacity="0.8"/>
+              <circle cx="55" cy="295" r="5"  fill="#f7d4d9" opacity="0.9"/>
+              <circle cx="55" cy="288" r="3"  fill="#f2b6c1" opacity="0.8"/>
+              <circle cx="30" cy="188" r="6"  fill="#f2b6c1" opacity="0.85"/>
+              <circle cx="30" cy="180" r="3.5" fill="#e693a3" opacity="0.8"/>
+              <circle cx="54" cy="88"  r="5.5" fill="#f7d4d9" opacity="0.9"/>
+              <circle cx="54" cy="81"  r="3"   fill="#f2b6c1" opacity="0.8"/>
+
+              <!-- ── Pequeñas florecillas puntito ── -->
+              <circle cx="38" cy="650" r="3" fill="#f4aeb9" opacity="0.7"/>
+              <circle cx="48" cy="640" r="2.5" fill="#f4aeb9" opacity="0.6"/>
+              <circle cx="32" cy="330" r="3" fill="#f4aeb9" opacity="0.7"/>
+              <circle cx="60" cy="150" r="2.5" fill="#f4aeb9" opacity="0.65"/>
+            </svg>
+
+            <!-- ── Borde floral derecho (espejo del izquierdo) ── -->
+            <svg class="floral-border right" viewBox="0 0 90 700" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+              <defs>
+                <radialGradient id="dc3" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#fff"/><stop offset="100%" stop-color="#f4c95d"/></radialGradient>
+              </defs>
+              <path d="M 45 700 C 42 580, 38 460, 44 350 C 50 240, 40 130, 45 20" fill="none" stroke="#8ba87e" stroke-width="2" opacity="0.6"/>
+              <path d="M 44 620 Q 20 600 10 580" fill="none" stroke="#8ba87e" stroke-width="1.5" opacity="0.5"/>
+              <path d="M 44 550 Q 65 530 75 510" fill="none" stroke="#8ba87e" stroke-width="1.5" opacity="0.5"/>
+              <path d="M 44 470 Q 18 450 8 430" fill="none" stroke="#8ba87e" stroke-width="1.5" opacity="0.5"/>
+              <path d="M 44 400 Q 68 385 78 365" fill="none" stroke="#8ba87e" stroke-width="1.5" opacity="0.5"/>
+              <path d="M 44 320 Q 15 305 5 285" fill="none" stroke="#8ba87e" stroke-width="1.5" opacity="0.5"/>
+              <path d="M 44 250 Q 70 235 80 215" fill="none" stroke="#8ba87e" stroke-width="1.5" opacity="0.5"/>
+              <path d="M 44 175 Q 18 160 8 140" fill="none" stroke="#8ba87e" stroke-width="1.5" opacity="0.5"/>
+              <path d="M 44 100 Q 65 85 74 65"  fill="none" stroke="#8ba87e" stroke-width="1.5" opacity="0.5"/>
+              <ellipse cx="14" cy="574" rx="9" ry="16" transform="rotate(-35 14 574)" fill="#a8bba2" opacity="0.7"/>
+              <ellipse cx="72" cy="514" rx="9" ry="16" transform="rotate(30 72 514)"  fill="#8ba87e" opacity="0.65"/>
+              <ellipse cx="12" cy="428" rx="8" ry="14" transform="rotate(-40 12 428)" fill="#a8bba2" opacity="0.6"/>
+              <ellipse cx="75" cy="368" rx="9" ry="15" transform="rotate(25 75 368)"  fill="#8ba87e" opacity="0.7"/>
+              <ellipse cx="10" cy="283" rx="8" ry="14" transform="rotate(-38 10 283)" fill="#a8bba2" opacity="0.65"/>
+              <ellipse cx="77" cy="218" rx="9" ry="16" transform="rotate(28 77 218)"  fill="#8ba87e" opacity="0.6"/>
+              <ellipse cx="12" cy="138" rx="8" ry="14" transform="rotate(-42 12 138)" fill="#a8bba2" opacity="0.7"/>
+              <ellipse cx="71" cy="68"  rx="8" ry="14" transform="rotate(32 71 68)"   fill="#8ba87e" opacity="0.65"/>
+              <g transform="translate(22,570)"><circle cx="0" cy="-11" r="5.5" fill="white"/><circle cx="0" cy="11" r="5.5" fill="white"/><circle cx="-11" cy="0" r="5.5" fill="white"/><circle cx="11" cy="0" r="5.5" fill="white"/><circle cx="-8" cy="-8" r="5" fill="white"/><circle cx="8" cy="8" r="5" fill="white"/><circle cx="8" cy="-8" r="5" fill="white"/><circle cx="-8" cy="8" r="5" fill="white"/><circle cx="0" cy="0" r="5.5" fill="url(#dc3)"/></g>
+              <g transform="translate(58,498) scale(0.75)"><circle cx="0" cy="-11" r="5.5" fill="white"/><circle cx="0" cy="11" r="5.5" fill="white"/><circle cx="-11" cy="0" r="5.5" fill="white"/><circle cx="11" cy="0" r="5.5" fill="white"/><circle cx="-8" cy="-8" r="5" fill="white"/><circle cx="8" cy="8" r="5" fill="white"/><circle cx="8" cy="-8" r="5" fill="white"/><circle cx="-8" cy="8" r="5" fill="white"/><circle cx="0" cy="0" r="5.5" fill="url(#dc3)"/></g>
+              <g transform="translate(18,415)"><circle cx="0" cy="-11" r="5.5" fill="white"/><circle cx="0" cy="11" r="5.5" fill="white"/><circle cx="-11" cy="0" r="5.5" fill="white"/><circle cx="11" cy="0" r="5.5" fill="white"/><circle cx="-8" cy="-8" r="5" fill="white"/><circle cx="8" cy="8" r="5" fill="white"/><circle cx="8" cy="-8" r="5" fill="white"/><circle cx="-8" cy="8" r="5" fill="white"/><circle cx="0" cy="0" r="5.5" fill="url(#dc3)"/></g>
+              <g transform="translate(62,360) scale(0.8)"><circle cx="0" cy="-11" r="5.5" fill="white"/><circle cx="0" cy="11" r="5.5" fill="white"/><circle cx="-11" cy="0" r="5.5" fill="white"/><circle cx="11" cy="0" r="5.5" fill="white"/><circle cx="-8" cy="-8" r="5" fill="white"/><circle cx="8" cy="8" r="5" fill="white"/><circle cx="8" cy="-8" r="5" fill="white"/><circle cx="-8" cy="8" r="5" fill="white"/><circle cx="0" cy="0" r="5.5" fill="url(#dc3)"/></g>
+              <g transform="translate(20,270)"><circle cx="0" cy="-11" r="5.5" fill="white"/><circle cx="0" cy="11" r="5.5" fill="white"/><circle cx="-11" cy="0" r="5.5" fill="white"/><circle cx="11" cy="0" r="5.5" fill="white"/><circle cx="-8" cy="-8" r="5" fill="white"/><circle cx="8" cy="8" r="5" fill="white"/><circle cx="8" cy="-8" r="5" fill="white"/><circle cx="-8" cy="8" r="5" fill="white"/><circle cx="0" cy="0" r="5.5" fill="url(#dc3)"/></g>
+              <g transform="translate(64,205) scale(0.7)"><circle cx="0" cy="-11" r="5.5" fill="white"/><circle cx="0" cy="11" r="5.5" fill="white"/><circle cx="-11" cy="0" r="5.5" fill="white"/><circle cx="11" cy="0" r="5.5" fill="white"/><circle cx="-8" cy="-8" r="5" fill="white"/><circle cx="8" cy="8" r="5" fill="white"/><circle cx="8" cy="-8" r="5" fill="white"/><circle cx="-8" cy="8" r="5" fill="white"/><circle cx="0" cy="0" r="5.5" fill="url(#dc3)"/></g>
+              <g transform="translate(18,128) scale(0.85)"><circle cx="0" cy="-11" r="5.5" fill="white"/><circle cx="0" cy="11" r="5.5" fill="white"/><circle cx="-11" cy="0" r="5.5" fill="white"/><circle cx="11" cy="0" r="5.5" fill="white"/><circle cx="-8" cy="-8" r="5" fill="white"/><circle cx="8" cy="8" r="5" fill="white"/><circle cx="8" cy="-8" r="5" fill="white"/><circle cx="-8" cy="8" r="5" fill="white"/><circle cx="0" cy="0" r="5.5" fill="url(#dc3)"/></g>
+              <circle cx="30" cy="540" r="6"   fill="#f2b6c1" opacity="0.85"/><circle cx="30" cy="532" r="3.5" fill="#e693a3" opacity="0.8"/>
+              <circle cx="52" cy="460" r="5.5" fill="#f7d4d9" opacity="0.9"/> <circle cx="52" cy="453" r="3"   fill="#f2b6c1" opacity="0.8"/>
+              <circle cx="28" cy="380" r="6"   fill="#f2b6c1" opacity="0.85"/><circle cx="28" cy="372" r="3.5" fill="#e693a3" opacity="0.8"/>
+              <circle cx="55" cy="295" r="5"   fill="#f7d4d9" opacity="0.9"/> <circle cx="55" cy="288" r="3"   fill="#f2b6c1" opacity="0.8"/>
+              <circle cx="30" cy="188" r="6"   fill="#f2b6c1" opacity="0.85"/><circle cx="30" cy="180" r="3.5" fill="#e693a3" opacity="0.8"/>
+              <circle cx="54" cy="88"  r="5.5" fill="#f7d4d9" opacity="0.9"/> <circle cx="54" cy="81"  r="3"   fill="#f2b6c1" opacity="0.8"/>
+              <circle cx="38" cy="650" r="3" fill="#f4aeb9" opacity="0.7"/>
+              <circle cx="32" cy="330" r="3" fill="#f4aeb9" opacity="0.7"/>
+              <circle cx="60" cy="150" r="2.5" fill="#f4aeb9" opacity="0.65"/>
+            </svg>
 
             <div class="text-content">
                 <p class="title-pre">Acompáñanos a celebrar el</p>
