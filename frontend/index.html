@@ -403,9 +403,33 @@
             position: fixed; bottom: -9999px; left: -9999px;
             opacity: 0; pointer-events: none;
         }
+
+        /* ─── HOJAS DE EUCALIPTO ─── */
+        #leaves-container {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 8000;
+            overflow: hidden;
+        }
+        .leaf {
+            position: absolute;
+            top: -60px;
+            opacity: 0;
+            animation: leafFall linear infinite;
+        }
+        @keyframes leafFall {
+            0%   { transform: translateY(0)      rotate(0deg)   translateX(0);    opacity: 0; }
+            5%   { opacity: 0.7; }
+            90%  { opacity: 0.5; }
+            100% { transform: translateY(110vh)  rotate(360deg) translateX(30px); opacity: 0; }
+        }
     </style>
 </head>
 <body>
+
+    <!-- ── Hojas de eucalipto ── -->
+    <div id="leaves-container"></div>
 
     <!-- ── Pantalla privacidad ── -->
     <div id="privacy-screen">
@@ -688,6 +712,41 @@
     }
 
     init();
+
+    /* ══ HOJAS DE EUCALIPTO ══ */
+    (function() {
+        // SVG de hoja de eucalipto — forma ovalada puntiaguda
+        const leafSVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 34">
+            <path d="M10 1 C14 6, 18 12, 17 19 C16 26, 13 31, 10 33 C7 31, 4 26, 3 19 C2 12, 6 6, 10 1 Z"
+                fill="#8ba87e" opacity="0.55"/>
+            <line x1="10" y1="3" x2="10" y2="31" stroke="#6d8c62" stroke-width="0.8" opacity="0.4"/>
+        </svg>`;
+
+        // Variantes: algunas hojas más pequeñas, otras más grandes
+        const configs = [
+            { left: '8%',  size: 18, dur: 9,  delay: 0   },
+            { left: '18%', size: 14, dur: 12, delay: 2.5 },
+            { left: '30%', size: 20, dur: 10, delay: 5   },
+            { left: '45%', size: 12, dur: 14, delay: 1   },
+            { left: '58%', size: 16, dur: 11, delay: 7   },
+            { left: '70%', size: 22, dur: 13, delay: 3.5 },
+            { left: '82%', size: 14, dur: 9,  delay: 6   },
+            { left: '92%', size: 18, dur: 15, delay: 4   },
+        ];
+
+        const container = document.getElementById('leaves-container');
+        configs.forEach(function(c) {
+            const el = document.createElement('div');
+            el.className = 'leaf';
+            el.style.left      = c.left;
+            el.style.width     = c.size + 'px';
+            el.style.height    = (c.size * 1.7) + 'px';
+            el.style.animationDuration  = c.dur + 's';
+            el.style.animationDelay     = c.delay + 's';
+            el.innerHTML = leafSVG;
+            container.appendChild(el);
+        });
+    })();
     </script>
 </body>
 </html>
