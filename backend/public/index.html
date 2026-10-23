@@ -1,614 +1,924 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Admin · Baby Shower Amelia 🐰</title>
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --pink: #F9C4D0; --pink-deep: #F4A0B5; --lilac: #E8D5F0;
-      --mint: #C8EDD9; --cream: #FFF8F0; --peach: #FDDCCC;
-      --white: #fff; --text: #5C3A2E; --text-mid: #8B5E52;
-      --success: #4CAF50; --error: #F44336; --warn: #FF9800;
-    }
-    body { font-family: 'Segoe UI', sans-serif; background: var(--cream); color: var(--text); min-height: 100vh; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administrador – Baby Shower Amelia</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg: #FFF8F0;
+            --primary: #5C3A2E;
+            --pink: #F4A0B5;
+            --pink-light: #F9C4D0;
+            --pink-bg: #FFF0F4;
+            --lilac: #D4AEE8;
+            --lilac-light: #E8D5F0;
+            --mint: #A2D8B8;
+            --mint-light: #C8EDD9;
+            --white: #fff;
+            --border: #F0DDE8;
+            --text-mid: #8B5E52;
+        }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: var(--bg);
+            color: var(--primary);
+            min-height: 100vh;
+            display: flex; flex-direction: column; align-items: center;
+        }
+        .header {
+            background: linear-gradient(135deg, var(--pink) 0%, var(--lilac) 100%);
+            color: var(--white); width: 100%;
+            padding: 1.6rem 1rem 1.2rem; text-align: center;
+            box-shadow: 0 4px 15px rgba(244,160,181,0.3);
+        }
+        .header h1 { font-family: 'Pacifico', cursive; font-size: 1.3rem; letter-spacing: 1px; }
+        .header p  { font-size: 0.9rem; opacity: 0.9; margin-top: 0.3rem; }
+        .container {
+            width: 100%; max-width: 1250px;
+            margin: 1.5rem auto; padding: 1.8rem 2rem;
+            background: var(--white); border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(244,160,181,0.1);
+            border: 1px solid var(--border);
+        }
+        .section { display: none; flex-direction: column; align-items: center; text-align: center; }
+        .section.active { display: flex; }
+        h2 { color: var(--pink); font-family: 'Pacifico', cursive; margin-bottom: 1.5rem; font-size: 1.2rem; }
 
-    /* LOGIN */
-    #login-page {
-      min-height: 100vh; display: flex; align-items: center; justify-content: center;
-      background: linear-gradient(135deg, var(--pink) 0%, var(--lilac) 100%);
-    }
-    .login-card {
-      background: var(--white); border-radius: 1.5rem; padding: 2.5rem 2rem;
-      max-width: 360px; width: 100%; text-align: center;
-      box-shadow: 0 8px 32px rgba(92,58,46,0.18);
-    }
-    .login-card h1 { font-size: 1.4rem; color: var(--pink-deep); margin-bottom: 0.3rem; }
-    .login-card p  { font-size: 0.85rem; color: var(--text-mid); margin-bottom: 1.5rem; }
-    .login-card input {
-      width: 100%; border: 2px solid var(--pink); border-radius: 0.8rem;
-      padding: 0.7rem 1rem; margin-bottom: 0.8rem; font-size: 0.95rem;
-      outline: none; color: var(--text);
-    }
-    .login-card input:focus { border-color: var(--pink-deep); }
-    .login-card button {
-      width: 100%; background: var(--pink-deep); color: var(--white);
-      border: none; border-radius: 0.8rem; padding: 0.8rem;
-      font-size: 1rem; font-weight: 700; cursor: pointer;
-    }
-    #login-error { color: var(--error); font-size: 0.85rem; margin-top: 0.5rem; }
+        /* LOGIN */
+        .login-form { width: 100%; max-width: 380px; }
+        .login-form .form-group { margin-bottom: 1.2rem; text-align: left; }
+        .login-form input {
+            width: 100%; padding: 0.85rem 1rem;
+            border: 2px solid var(--border); border-radius: 10px;
+            font-family: 'Quicksand', sans-serif; font-size: 0.95rem;
+            background: var(--bg); outline: none; transition: border-color 0.2s;
+        }
+        .login-form input:focus { border-color: var(--pink); }
 
-    /* APP */
-    #app-page { display: none; }
+        /* QR */
+        .qr-container {
+            margin: 2rem 0; padding: 1.2rem;
+            background: var(--white); border: 2px solid var(--pink);
+            border-radius: 16px; box-shadow: 0 8px 25px rgba(244,160,181,0.2);
+        }
+        .qr-container img { max-width: 250px; height: auto; }
 
-    header {
-      background: var(--white); padding: 1rem 1.5rem;
-      display: flex; align-items: center; justify-content: space-between;
-      box-shadow: 0 2px 8px rgba(92,58,46,0.10); position: sticky; top: 0; z-index: 100;
-    }
-    header h1 { font-size: 1.1rem; color: var(--pink-deep); }
-    header button {
-      background: var(--peach); border: none; border-radius: 0.5rem;
-      padding: 0.4rem 0.8rem; font-size: 0.8rem; cursor: pointer; color: var(--text);
-    }
+        /* SPINNER */
+        .loading-spinner {
+            border: 4px solid rgba(244,160,181,0.2);
+            border-top: 4px solid var(--pink);
+            border-radius: 50%; width: 44px; height: 44px;
+            animation: spin 1s linear infinite; margin: 2rem auto;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* TABS */
-    .tabs {
-      display: flex; gap: 0; overflow-x: auto;
-      background: var(--white); border-bottom: 2px solid var(--pink);
-    }
-    .tab-btn {
-      flex: 1; min-width: 90px; padding: 0.8rem 0.5rem;
-      border: none; background: none; cursor: pointer;
-      font-size: 0.8rem; font-weight: 600; color: var(--text-mid);
-      border-bottom: 3px solid transparent; transition: all 0.2s;
-      white-space: nowrap;
-    }
-    .tab-btn.active { color: var(--pink-deep); border-bottom-color: var(--pink-deep); }
+        /* TABS */
+        .tabs { display: flex; gap: 0; width: 100%; margin-bottom: 2rem; border-bottom: 2px solid var(--border); flex-wrap: wrap; }
+        .tab-btn {
+            flex: 1; min-width: 110px; padding: 0.9rem 0.5rem;
+            background: none; border: none;
+            font-family: 'Quicksand', sans-serif; font-size: 0.8rem; font-weight: 700;
+            letter-spacing: 0.8px; text-transform: uppercase; color: #aaa;
+            cursor: pointer; border-bottom: 3px solid transparent;
+            margin-bottom: -2px; transition: all 0.2s; white-space: nowrap;
+        }
+        .tab-btn.active { color: var(--pink); border-bottom-color: var(--pink); }
+        .tab-content { display: none; width: 100%; }
+        .tab-content.active { display: block; }
 
-    .tab-content { display: none; padding: 1.2rem 1rem; max-width: 700px; margin: 0 auto; }
-    .tab-content.active { display: block; }
+        /* FORM */
+        .form-group { width: 100%; text-align: left; margin-bottom: 1.5rem; }
+        label { display: block; margin-bottom: 0.5rem; font-weight: 700; color: var(--primary); font-size: 0.85rem; }
+        textarea, input[type="text"] {
+            width: 100%; padding: 0.85rem;
+            border: 2px solid var(--border); border-radius: 10px;
+            font-family: 'Quicksand', sans-serif; font-size: 0.92rem;
+            background: var(--bg); outline: none; transition: border-color 0.2s;
+        }
+        textarea { resize: vertical; min-height: 140px; line-height: 1.5; }
+        textarea:focus, input[type="text"]:focus { border-color: var(--pink); }
+        .helper-text { font-size: 0.78rem; color: var(--text-mid); margin-top: 0.4rem; }
 
-    /* WHATSAPP STATUS */
-    .status-bar {
-      display: flex; align-items: center; gap: 0.6rem;
-      background: var(--white); border-radius: 1rem; padding: 0.8rem 1.2rem;
-      margin-bottom: 1rem; box-shadow: 0 2px 8px rgba(92,58,46,0.08);
-    }
-    .status-dot { width: 12px; height: 12px; border-radius: 50%; }
-    .dot-connected { background: var(--success); }
-    .dot-qr        { background: var(--warn); }
-    .dot-init      { background: #999; }
-    .status-bar span { font-weight: 600; font-size: 0.9rem; }
+        /* CONTACTS LAYOUT */
+        .contacts-layout {
+            display: grid; grid-template-columns: 42% 58%;
+            gap: 1.25rem; width: 100%; margin-bottom: 1.25rem; align-items: start;
+        }
+        @media(max-width: 860px) { .contacts-layout { grid-template-columns: 1fr; } }
+        .contacts-panel, .selected-panel {
+            border: 2px solid var(--border); border-radius: 12px;
+            display: flex; flex-direction: column; overflow: hidden; background: #fff;
+        }
+        .panel-header {
+            background: linear-gradient(90deg, var(--pink) 0%, var(--lilac) 100%);
+            color: #fff; padding: 0.75rem 1rem;
+            font-size: 0.8rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+            display: flex; align-items: center; justify-content: space-between;
+        }
+        .panel-header span { font-weight: 500; opacity: 0.9; font-size: 0.75rem; }
+        .search-input {
+            width: 100%; padding: 0.7rem 0.9rem;
+            border: none; border-bottom: 2px solid var(--border);
+            font-family: 'Quicksand', sans-serif; font-size: 0.88rem;
+            background: var(--bg); outline: none;
+        }
+        .contacts-toolbar {
+            display: flex; gap: 0.5rem; padding: 0.6rem 0.75rem;
+            border-bottom: 1px solid var(--border); background: var(--bg); flex-wrap: wrap;
+        }
+        .contacts-list { flex: 1; max-height: 480px; overflow-y: auto; }
+        .contact-item {
+            display: flex; align-items: center; gap: 0.65rem;
+            padding: 0.65rem 0.9rem; border-bottom: 1px solid #FBF0F4;
+            cursor: pointer; transition: background 0.12s; user-select: none;
+        }
+        .contact-item:last-child { border-bottom: none; }
+        .contact-item:hover { background: var(--pink-light); }
+        .contact-item.is-selected { background: #FFF0F4; }
+        .contact-item input[type="checkbox"] { accent-color: var(--pink); width: 16px; height: 16px; cursor: pointer; flex-shrink: 0; }
+        .contact-info { flex: 1; min-width: 0; }
+        .contact-name   { font-size: 0.88rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .contact-number { font-size: 0.75rem; color: var(--text-mid); }
 
-    #qr-container {
-      text-align: center; background: var(--white);
-      border-radius: 1rem; padding: 1.2rem; margin-bottom: 1rem;
-      box-shadow: 0 2px 8px rgba(92,58,46,0.08);
-    }
-    #qr-container img { max-width: 220px; border-radius: 0.5rem; }
+        /* SELECTED PANEL */
+        .selected-list { flex: 1; max-height: 480px; overflow-y: auto; }
+        .selected-item {
+            display: flex; align-items: center; gap: 0.65rem;
+            padding: 0.75rem 0.9rem; border-bottom: 1px solid #FBF0F4; transition: background 0.12s;
+        }
+        .selected-item:last-child { border-bottom: none; }
+        .selected-item:hover { background: var(--bg); }
+        .selected-info { width: 25%; min-width: 90px; }
+        .selected-orig-name  { font-size: 0.82rem; font-weight: 700; color: var(--primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .selected-orig-phone { font-size: 0.72rem; color: var(--text-mid); }
+        .custom-name-wrapper { flex: 1; display: flex; flex-direction: column; gap: 0.2rem; text-align: left; }
+        .custom-name-label {
+            font-size: 0.68rem; font-weight: 700; color: var(--pink);
+            text-transform: uppercase; letter-spacing: 0.5px;
+        }
+        .custom-name-input {
+            width: 100%; padding: 0.45rem 0.7rem;
+            border: 2px solid var(--border); border-radius: 8px;
+            font-family: 'Quicksand', sans-serif; font-size: 0.85rem;
+            background: #fff; outline: none; color: var(--primary); transition: border-color 0.2s;
+        }
+        .custom-name-input:focus { border-color: var(--pink); }
+        .passes-select {
+            padding: 0.45rem 0.6rem; border: 2px solid var(--border); border-radius: 8px;
+            font-family: 'Quicksand', sans-serif; font-size: 0.82rem;
+            background: white; outline: none; cursor: pointer; color: var(--primary);
+            flex-shrink: 0; transition: border-color 0.2s; margin-top: 1rem;
+        }
+        .passes-select:focus { border-color: var(--pink); }
+        .remove-btn {
+            background: none; border: none; cursor: pointer;
+            color: #ccc; font-size: 1.1rem; padding: 0 0.2rem;
+            line-height: 1; transition: color 0.15s; flex-shrink: 0; margin-top: 1rem;
+        }
+        .remove-btn:hover { color: #e74c3c; }
+        .empty-selected { padding: 2.5rem 1rem; text-align: center; color: #aaa; font-size: 0.85rem; line-height: 1.6; }
+        .selected-footer {
+            padding: 0.65rem 0.9rem; background: var(--bg);
+            border-top: 2px solid var(--border);
+            font-size: 0.8rem; color: var(--pink); font-weight: 700;
+            display: flex; justify-content: space-between; align-items: center;
+        }
 
-    .btn-action {
-      background: var(--pink-deep); color: var(--white);
-      border: none; border-radius: 0.8rem; padding: 0.6rem 1.2rem;
-      font-size: 0.85rem; font-weight: 700; cursor: pointer; margin: 0.2rem;
-    }
-    .btn-secondary { background: var(--lilac); color: var(--text); }
-    .btn-danger    { background: #F44336; }
+        /* RSVP METRICS */
+        .rsvp-metrics-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 1rem; width: 100%; margin-bottom: 1.5rem;
+        }
+        .metric-card {
+            background: var(--bg); border: 2px solid var(--border);
+            border-radius: 12px; padding: 1rem; text-align: center;
+            box-shadow: 0 2px 8px rgba(244,160,181,0.08);
+        }
+        .metric-card.confirmed { border-top: 4px solid var(--mint);   background: #F2FAF5; }
+        .metric-card.declined  { border-top: 4px solid #F4A0B5;       background: #FFF0F4; }
+        .metric-card.pending   { border-top: 4px solid #F9C860;       background: #FFFCF0; }
+        .metric-card.dietary   { border-top: 4px solid var(--lilac);  background: #F8F2FF; }
+        .metric-num {
+            font-size: 1.8rem; font-weight: 700; font-family: 'Pacifico', cursive;
+            color: var(--primary); line-height: 1.1; margin-bottom: 0.3rem;
+        }
+        .metric-card.confirmed .metric-num { color: #2E7D57; }
+        .metric-card.declined  .metric-num { color: #C0392B; }
+        .metric-card.pending   .metric-num { color: #B07D1A; }
+        .metric-card.dietary   .metric-num { color: #7B3BAE; }
+        .metric-title { font-size: 0.72rem; font-weight: 700; color: var(--text-mid); text-transform: uppercase; letter-spacing: 0.5px; }
 
-    /* SEND FORM */
-    .card {
-      background: var(--white); border-radius: 1rem; padding: 1.2rem;
-      margin-bottom: 1rem; box-shadow: 0 2px 8px rgba(92,58,46,0.08);
-    }
-    .card h3 { font-size: 1rem; color: var(--pink-deep); margin-bottom: 0.8rem; }
-    textarea, input[type=text], input[type=number], select {
-      width: 100%; border: 2px solid var(--pink); border-radius: 0.6rem;
-      padding: 0.6rem 0.8rem; font-size: 0.85rem; outline: none; color: var(--text);
-      font-family: inherit; background: var(--cream);
-    }
-    textarea:focus, input:focus, select:focus { border-color: var(--pink-deep); }
-    label { font-size: 0.8rem; font-weight: 600; color: var(--text-mid); display: block; margin-bottom: 0.3rem; }
+        /* FILTER BAR */
+        .filter-bar {
+            display: flex; gap: 0.5rem; margin-bottom: 1rem;
+            flex-wrap: wrap; align-items: center; justify-content: space-between;
+        }
+        .filter-chips { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+        .chip-filter {
+            padding: 0.35rem 0.85rem; border-radius: 50px;
+            border: 2px solid var(--border); background: #fff;
+            font-size: 0.78rem; font-weight: 700; cursor: pointer;
+            transition: all 0.2s; color: #888;
+        }
+        .chip-filter.active { background: var(--pink); color: #fff; border-color: var(--pink); }
 
-    /* CONTACT LIST */
-    .contact-search {
-      display: flex; gap: 0.5rem; margin-bottom: 0.8rem; align-items: center;
-    }
-    .contact-search input { flex: 1; }
-    #contacts-list { max-height: 280px; overflow-y: auto; border-radius: 0.6rem; border: 2px solid var(--pink); }
-    .contact-item {
-      display: flex; align-items: center; gap: 0.6rem;
-      padding: 0.6rem 0.8rem; border-bottom: 1px solid var(--pink);
-      background: var(--white); cursor: pointer; transition: background 0.15s;
-    }
-    .contact-item:last-child { border-bottom: none; }
-    .contact-item:hover { background: var(--pink); }
-    .contact-item input[type=checkbox] { width: 16px; height: 16px; accent-color: var(--pink-deep); }
-    .contact-item .c-name { font-weight: 600; font-size: 0.88rem; }
-    .contact-item .c-num  { font-size: 0.75rem; color: var(--text-mid); }
-    .contact-item .c-passes {
-      margin-left: auto; display: flex; align-items: center; gap: 0.3rem;
-    }
-    .contact-item .c-passes input {
-      width: 50px; text-align: center; padding: 0.2rem;
-      border-radius: 0.4rem; font-size: 0.8rem;
-    }
-    .contact-item .c-custom-name {
-      display: none; flex: 1;
-    }
-    .contact-item.selected .c-custom-name { display: block; }
+        /* TABLE */
+        .history-table { width: 100%; border-collapse: collapse; font-size: 0.86rem; }
+        .history-table th {
+            background: linear-gradient(90deg, var(--pink) 0%, var(--lilac) 100%);
+            color: #fff; padding: 0.75rem 0.9rem;
+            text-align: left; font-weight: 700; font-size: 0.78rem;
+        }
+        .history-table td { padding: 0.65rem 0.9rem; border-bottom: 1px solid #FBF0F4; }
+        .history-table tr:hover td { background: var(--bg); }
+        .badge { display: inline-block; padding: 0.25rem 0.65rem; border-radius: 50px; font-size: 0.74rem; font-weight: 700; }
+        .badge-success { background: #E8F8EF; color: #2E7D57; border: 1px solid #A2D8B8; }
+        .badge-error   { background: #FDE8E8; color: #C0392B; border: 1px solid #F4A0B5; }
+        .badge-pending { background: #FFFBE6; color: #B07D1A; border: 1px solid #F9E0A0; }
+        .badge-dietary { background: #F5EEFF; color: #7B3BAE; border: 1px solid #D4AEE8; }
 
-    .selected-count { font-size: 0.85rem; color: var(--text-mid); margin-bottom: 0.6rem; }
+        /* BUTTONS */
+        .btn {
+            background: linear-gradient(135deg, var(--pink) 0%, var(--lilac) 100%);
+            color: #fff; border: none; padding: 0.9rem 2.2rem;
+            font-family: 'Quicksand', sans-serif; font-size: 0.85rem;
+            font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+            cursor: pointer; border-radius: 50px; transition: all 0.2s;
+            box-shadow: 0 4px 15px rgba(244,160,181,0.3);
+        }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(244,160,181,0.45); }
+        .btn:disabled { background: #ccc; cursor: not-allowed; transform: none; box-shadow: none; }
+        .btn-sm { padding: 0.45rem 1.1rem; font-size: 0.75rem; }
+        .btn-outline {
+            background: none; border: 2px solid var(--pink); color: var(--pink);
+            padding: 0.5rem 1.2rem; font-family: 'Quicksand', sans-serif;
+            font-size: 0.78rem; letter-spacing: 1px; text-transform: uppercase;
+            cursor: pointer; border-radius: 50px; transition: all 0.2s; font-weight: 700;
+        }
+        .btn-outline:hover { background: var(--pink); color: white; }
+        .btn-danger { border-color: #e74c3c; color: #e74c3c; }
+        .btn-danger:hover { background: #e74c3c; color: white; }
 
-    /* RSVP */
-    .metrics-grid {
-      display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.8rem; margin-bottom: 1rem;
-    }
-    .metric-card {
-      background: var(--white); border-radius: 1rem; padding: 1rem 0.8rem;
-      text-align: center; box-shadow: 0 2px 8px rgba(92,58,46,0.08);
-    }
-    .metric-card .m-icon { font-size: 1.8rem; display: block; }
-    .metric-card .m-val  { font-size: 1.6rem; font-weight: 700; color: var(--pink-deep); }
-    .metric-card .m-label { font-size: 0.72rem; color: var(--text-mid); }
+        /* ALERTS */
+        .alert { padding: 0.9rem 1rem; border-radius: 10px; margin-bottom: 1.5rem; width: 100%; display: none; font-size: 0.88rem; font-weight: 600; }
+        .alert.success { background: #E8F8EF; color: #2E7D57; border: 2px solid #A2D8B8; display: block; }
+        .alert.error   { background: #FDE8E8; color: #C0392B; border: 2px solid #F4A0B5; display: block; }
 
-    .filter-row { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 0.8rem; }
-    .filter-btn {
-      border: 2px solid var(--pink-deep); border-radius: 2rem;
-      padding: 0.3rem 0.9rem; font-size: 0.78rem; font-weight: 700;
-      background: none; cursor: pointer; color: var(--text);
-    }
-    .filter-btn.active { background: var(--pink-deep); color: var(--white); }
+        /* STATUS BADGE */
+        .status-badge { display: inline-block; padding: 0.35rem 1rem; border-radius: 50px; font-size: 0.8rem; font-weight: 700; margin-top: 0.5rem; }
+        .status-connected    { background: #E8F8EF; color: #2E7D57; border: 2px solid #A2D8B8; }
+        .status-disconnected { background: #FDE8E8; color: #C0392B; border: 2px solid #F4A0B5; }
 
-    .rsvp-search { margin-bottom: 0.8rem; }
-
-    .rsvp-table-wrap { overflow-x: auto; }
-    table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
-    th { background: var(--pink); color: var(--text); padding: 0.5rem; text-align: left; }
-    td { padding: 0.5rem; border-bottom: 1px solid var(--pink); vertical-align: top; }
-    .badge {
-      display: inline-block; border-radius: 1rem; padding: 0.15rem 0.5rem;
-      font-size: 0.72rem; font-weight: 700;
-    }
-    .badge-confirmed { background: #C8F7C5; color: #2E7D32; }
-    .badge-declined  { background: #FFDDE1; color: #C62828; }
-    .badge-pending   { background: #FFF9C4; color: #F57F17; }
-
-    .toast {
-      position: fixed; bottom: 1rem; left: 50%; transform: translateX(-50%);
-      background: var(--text); color: var(--white);
-      padding: 0.7rem 1.5rem; border-radius: 2rem; font-size: 0.9rem;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.2); z-index: 9999;
-      opacity: 0; transition: opacity 0.3s; pointer-events: none;
-    }
-    .toast.show { opacity: 1; }
-  </style>
+        .panel-footer { margin-top: auto; padding: 1.8rem; text-align: center; font-size: 0.78rem; color: #bbb; letter-spacing: 1px; }
+    </style>
 </head>
 <body>
 
-<div class="toast" id="toast"></div>
-
-<!-- LOGIN -->
-<div id="login-page">
-  <div class="login-card">
-    <div style="font-size:3rem;margin-bottom:0.5rem">🐰</div>
-    <h1>Baby Shower Amelia</h1>
-    <p>Panel de administración WhatsApp</p>
-    <input type="text"     id="username" placeholder="Usuario" />
-    <input type="password" id="password" placeholder="Contraseña" />
-    <button onclick="doLogin()">Entrar</button>
-    <p id="login-error"></p>
-  </div>
+<div class="header">
+    <h1>🐰 Panel Baby Shower Amelia</h1>
+    <p>Administración de invitaciones · WhatsApp</p>
 </div>
 
-<!-- APP -->
-<div id="app-page">
-  <header>
-    <h1>🐰 Admin · Baby Shower Amelia</h1>
-    <button onclick="doLogout()">Salir</button>
-  </header>
+<div class="container">
 
-  <div class="tabs">
-    <button class="tab-btn active" onclick="switchTab('whatsapp')">📱 WhatsApp</button>
-    <button class="tab-btn"       onclick="switchTab('send')">📤 Enviar</button>
-    <button class="tab-btn"       onclick="switchTab('rsvp')">✅ RSVP</button>
-    <button class="tab-btn"       onclick="switchTab('history')">📋 Historial</button>
-  </div>
-
-  <!-- TAB: WHATSAPP -->
-  <div class="tab-content active" id="tab-whatsapp">
-    <div class="status-bar">
-      <div class="status-dot dot-init" id="status-dot"></div>
-      <span id="status-text">Verificando...</span>
-      <button class="btn-action btn-secondary" onclick="refreshStatus()" style="margin-left:auto;font-size:0.75rem">🔄</button>
-    </div>
-    <div id="qr-container" style="display:none">
-      <p style="margin-bottom:0.8rem;font-size:0.85rem">Escanea el QR con WhatsApp para conectar:</p>
-      <img id="qr-img" src="" alt="QR Code" />
-    </div>
-    <div style="margin-bottom:1rem">
-      <button class="btn-action btn-danger" onclick="doLogoutWA()">Desconectar WhatsApp</button>
+    <!-- LOGIN -->
+    <div id="section-login" class="section active">
+        <h2>Acceso de Administrador</h2>
+        <div class="login-form">
+            <div id="login-alert" class="alert"></div>
+            <div class="form-group">
+                <label for="login-user">Usuario</label>
+                <input type="text" id="login-user" placeholder="Usuario" autocomplete="username">
+            </div>
+            <div class="form-group">
+                <label for="login-pass">Contraseña</label>
+                <input type="password" id="login-pass" placeholder="Contraseña" autocomplete="current-password">
+            </div>
+            <button class="btn" style="width:100%" onclick="doLogin()">Entrar 🌸</button>
+        </div>
     </div>
 
-    <div class="card">
-      <h3>📥 Importar Contactos</h3>
-      <label>Pega el listado (Nombre, Teléfono) por línea:</label>
-      <textarea id="import-text" rows="5" placeholder="María García, 50688001234&#10;Juan Pérez, 50672005678"></textarea>
-      <button class="btn-action" style="margin-top:0.6rem" onclick="importContacts()">Importar</button>
+    <!-- LOADING -->
+    <div id="section-loading" class="section">
+        <h2>Conectando con WhatsApp...</h2>
+        <div class="loading-spinner"></div>
+        <p>Por favor espera un momento.</p>
     </div>
-  </div>
 
-  <!-- TAB: ENVIAR -->
-  <div class="tab-content" id="tab-send">
-    <div class="card">
-      <h3>💬 Mensaje</h3>
-      <label>Texto de la invitación (usa {pases} y {link}):</label>
-      <textarea id="msg-text" rows="5">🐰 ¡Hola! 🌸
+    <!-- QR -->
+    <div id="section-qr" class="section">
+        <h2>Vincular WhatsApp</h2>
+        <p>Abre WhatsApp en tu teléfono, toca <strong>Dispositivos vinculados</strong> y escanea este código QR.</p>
+        <div class="qr-container">
+            <img id="qr-image" src="" alt="WhatsApp QR Code">
+        </div>
+        <span class="status-badge status-disconnected">Desconectado</span>
+    </div>
 
-Amanda tiene el placer de invitarte al Baby Shower de la pequeña Amelia. 👶
+    <!-- DASHBOARD -->
+    <div id="section-dashboard" class="section">
+        <div style="width:100%;display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;flex-wrap:wrap;gap:0.75rem;">
+            <span class="status-badge status-connected">✅ WhatsApp Conectado</span>
+            <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+                <button class="btn-outline" onclick="loadContacts(true)">🔄 Recargar</button>
+                <button class="btn-outline" onclick="loadRsvpSummary()">📊 Actualizar RSVP</button>
+                <button class="btn-outline btn-danger" onclick="doLogout()">Desconectar WA</button>
+                <button class="btn-outline btn-danger" onclick="doLogoutSession()">Cerrar Sesión</button>
+            </div>
+        </div>
 
-🗓️ Sábado 22 de Noviembre · 10:00 am
-✨ Tienes {pases} reservado(s) para ti
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('tab-contacts')">📋 Contactos</button>
+            <button class="tab-btn" onclick="switchTab('tab-rsvp')">✅ Confirmaciones</button>
+            <button class="tab-btn" onclick="switchTab('tab-import')">📥 Importar</button>
+            <button class="tab-btn" onclick="switchTab('tab-manual')">✍️ Manual</button>
+            <button class="tab-btn" onclick="switchTab('tab-history')">📜 Historial</button>
+        </div>
 
-🔗 Tu invitación personalizada:
+        <!-- TAB: CONTACTOS -->
+        <div id="tab-contacts" class="tab-content active">
+            <div id="alert-contacts" class="alert"></div>
+            <div class="contacts-layout">
+                <!-- Izquierda: agenda -->
+                <div class="contacts-panel">
+                    <div class="panel-header">
+                        Agenda WhatsApp
+                        <span id="selected-count">0 seleccionados</span>
+                    </div>
+                    <input class="search-input" id="contact-search" placeholder="🔍  Buscar por nombre o número..." oninput="filterContacts()">
+                    <div class="contacts-toolbar">
+                        <button class="btn-outline btn-sm" onclick="selectAll()">Todos</button>
+                        <button class="btn-outline btn-sm" onclick="deselectAll()">Ninguno</button>
+                    </div>
+                    <div class="contacts-list" id="contacts-list">
+                        <div style="padding:2rem;text-align:center;color:#aaa;">
+                            <div class="loading-spinner" style="margin:0 auto 1rem;"></div>
+                            Cargando contactos...
+                        </div>
+                    </div>
+                </div>
+                <!-- Derecha: seleccionados con nombre en sobre y pases -->
+                <div class="selected-panel">
+                    <div class="panel-header">
+                        Destinatarios Seleccionados
+                        <span id="total-passes-label">0 pases total</span>
+                    </div>
+                    <div class="selected-list" id="selected-list">
+                        <div class="empty-selected">
+                            Selecciona contactos de la agenda para asignarles<br><strong>el nombre que aparecerá en la invitación</strong> y la cantidad de espacios
+                        </div>
+                    </div>
+                    <div class="selected-footer">
+                        <span id="selected-summary">0 invitados</span>
+                        <button class="btn-outline btn-sm" onclick="deselectAll()" style="font-size:0.72rem;padding:0.3rem 0.8rem;">Limpiar todo</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="msg-contacts">Mensaje de Invitación</label>
+                <textarea id="msg-contacts">🐰 ¡Hola! Con mucha ilusión te invitamos al Baby Shower de la pequeña Amelia. 🌸
+
+Hemos reservado {pases} para que nos acompañes en este momento tan especial. 👶
+
+📅 Sábado 22 de Noviembre · 10:00 am
+
+Ingresa a tu invitación personalizada aquí:
 {link}
 
-¡Con mucho amor te esperamos! 💕</textarea>
+¡Con todo el amor te esperamos! 💕
+Amanda</textarea>
+                <p class="helper-text">Usa <strong>{pases}</strong> para los espacios y <strong>{link}</strong> para el enlace único de cada invitado.</p>
+            </div>
+            <button class="btn" id="btn-send-contacts" onclick="sendToContacts()">📤 Enviar Invitaciones</button>
+        </div>
+
+        <!-- TAB: RSVP -->
+        <div id="tab-rsvp" class="tab-content">
+            <div id="alert-rsvp" class="alert"></div>
+            <div class="rsvp-metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-num" id="kpi-total-inv">0</div>
+                    <div class="metric-title">Invitaciones</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-num" id="kpi-total-passes">0</div>
+                    <div class="metric-title">Espacios Asignados</div>
+                </div>
+                <div class="metric-card confirmed">
+                    <div class="metric-num" id="kpi-confirmed-passes">0</div>
+                    <div class="metric-title">Espacios Confirmados</div>
+                </div>
+                <div class="metric-card declined">
+                    <div class="metric-num" id="kpi-declined-count">0</div>
+                    <div class="metric-title">No Asistirán</div>
+                </div>
+                <div class="metric-card pending">
+                    <div class="metric-num" id="kpi-pending-count">0</div>
+                    <div class="metric-title">Pendientes</div>
+                </div>
+                <div class="metric-card dietary">
+                    <div class="metric-num" id="kpi-dietary-count">0</div>
+                    <div class="metric-title">Con Restricción</div>
+                </div>
+            </div>
+
+            <div class="filter-bar">
+                <div class="filter-chips">
+                    <button class="chip-filter active" onclick="setRsvpFilter('all', this)">Todos</button>
+                    <button class="chip-filter" onclick="setRsvpFilter('confirmed', this)">✅ Confirmados</button>
+                    <button class="chip-filter" onclick="setRsvpFilter('declined', this)">❌ No Asistirán</button>
+                    <button class="chip-filter" onclick="setRsvpFilter('pending', this)">⏳ Pendientes</button>
+                    <button class="chip-filter" onclick="setRsvpFilter('dietary', this)">🥗 Con Restricción</button>
+                </div>
+                <div style="display:flex;gap:0.5rem;align-items:center;">
+                    <input type="text" id="rsvp-search" placeholder="🔍 Buscar invitado..." oninput="filterRsvpList()" style="padding:0.4rem 0.8rem;width:200px;font-size:0.82rem;margin:0;">
+                    <button class="btn-outline btn-sm" onclick="exportRsvpCsv()"><i class="fa-solid fa-file-csv"></i> CSV</button>
+                </div>
+            </div>
+
+            <div id="rsvp-table-wrap" style="width:100%;overflow-x:auto;border:2px solid var(--border);border-radius:10px;">
+                <p style="color:#aaa;text-align:center;padding:2rem;">Cargando respuestas...</p>
+            </div>
+        </div>
+
+        <!-- TAB: IMPORTAR -->
+        <div id="tab-import" class="tab-content">
+            <div id="alert-import" class="alert"></div>
+            <div class="form-group">
+                <label for="import-text">Pegar Lista de Contactos (Nombre y Teléfono)</label>
+                <textarea id="import-text" style="min-height:200px;" placeholder="Ejemplo de formato:
+María García, 50688001234
+Familia Pérez, 50672005678
+50683124534, Carlos Segura"></textarea>
+                <p class="helper-text">Puedes pegar tu lista de Excel directamente. Formato: <strong>Nombre, Teléfono</strong> o <strong>Teléfono, Nombre</strong> (uno por línea).</p>
+            </div>
+            <button class="btn" onclick="doImportContacts()">📥 Sincronizar a la Agenda</button>
+        </div>
+
+        <!-- TAB: MANUAL -->
+        <div id="tab-manual" class="tab-content">
+            <div id="alert-manual" class="alert"></div>
+            <div class="form-group">
+                <label for="numbers">Números de teléfono</label>
+                <textarea id="numbers" placeholder="50688888888&#10;50699999999&#10;o separados por comas"></textarea>
+                <p class="helper-text">Incluye el código de país (506 para Costa Rica) sin el signo +. Un número por línea o separados por comas.</p>
+            </div>
+            <div class="form-group">
+                <label for="msg-manual">Mensaje</label>
+                <textarea id="msg-manual">🐰 ¡Hola! Con mucha ilusión te invitamos al Baby Shower de la pequeña Amelia. 🌸
+
+📅 Sábado 22 de Noviembre · 10:00 am
+
+Ingresa a tu invitación personalizada:
+{link}
+
+¡Con todo el amor! 💕
+Amanda</textarea>
+            </div>
+            <button class="btn" id="btn-send-manual" onclick="sendManual()">📤 Enviar</button>
+        </div>
+
+        <!-- TAB: HISTORIAL -->
+        <div id="tab-history" class="tab-content">
+            <div id="history-wrap" style="width:100%;overflow-x:auto;">
+                <p style="color:#aaa;text-align:center;padding:2rem;">Cargando historial...</p>
+            </div>
+        </div>
     </div>
 
-    <div class="card">
-      <h3>👥 Contactos</h3>
-      <div class="contact-search">
-        <input type="text" id="contact-search" placeholder="Buscar..." oninput="filterContacts()" />
-        <button class="btn-action btn-secondary" onclick="loadContacts()">🔄</button>
-      </div>
-      <p class="selected-count" id="selected-count">0 seleccionados</p>
-      <div id="contacts-list"></div>
-    </div>
-
-    <div class="card">
-      <button class="btn-action" onclick="sendInvitations()" id="send-btn">📤 Enviar Invitaciones</button>
-      <p id="send-status" style="margin-top:0.5rem;font-size:0.82rem;color:var(--text-mid)"></p>
-    </div>
-  </div>
-
-  <!-- TAB: RSVP -->
-  <div class="tab-content" id="tab-rsvp">
-    <div class="metrics-grid" id="metrics-grid">
-      <div class="metric-card"><span class="m-icon">📨</span><div class="m-val" id="m-total">-</div><div class="m-label">Invitaciones</div></div>
-      <div class="metric-card"><span class="m-icon">✅</span><div class="m-val" id="m-confirmed">-</div><div class="m-label">Pases confirmados</div></div>
-      <div class="metric-card"><span class="m-icon">⏳</span><div class="m-val" id="m-pending">-</div><div class="m-label">Pendientes</div></div>
-      <div class="metric-card"><span class="m-icon">⚠️</span><div class="m-val" id="m-diet">-</div><div class="m-label">Restricciones dieta</div></div>
-    </div>
-
-    <div class="filter-row">
-      <button class="filter-btn active" onclick="setFilter('all',this)">Todos</button>
-      <button class="filter-btn" onclick="setFilter('confirmed',this)">✅ Confirmados</button>
-      <button class="filter-btn" onclick="setFilter('declined',this)">❌ Bajas</button>
-      <button class="filter-btn" onclick="setFilter('pending',this)">⏳ Pendientes</button>
-    </div>
-
-    <div class="rsvp-search">
-      <input type="text" id="rsvp-search" placeholder="Buscar invitado..." oninput="renderRsvpTable()" />
-    </div>
-
-    <button class="btn-action btn-secondary" onclick="exportCsv()" style="margin-bottom:0.8rem">⬇️ Exportar CSV</button>
-    <button class="btn-action" onclick="loadRsvp()" style="margin-bottom:0.8rem">🔄 Actualizar</button>
-
-    <div class="rsvp-table-wrap">
-      <table>
-        <thead><tr>
-          <th>Nombre</th><th>Pases</th><th>Estado</th><th>Restricción</th><th>Mensaje</th>
-        </tr></thead>
-        <tbody id="rsvp-tbody"></tbody>
-      </table>
-    </div>
-  </div>
-
-  <!-- TAB: HISTORIAL -->
-  <div class="tab-content" id="tab-history">
-    <button class="btn-action" onclick="loadHistory()" style="margin-bottom:0.8rem">🔄 Actualizar</button>
-    <div class="rsvp-table-wrap">
-      <table>
-        <thead><tr><th>Nombre</th><th>Pases</th><th>Estado</th><th>Fecha</th></tr></thead>
-        <tbody id="history-tbody"></tbody>
-      </table>
-    </div>
-  </div>
 </div>
 
+<div class="panel-footer">Panel de Administración · Baby Shower Amelia 🐰 2025</div>
+
 <script>
-// ============================================================
-// STATE
-// ============================================================
-let TOKEN         = localStorage.getItem('amelia_token') || '';
-let allContacts   = [];
-let allRsvp       = [];
-let rsvpFilter    = 'all';
-let statusTimer   = null;
+let token = localStorage.getItem('amelia_token') || null;
+let allContacts = [];
+let allRsvpInvitations = [];
+let currentRsvpFilter = 'all';
+let statusInterval = null;
+let contactsLoading = false;
+let inactivityTimer = null;
+const INACTIVITY_MS = 5 * 60 * 1000;
 
-// ============================================================
-// INIT
-// ============================================================
-window.onload = () => {
-  if (TOKEN) showApp();
-  else       showLogin();
-};
-
-function showLogin() {
-  document.getElementById('login-page').style.display = 'flex';
-  document.getElementById('app-page').style.display   = 'none';
+function resetInactivityTimer() {
+    clearTimeout(inactivityTimer);
+    inactivityTimer = setTimeout(() => {
+        if (token) { alert('Sesión cerrada por inactividad.'); doLogoutSession(); }
+    }, INACTIVITY_MS);
 }
-function showApp() {
-  document.getElementById('login-page').style.display = 'none';
-  document.getElementById('app-page').style.display   = 'block';
-  refreshStatus();
-  statusTimer = setInterval(refreshStatus, 8000);
-  loadContacts();
-}
+['mousemove', 'keydown', 'click', 'touchstart', 'scroll'].forEach(evt =>
+    document.addEventListener(evt, resetInactivityTimer, { passive: true })
+);
 
-// ============================================================
-// AUTH
-// ============================================================
+// ── LOGIN ──
 async function doLogin() {
-  const u = document.getElementById('username').value.trim();
-  const p = document.getElementById('password').value.trim();
-  try {
-    const r = await api('/api/admin/login', 'POST', { username: u, password: p }, false);
-    if (r.success) {
-      TOKEN = r.token;
-      localStorage.setItem('amelia_token', TOKEN);
-      document.getElementById('login-error').textContent = '';
-      showApp();
+    const u = document.getElementById('login-user').value;
+    const p = document.getElementById('login-pass').value;
+    const r = await fetch('/api/admin/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username: u, password: p })
+    });
+    const d = await r.json();
+    if (d.success) {
+        token = d.token;
+        localStorage.setItem('amelia_token', token);
+        resetInactivityTimer();
+        startStatusCheck();
     } else {
-      document.getElementById('login-error').textContent = r.message || 'Error';
+        showAlert('login-alert', d.message || 'Credenciales inválidas', false);
     }
-  } catch(e) { document.getElementById('login-error').textContent = 'Error de conexión'; }
+}
+document.getElementById('login-pass').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+
+// ── STATUS ──
+function startStatusCheck() {
+    showSection('section-loading');
+    checkStatus();
+    statusInterval = setInterval(checkStatus, 3000);
 }
 
-function doLogout() {
-  TOKEN = '';
-  localStorage.removeItem('amelia_token');
-  if (statusTimer) clearInterval(statusTimer);
-  showLogin();
+async function checkStatus() {
+    try {
+        const r = await fetch('/api/whatsapp/status', { headers: { Authorization: 'Bearer ' + token } });
+        if (r.status === 401) { doLocalLogout(); return; }
+        const d = await r.json();
+        if (d.status === 'connected') {
+            clearInterval(statusInterval);
+            showSection('section-dashboard');
+            loadContacts();
+            loadHistory();
+            loadRsvpSummary();
+            statusInterval = setInterval(checkStatusBg, 8000);
+        } else if (d.status === 'qr') {
+            showSection('section-qr');
+            document.getElementById('qr-image').src = d.qrCode;
+        } else {
+            showSection('section-loading');
+        }
+    } catch(e) {}
 }
 
-// ============================================================
-// API HELPER
-// ============================================================
-async function api(url, method = 'GET', body = null, auth = true) {
-  const headers = { 'Content-Type': 'application/json' };
-  if (auth) headers['Authorization'] = `Bearer ${TOKEN}`;
-  const opts = { method, headers };
-  if (body) opts.body = JSON.stringify(body);
-  const r = await fetch(url, opts);
-  return r.json();
+async function checkStatusBg() {
+    try {
+        const r = await fetch('/api/whatsapp/status', { headers: { Authorization: 'Bearer ' + token } });
+        const d = await r.json();
+        if (d.status !== 'connected') location.reload();
+        if (allContacts.length === 0) loadContacts(false);
+    } catch(e) {}
 }
 
-// ============================================================
-// WHATSAPP STATUS
-// ============================================================
-async function refreshStatus() {
-  try {
-    const d = await api('/api/whatsapp/status');
-    const dot  = document.getElementById('status-dot');
-    const text = document.getElementById('status-text');
-    const qrC  = document.getElementById('qr-container');
+// ── LOGOUT ──
+async function doLogout() {
+    if (!confirm('¿Desconectar WhatsApp? El panel seguirá abierto y mostrará el QR para volver a vincular.')) return;
+    try { await fetch('/api/whatsapp/logout', { method: 'POST', headers: { Authorization: 'Bearer ' + token } }); } catch(e) {}
+    allContacts = [];
+    selectedMap = {};
+    clearInterval(statusInterval);
+    showSection('section-loading');
+    statusInterval = setInterval(checkStatus, 3000);
+}
 
-    if (d.status === 'connected') {
-      dot.className  = 'status-dot dot-connected';
-      text.textContent = '✅ WhatsApp Conectado';
-      qrC.style.display = 'none';
-    } else if (d.status === 'qr') {
-      dot.className  = 'status-dot dot-qr';
-      text.textContent = '⚠️ Esperando QR';
-      qrC.style.display = 'block';
-      document.getElementById('qr-img').src = d.qrCode;
-    } else {
-      dot.className  = 'status-dot dot-init';
-      text.textContent = '⏳ Inicializando...';
-      qrC.style.display = 'none';
+function doLogoutSession() {
+    if (!confirm('¿Cerrar sesión del panel?')) return;
+    localStorage.removeItem('amelia_token');
+    token = null;
+    clearInterval(statusInterval);
+    location.reload();
+}
+
+function doLocalLogout() {
+    localStorage.removeItem('amelia_token');
+    token = null;
+    clearInterval(statusInterval);
+    location.reload();
+}
+
+// ── CONTACTS ──
+async function loadContacts(showFeedback = false) {
+    if (contactsLoading) return;
+    contactsLoading = true;
+    try {
+        const r = await fetch('/api/whatsapp/contacts', { headers: { Authorization: 'Bearer ' + token } });
+        const d = await r.json();
+        if (d.success) {
+            allContacts = d.contacts;
+            renderContacts(allContacts);
+            if (showFeedback) showAlert('alert-contacts', `Se cargaron ${allContacts.length} contactos.`, true);
+        }
+    } catch(e) {}
+    finally { contactsLoading = false; }
+}
+
+let selectedMap = {};
+
+function renderContacts(contacts) {
+    const list = document.getElementById('contacts-list');
+    if (!contacts.length) {
+        list.innerHTML = `<div style="padding:2rem 1rem;color:#aaa;text-align:center;">
+            <p>No hay contactos en la caché de WhatsApp.</p>
+            <div style="margin-top:12px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap;">
+                <button class="btn-outline btn-sm" onclick="loadContacts(true)">🔄 Recargar</button>
+                <button class="btn-outline btn-sm" onclick="switchTab('tab-import')">📥 Importar Lista</button>
+            </div></div>`;
+        return;
     }
-  } catch(e) { /* silent */ }
+    list.innerHTML = contacts.map(c => `
+        <div class="contact-item${selectedMap[c.id] ? ' is-selected' : ''}" onclick="toggleContact('${c.id}','${(c.name || '').replace(/'/g,"\\'")}')">
+            <input type="checkbox" data-id="${c.id}" ${selectedMap[c.id] ? 'checked' : ''} onclick="event.stopPropagation();toggleContact('${c.id}','${(c.name || '').replace(/'/g,"\\'")}')">
+            <div class="contact-info">
+                <div class="contact-name">${c.name}</div>
+                <div class="contact-number">${c.number}</div>
+            </div>
+        </div>`).join('');
 }
 
-async function doLogoutWA() {
-  if (!confirm('¿Desconectar WhatsApp?')) return;
-  await api('/api/whatsapp/logout', 'POST');
-  toast('WhatsApp desconectado');
-  refreshStatus();
-}
-
-// ============================================================
-// IMPORT CONTACTS
-// ============================================================
-async function importContacts() {
-  const text = document.getElementById('import-text').value.trim();
-  if (!text) { toast('Escribe el listado primero'); return; }
-  const r = await api('/api/whatsapp/import-contacts', 'POST', { text });
-  toast(r.message || 'Importado');
-  loadContacts();
-}
-
-// ============================================================
-// CONTACTS
-// ============================================================
-async function loadContacts() {
-  try {
-    const r = await api('/api/whatsapp/contacts');
-    allContacts = r.contacts || [];
-    renderContacts(allContacts);
-  } catch(e) { toast('Error cargando contactos'); }
+function toggleContact(id, name) {
+    if (selectedMap[id]) { delete selectedMap[id]; }
+    else { selectedMap[id] = { id, originalName: name, customName: name, passes: '1' }; }
+    const q = document.getElementById('contact-search').value.toLowerCase();
+    renderContacts(allContacts.filter(c => (c.name||'').toLowerCase().includes(q)||(c.number||'').includes(q)));
+    renderSelected();
 }
 
 function filterContacts() {
-  const q = document.getElementById('contact-search').value.toLowerCase();
-  renderContacts(allContacts.filter(c => (c.name||'').toLowerCase().includes(q) || (c.number||'').includes(q)));
+    const q = document.getElementById('contact-search').value.toLowerCase();
+    renderContacts(allContacts.filter(c => (c.name||'').toLowerCase().includes(q)||(c.number||'').includes(q)));
 }
 
-function renderContacts(list) {
-  const el = document.getElementById('contacts-list');
-  el.innerHTML = '';
-  list.forEach(c => {
-    const div = document.createElement('div');
-    div.className = 'contact-item';
-    div.id = `ci-${c.id}`;
-    div.innerHTML = `
-      <input type="checkbox" id="chk-${c.id}" onchange="updateSelected()" />
-      <div>
-        <div class="c-name">${c.name}</div>
-        <div class="c-num">${c.number}</div>
-        <input class="c-custom-name" type="text" id="cname-${c.id}" placeholder="Nombre para sobre (ej: Familia Pérez)" style="margin-top:0.3rem;font-size:0.78rem;display:none" />
-      </div>
-      <div class="c-passes">
-        <span style="font-size:0.75rem;color:var(--text-mid)">Pases:</span>
-        <input type="number" id="pass-${c.id}" value="1" min="1" max="20" />
-      </div>`;
-    div.querySelector(`#chk-${c.id}`).addEventListener('change', () => {
-      const nameInput = div.querySelector(`#cname-${c.id}`);
-      nameInput.style.display = div.querySelector(`#chk-${c.id}`).checked ? 'block' : 'none';
+function selectAll() {
+    const q = document.getElementById('contact-search').value.toLowerCase();
+    allContacts.filter(c => (c.name||'').toLowerCase().includes(q)||(c.number||'').includes(q))
+        .forEach(c => { if (!selectedMap[c.id]) selectedMap[c.id] = { id: c.id, originalName: c.name, customName: c.name, passes: '1' }; });
+    filterContacts();
+    renderSelected();
+}
+
+function deselectAll() {
+    selectedMap = {};
+    filterContacts();
+    renderSelected();
+}
+
+function renderSelected() {
+    const list  = document.getElementById('selected-list');
+    const items = Object.values(selectedMap);
+    const totalPasses = items.reduce((s, i) => s + parseInt(i.passes || 1), 0);
+
+    document.getElementById('selected-count').textContent    = items.length + ' seleccionado' + (items.length !== 1 ? 's' : '');
+    document.getElementById('selected-summary').textContent  = items.length + ' invitado' + (items.length !== 1 ? 's' : '');
+    document.getElementById('total-passes-label').textContent = totalPasses + ' espacios total';
+
+    if (!items.length) {
+        list.innerHTML = `<div class="empty-selected">Selecciona contactos de la agenda para asignarles<br><strong>el nombre que aparecerá en la invitación</strong> y la cantidad de espacios</div>`;
+        return;
+    }
+    list.innerHTML = items.map(item => `
+        <div class="selected-item">
+            <div class="selected-info">
+                <div class="selected-orig-name" title="${item.originalName}">${item.originalName}</div>
+                <div class="selected-orig-phone">${item.id.split('@')[0]}</div>
+            </div>
+            <div class="custom-name-wrapper">
+                <span class="custom-name-label">Nombre en la invitación:</span>
+                <input type="text" class="custom-name-input"
+                       value="${item.customName || item.originalName}"
+                       placeholder="Ej: Familia García / María & Juan"
+                       title="Este nombre aparecerá en la portada de la invitación"
+                       oninput="updateCustomName('${item.id}', this.value)">
+            </div>
+            <select class="passes-select" onchange="updatePasses('${item.id}', this.value)">
+                ${[1,2,3,4,5,6,7,8,9,10].map(n =>
+                    `<option value="${n}" ${item.passes == n ? 'selected' : ''}>${n} espacio${n > 1 ? 's' : ''}</option>`
+                ).join('')}
+            </select>
+            <button class="remove-btn" onclick="removeSelected('${item.id}')" title="Quitar">✕</button>
+        </div>`).join('');
+}
+
+function updateCustomName(id, val) { if (selectedMap[id]) selectedMap[id].customName = val; }
+
+function updatePasses(id, val) {
+    if (selectedMap[id]) {
+        selectedMap[id].passes = val;
+        const total = Object.values(selectedMap).reduce((s,i) => s + parseInt(i.passes||1), 0);
+        document.getElementById('total-passes-label').textContent = total + ' espacios total';
+    }
+}
+
+function removeSelected(id) {
+    delete selectedMap[id];
+    filterContacts();
+    renderSelected();
+}
+
+async function doImportContacts() {
+    const text = document.getElementById('import-text').value;
+    if (!text.trim()) { showAlert('alert-import', 'Pega al menos un contacto.', false); return; }
+    try {
+        const r = await fetch('/api/whatsapp/import-contacts', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token },
+            body: JSON.stringify({ text })
+        });
+        const d = await r.json();
+        showAlert('alert-import', d.message, d.success);
+        if (d.success) { document.getElementById('import-text').value = ''; loadContacts(false); switchTab('tab-contacts'); }
+    } catch(e) { showAlert('alert-import', 'Error al importar contactos.', false); }
+}
+
+async function sendToContacts() {
+    const targets = Object.values(selectedMap);
+    if (!targets.length) { showAlert('alert-contacts', 'Selecciona al menos un contacto.', false); return; }
+    const message = document.getElementById('msg-contacts').value;
+    if (!message.trim()) { showAlert('alert-contacts', 'Escribe un mensaje.', false); return; }
+    const payload = targets.map(t => ({
+        id: t.id, display: t.originalName,
+        customName: (t.customName && t.customName.trim()) ? t.customName.trim() : t.originalName,
+        count: t.passes
+    }));
+    const btn = document.getElementById('btn-send-contacts');
+    btn.disabled = true; btn.textContent = 'Enviando...';
+    try {
+        const r = await fetch('/api/whatsapp/send', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token },
+            body: JSON.stringify({ targets: payload, message })
+        });
+        const d = await r.json();
+        showAlert('alert-contacts', d.message, d.success);
+        if (d.success) { deselectAll(); setTimeout(loadRsvpSummary, 2000); }
+    } catch(e) { showAlert('alert-contacts', 'Error de conexión.', false); }
+    finally { btn.disabled = false; btn.textContent = '📤 Enviar Invitaciones'; }
+}
+
+async function sendManual() {
+    const numbersInput = document.getElementById('numbers').value;
+    const message = document.getElementById('msg-manual').value;
+    if (!numbersInput.trim()) { showAlert('alert-manual', 'Ingresa al menos un número.', false); return; }
+    if (!message.trim()) { showAlert('alert-manual', 'Escribe un mensaje.', false); return; }
+    const numbers = numbersInput.split(/[\n,]+/).map(n => n.trim().replace(/\D/g,'')).filter(n => n);
+    const targets = numbers.map(n => ({ id: n + '@c.us', display: n, customName: n, count: '1' }));
+    const btn = document.getElementById('btn-send-manual');
+    btn.disabled = true; btn.textContent = 'Enviando...';
+    try {
+        const r = await fetch('/api/whatsapp/send', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token },
+            body: JSON.stringify({ targets, message })
+        });
+        const d = await r.json();
+        showAlert('alert-manual', d.message, d.success);
+        if (d.success) { document.getElementById('numbers').value = ''; setTimeout(loadRsvpSummary, 2000); }
+    } catch(e) { showAlert('alert-manual', 'Error de conexión.', false); }
+    finally { btn.disabled = false; btn.textContent = '📤 Enviar'; }
+}
+
+// ── RSVP ──
+async function loadRsvpSummary() {
+    try {
+        const r = await fetch('/api/admin/rsvp-summary', { headers: { Authorization: 'Bearer ' + token } });
+        const d = await r.json();
+        if (!d.success) return;
+        const s = d.stats;
+        document.getElementById('kpi-total-inv').textContent       = s.totalInvitations;
+        document.getElementById('kpi-total-passes').textContent    = s.totalPassesAssigned;
+        document.getElementById('kpi-confirmed-passes').textContent = `${s.confirmedPasses} (${s.confirmedCount})`;
+        document.getElementById('kpi-declined-count').textContent  = s.declinedCount;
+        document.getElementById('kpi-pending-count').textContent   = s.pendingCount;
+        document.getElementById('kpi-dietary-count').textContent   = s.withDietaryCount;
+        allRsvpInvitations = d.invitations || [];
+        renderRsvpTable(allRsvpInvitations);
+    } catch(e) { console.error('Error RSVP:', e); }
+}
+
+function setRsvpFilter(filter, el) {
+    currentRsvpFilter = filter;
+    document.querySelectorAll('.chip-filter').forEach(c => c.classList.remove('active'));
+    if (el) el.classList.add('active');
+    filterRsvpList();
+}
+
+function filterRsvpList() {
+    const q = (document.getElementById('rsvp-search').value || '').toLowerCase();
+    let list = allRsvpInvitations;
+    if (currentRsvpFilter === 'confirmed') list = list.filter(i => i.status === 'confirmed');
+    else if (currentRsvpFilter === 'declined') list = list.filter(i => i.status === 'declined');
+    else if (currentRsvpFilter === 'pending')  list = list.filter(i => i.status === 'pending');
+    else if (currentRsvpFilter === 'dietary')  list = list.filter(i => i.hasDietaryRestriction);
+    if (q) list = list.filter(i => (i.name||'').toLowerCase().includes(q)||(i.phone||'').includes(q)||(i.dietaryDetails||'').toLowerCase().includes(q));
+    renderRsvpTable(list);
+}
+
+function renderRsvpTable(list) {
+    const wrap = document.getElementById('rsvp-table-wrap');
+    if (!list.length) {
+        wrap.innerHTML = '<p style="color:#aaa;text-align:center;padding:2.5rem;">No se encontraron invitaciones con el filtro seleccionado.</p>';
+        return;
+    }
+    const rows = list.map(inv => {
+        let statusBadge = '<span class="badge badge-pending">⏳ Pendiente</span>';
+        if (inv.status === 'confirmed') statusBadge = '<span class="badge badge-success">✅ Asiste</span>';
+        else if (inv.status === 'declined') statusBadge = '<span class="badge badge-error">❌ No Asiste</span>';
+        let dietBadge = '<span style="color:#ccc;">Ninguna</span>';
+        if (inv.hasDietaryRestriction) dietBadge = `<span class="badge badge-dietary" title="${inv.dietaryDetails}">🥗 ${inv.dietaryDetails}</span>`;
+        const dateStr = inv.submittedAt ? new Date(inv.submittedAt).toLocaleString('es-CR', { month:'short', day:'numeric', hour:'2-digit', minute:'2-digit' }) : '-';
+        return `<tr>
+            <td><strong>${inv.name}</strong><br><small style="color:#aaa;">${inv.phone.split('@')[0]}</small></td>
+            <td style="text-align:center;">${inv.passes}</td>
+            <td>${statusBadge}</td>
+            <td style="text-align:center;"><strong>${inv.status === 'confirmed' ? inv.confirmedPasses : (inv.status === 'declined' ? '0' : '-')}</strong></td>
+            <td>${dietBadge}</td>
+            <td><small style="color:#777;">${inv.guestNote || '-'}</small></td>
+            <td><small style="color:#aaa;">${dateStr}</small></td>
+            <td><a href="https://testdeinvitacion.ddns.net/?id=${inv.id}" target="_blank" class="btn-outline btn-sm" style="font-size:0.7rem;padding:0.25rem 0.6rem;">Link</a></td>
+        </tr>`;
+    }).join('');
+    wrap.innerHTML = `<table class="history-table">
+        <thead><tr>
+            <th>Nombre en Invitación</th>
+            <th style="text-align:center;">Espacios Asig.</th>
+            <th>Estado</th>
+            <th style="text-align:center;">Esp. Conf.</th>
+            <th>Restricción</th>
+            <th>Nota</th>
+            <th>Fecha Resp.</th>
+            <th>Enlace</th>
+        </tr></thead>
+        <tbody>${rows}</tbody>
+    </table>`;
+}
+
+function exportRsvpCsv() {
+    if (!allRsvpInvitations.length) { alert('No hay invitaciones para exportar.'); return; }
+    let csv = "Nombre,Teléfono,Espacios Asignados,Estado,Espacios Confirmados,Tiene Restricción,Detalle Restricción,Nota,Fecha Respuesta,ID\n";
+    allRsvpInvitations.forEach(i => {
+        const clean = str => `"${(str||'').toString().replace(/"/g,'""')}"`;
+        csv += [clean(i.name), clean(i.phone.split('@')[0]), i.passes, i.status,
+            i.status === 'confirmed' ? i.confirmedPasses : (i.status === 'declined' ? 0 : ''),
+            i.hasDietaryRestriction ? 'SI' : 'NO', clean(i.dietaryDetails), clean(i.guestNote),
+            clean(i.submittedAt ? new Date(i.submittedAt).toLocaleString('es-CR') : ''), clean(i.id)
+        ].join(',') + '\n';
     });
-    el.appendChild(div);
-  });
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const url  = URL.createObjectURL(blob);
+    const a    = document.createElement('a');
+    a.href = url; a.download = `RSVP_BabyShower_Amelia_${new Date().toISOString().slice(0,10)}.csv`;
+    a.click();
 }
 
-function updateSelected() {
-  const count = document.querySelectorAll('#contacts-list input[type=checkbox]:checked').length;
-  document.getElementById('selected-count').textContent = `${count} seleccionado${count !== 1 ? 's' : ''}`;
-}
-
-// ============================================================
-// SEND
-// ============================================================
-async function sendInvitations() {
-  const message = document.getElementById('msg-text').value.trim();
-  if (!message) { toast('Escribe el mensaje primero'); return; }
-
-  const checks = document.querySelectorAll('#contacts-list input[type=checkbox]:checked');
-  if (checks.length === 0) { toast('Selecciona al menos un contacto'); return; }
-
-  const targets = [];
-  checks.forEach(ch => {
-    const cid = ch.id.replace('chk-', '');
-    const ct  = allContacts.find(c => c.id === cid);
-    if (!ct) return;
-    const passes     = document.getElementById(`pass-${cid}`)?.value || '1';
-    const customName = document.getElementById(`cname-${cid}`)?.value?.trim() || '';
-    targets.push({ id: cid, display: ct.name, count: passes, customName });
-  });
-
-  if (!confirm(`¿Enviar invitaciones a ${targets.length} contacto${targets.length > 1 ? 's' : ''}?`)) return;
-
-  const btn = document.getElementById('send-btn');
-  btn.disabled = true;
-  btn.textContent = '⏳ Enviando...';
-
-  try {
-    const r = await api('/api/whatsapp/send', 'POST', { targets, message });
-    document.getElementById('send-status').textContent = r.message || 'Envío iniciado';
-    toast('¡Envío iniciado con anti-ban! 🐰');
-  } catch(e) { toast('Error al enviar'); }
-
-  btn.disabled = false;
-  btn.textContent = '📤 Enviar Invitaciones';
-}
-
-// ============================================================
-// RSVP
-// ============================================================
-async function loadRsvp() {
-  try {
-    const r = await api('/api/admin/rsvp-summary');
-    const s = r.stats;
-    document.getElementById('m-total').textContent     = s.totalPassesAssigned || 0;
-    document.getElementById('m-confirmed').textContent = s.confirmedPasses || 0;
-    document.getElementById('m-pending').textContent   = s.pendingCount || 0;
-    document.getElementById('m-diet').textContent      = s.withDietaryCount || 0;
-    allRsvp = r.invitations || [];
-    renderRsvpTable();
-  } catch(e) { toast('Error cargando RSVP'); }
-}
-
-function setFilter(f, btn) {
-  rsvpFilter = f;
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  renderRsvpTable();
-}
-
-function renderRsvpTable() {
-  const q = (document.getElementById('rsvp-search')?.value || '').toLowerCase();
-  let list = allRsvp;
-  if (rsvpFilter !== 'all') list = list.filter(i => i.status === rsvpFilter);
-  if (q) list = list.filter(i => (i.name||'').toLowerCase().includes(q) || (i.phone||'').includes(q));
-
-  const tbody = document.getElementById('rsvp-tbody');
-  tbody.innerHTML = list.map(i => `
-    <tr>
-      <td><strong>${i.name}</strong><br><span style="font-size:0.72rem;color:var(--text-mid)">${i.phone?.split('@')[0]||''}</span></td>
-      <td>${i.status==='confirmed' ? i.confirmedPasses : '-'} / ${i.passes}</td>
-      <td><span class="badge badge-${i.status}">${i.status==='confirmed'?'✅ Sí':i.status==='declined'?'❌ No':'⏳ Pend.'}</span></td>
-      <td>${i.hasDietaryRestriction ? `⚠️ ${i.dietaryDetails||'Sí'}` : '—'}</td>
-      <td style="font-size:0.75rem;max-width:120px;overflow:hidden">${i.guestNote||'—'}</td>
-    </tr>`).join('');
-}
-
-function exportCsv() {
-  const headers = ['Nombre','Teléfono','Pases Asignados','Pases Confirmados','Estado','Restricción','Detalle','Mensaje','Fecha'];
-  const rows = allRsvp.map(i => [
-    i.name, (i.phone||'').split('@')[0], i.passes, i.confirmedPasses||0,
-    i.status, i.hasDietaryRestriction?'Sí':'No', i.dietaryDetails||'',
-    (i.guestNote||'').replace(/,/g,';'), i.submittedAt||''
-  ].join(','));
-  const csv = [headers.join(','), ...rows].join('\n');
-  const blob = new Blob([csv], { type: 'text/csv' });
-  const url  = URL.createObjectURL(blob);
-  const a    = document.createElement('a');
-  a.href = url; a.download = 'rsvp-amelia.csv';
-  a.click();
-  URL.revokeObjectURL(url);
-}
-
-// ============================================================
-// HISTORY
-// ============================================================
+// ── HISTORY ──
 async function loadHistory() {
-  try {
-    const r = await api('/api/admin/history');
-    const tbody = document.getElementById('history-tbody');
-    const list  = (r.history || []).reverse();
-    tbody.innerHTML = list.map(h => `
-      <tr>
-        <td>${h.name||'—'}</td>
-        <td>${h.passes||'1'}</td>
-        <td><span class="badge ${h.status==='success'?'badge-confirmed':'badge-declined'}">${h.status==='success'?'✅':'❌'}</span></td>
-        <td style="font-size:0.75rem">${h.date ? new Date(h.date).toLocaleString('es-CR') : '—'}</td>
-      </tr>`).join('');
-  } catch(e) { toast('Error cargando historial'); }
+    try {
+        const r = await fetch('/api/admin/history', { headers: { Authorization: 'Bearer ' + token } });
+        const d = await r.json();
+        const wrap = document.getElementById('history-wrap');
+        if (!d.success || !d.history.length) {
+            wrap.innerHTML = '<p style="color:#aaa;text-align:center;padding:2rem;">No hay envíos registrados aún.</p>';
+            return;
+        }
+        const rows = [...d.history].reverse().map(h => `
+            <tr>
+                <td>${h.name}</td>
+                <td>${h.passes || '-'}</td>
+                <td>${new Date(h.date).toLocaleString('es-CR')}</td>
+                <td><span class="badge badge-${h.status === 'success' ? 'success' : 'error'}">${h.status === 'success' ? '✅ Enviado' : '❌ Error'}</span></td>
+            </tr>`).join('');
+        wrap.innerHTML = `<table class="history-table">
+            <thead><tr><th>Nombre</th><th>Espacios</th><th>Fecha</th><th>Estado</th></tr></thead>
+            <tbody>${rows}</tbody>
+        </table>`;
+    } catch(e) {}
 }
 
-// ============================================================
-// TABS
-// ============================================================
+// ── TABS ──
 function switchTab(id) {
-  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('tab-' + id).classList.add('active');
-  event.target.classList.add('active');
-  if (id === 'rsvp')    loadRsvp();
-  if (id === 'history') loadHistory();
+    const tabs = ['tab-contacts','tab-rsvp','tab-import','tab-manual','tab-history'];
+    document.querySelectorAll('.tab-btn').forEach((b,i) => b.classList.toggle('active', tabs[i] === id));
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.toggle('active', t.id === id));
+    if (id === 'tab-history') loadHistory();
+    if (id === 'tab-rsvp')    loadRsvpSummary();
 }
 
-// ============================================================
-// TOAST
-// ============================================================
-function toast(msg) {
-  const el = document.getElementById('toast');
-  el.textContent = msg;
-  el.classList.add('show');
-  setTimeout(() => el.classList.remove('show'), 3000);
+function showSection(id) {
+    document.querySelectorAll('.section').forEach(el => el.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
 }
+
+function showAlert(id, msg, ok) {
+    const el = document.getElementById(id);
+    el.textContent = msg;
+    el.className = 'alert ' + (ok ? 'success' : 'error');
+    setTimeout(() => { el.style.display = 'none'; el.className = 'alert'; }, 8000);
+}
+
+// ── INIT ──
+if (token) { resetInactivityTimer(); startStatusCheck(); }
 </script>
 </body>
 </html>
