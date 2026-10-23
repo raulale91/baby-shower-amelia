@@ -198,15 +198,15 @@
             flex-shrink: 0;
         }
 
-        /* Patito */
+        /* Patito — estático en flujo, centrado debajo del texto */
         .img-duck {
-            position: absolute;
-            bottom: 30px;
-            left: 10px;
+            display: block;
+            margin: 20px auto 0;
             width: 200px;
-            z-index: 50;
+            position: relative;
+            z-index: 10;
             opacity: 0;
-            transform: translateX(-120px);
+            transform: translateX(-80px);
             animation: slideRightFade 1.5s ease-out 1.5s forwards;
         }
         /* Flores */
@@ -460,14 +460,11 @@
                     <p>Av. Siempreviva #742</p>
                 </div>
                 <p class="title-pre" style="margin-top:14px; font-size:1rem;">¡Te esperamos con cariño!</p>
+
+                <!-- Patito — justo debajo del texto de bienvenida -->
+                <img src="pato.png" alt="" class="img-duck">
             </div>
 
-        </div>
-
-        <!-- ── BLOQUE ANIMALES (espacio blanco con patito y flores) ── -->
-        <div class="section-animals">
-            <img src="pato.png" alt="" class="img-duck">
-            <img src="flores.png" alt="" class="img-flowers" onerror="this.style.display='none'">
         </div>
 
         <!-- ── DIVISOR ── -->
