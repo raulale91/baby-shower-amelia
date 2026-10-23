@@ -5,512 +5,710 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Baby Shower · Amelia</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Great+Vibes&family=Montserrat:wght@400;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap');
 
         :root {
-            --bg-color: #fdf5f6;
-            --pastel-pink: #f4c0c6;
-            --dark-pink: #e39fa8;
-            --cream: #fffaf0;
-            --soft-green: #bbc9b0;
-            --text-brown: #6b5a5c;
-            --paper-shadow: drop-shadow(0px 12px 10px rgba(130, 90, 90, 0.2));
-            --white-border: 8px solid white;
+            --gingham-pink: rgba(239, 195, 202, 0.3);
+            --dark-pink: #d98896;
+            --light-pink: #f7d4d9;
+            --cream: #fdfbf7;
+            --soft-green: #a8bba2;
+            --text-color: #5c4a4d;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
-            background-color: var(--bg-color);
-            overflow: hidden;
-            font-family: 'Montserrat', sans-serif;
+            background-color: #fff;
+            background-image:
+                linear-gradient(90deg, var(--gingham-pink) 50%, transparent 50%),
+                linear-gradient(var(--gingham-pink) 50%, transparent 50%);
+            background-size: 60px 60px;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            color: var(--text-brown);
+            min-height: 100vh;
+            font-family: 'Playfair Display', serif;
+            padding: 20px;
         }
 
-        /* Textura de papel */
-        .paper-texture {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none; z-index: 100;
-            opacity: 0.35; mix-blend-mode: multiply;
-        }
-
-        /* Contenedor 3D */
-        .scene-container {
-            width: 100vw; height: 100vh;
-            perspective: 1200px;
-            display: flex; justify-content: center; align-items: center;
-            position: relative;
-        }
-
-        /* --- PANTALLA DE PRIVACIDAD --- */
+        /* ───── PANTALLA PRIVACIDAD ───── */
         #privacy-screen {
+            display: none;
             position: fixed;
             inset: 0;
+            background: rgba(253, 251, 247, 0.97);
             z-index: 9999;
-            background-color: var(--bg-color);
-            background-image:
-                linear-gradient(90deg, rgba(244, 192, 198, 0.25) 50%, transparent 50%),
-                linear-gradient(rgba(244, 192, 198, 0.25) 50%, transparent 50%);
-            background-size: 30px 30px;
-            display: flex;
-            align-items: center;
             justify-content: center;
-        }
-        #privacy-screen .priv-plate {
-            background: var(--cream);
-            padding: 30px 40px;
-            border-radius: 15px;
+            align-items: center;
+            flex-direction: column;
+            gap: 18px;
             text-align: center;
-            filter: var(--paper-shadow);
-            border: 2px dashed var(--pastel-pink);
-            max-width: 300px;
+            padding: 30px;
         }
-        #privacy-screen .priv-icon {
-            font-size: 2.5rem;
-            display: block;
-            margin-bottom: 0.6rem;
-        }
+        #privacy-screen .lock-icon { font-size: 3.5rem; }
         #privacy-screen h2 {
             font-family: 'Great Vibes', cursive;
-            font-size: 2.2rem;
+            font-size: 2.4rem;
             color: var(--dark-pink);
-            line-height: 1;
-            margin-bottom: 0.5rem;
         }
         #privacy-screen p {
-            font-family: 'Cinzel', serif;
-            font-size: 0.72rem;
-            font-weight: 700;
-            letter-spacing: 1px;
-            line-height: 1.7;
-            color: var(--text-brown);
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            color: var(--text-color);
+            font-size: 1rem;
+            max-width: 320px;
+            line-height: 1.6;
         }
 
-        /* --- BOTÓN DE MÚSICA --- */
-        #music-btn {
-            position: fixed;
-            bottom: 1.2rem;
-            right: 1.2rem;
-            z-index: 1000;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: var(--cream);
-            border: var(--white-border);
-            cursor: pointer;
+        /* ───── TARJETA ───── */
+        .invitation-card {
+            width: 100%;
+            max-width: 480px;
+            min-height: 750px;
+            background-color: var(--cream);
+            position: relative;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
             display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: center;
-            filter: var(--paper-shadow);
+            background-image: radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.02) 100%);
+        }
+
+        .inner-frame {
+            position: absolute;
+            top: 25px; left: 25px; right: 25px; bottom: 25px;
+            border: 1px solid var(--soft-green);
+            border-radius: 200px 200px 15px 15px;
+            pointer-events: none;
+            z-index: 5;
+        }
+        .inner-frame::before {
+            content: '';
+            position: absolute;
+            top: 5px; left: 5px; right: 5px; bottom: 5px;
+            border: 1px dashed var(--dark-pink);
+            border-radius: 195px 195px 10px 10px;
+            opacity: 0.5;
+        }
+
+        /* ───── TEXTO INVITACIÓN ───── */
+        .text-content {
+            margin-top: 100px;
+            text-align: center;
+            z-index: 10;
+            padding: 0 50px;
+        }
+        .title-pre {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            color: var(--text-color);
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+        .title-main {
+            font-family: 'Great Vibes', cursive;
+            font-size: 4.5rem;
+            color: var(--dark-pink);
+            line-height: 0.9;
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 2px rgba(217, 136, 150, 0.2);
+        }
+        .subtitle {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            color: var(--text-color);
+            letter-spacing: 3px;
+            margin-bottom: 25px;
+        }
+        .details {
+            font-size: 1rem;
+            color: var(--text-color);
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        .details strong { color: var(--dark-pink); font-weight: 600; }
+        .separator {
+            width: 40px; height: 2px;
+            background-color: var(--soft-green);
+            margin: 15px auto; border-radius: 2px;
+        }
+        .guest-greeting {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            color: var(--dark-pink);
+            font-size: 1rem;
+            margin-bottom: 6px;
+        }
+        .guest-name-display {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.4rem;
+            color: var(--text-color);
+            line-height: 1.1;
+            margin-bottom: 4px;
+        }
+        .guest-passes {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 0.88rem;
+            color: var(--soft-green);
+        }
+
+        /* ───── SVGs absolutos ───── */
+        .decor-svg {
+            position: absolute;
+            pointer-events: none;
+        }
+        .top-bow {
+            top: 10px; left: 50%;
+            transform: translateX(-50%);
+            width: 180px; z-index: 15;
+        }
+        .bottom-bow {
+            bottom: -20px; left: 50%;
+            transform: translateX(-50%);
+            width: 320px; z-index: 15;
+        }
+        .duck-container {
+            bottom: 70px; left: 20px;
+            width: 220px; z-index: 12;
+            filter: drop-shadow(2px 5px 6px rgba(0,0,0,0.08));
+            animation: gentleFloat 4s ease-in-out infinite alternate;
+        }
+        .floral-right {
+            bottom: 60px; right: 0px;
+            width: 180px; z-index: 11;
+        }
+        @keyframes gentleFloat {
+            0%   { transform: translateY(0px); }
+            100% { transform: translateY(-5px); }
+        }
+
+        /* ───── RSVP ───── */
+        .rsvp-section {
+            width: 100%;
+            padding: 20px 45px 30px;
+            z-index: 10;
+            margin-top: 10px;
+        }
+        .rsvp-title {
+            font-family: 'Cinzel', serif;
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            color: var(--dark-pink);
+            text-align: center;
+            margin-bottom: 14px;
+        }
+        .rsvp-options {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 14px;
+        }
+        .rsvp-btn {
+            flex: 1;
+            padding: 10px 8px;
+            border: 1.5px solid var(--dark-pink);
+            background: transparent;
+            border-radius: 30px;
+            font-family: 'Playfair Display', serif;
+            font-size: 0.85rem;
+            color: var(--text-color);
+            cursor: pointer;
+            transition: all 0.25s;
+        }
+        .rsvp-btn.selected,
+        .rsvp-btn:hover {
+            background: var(--dark-pink);
+            color: white;
+        }
+        .rsvp-row {
+            margin-bottom: 12px;
+        }
+        .rsvp-label {
+            display: block;
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 0.82rem;
+            color: var(--text-color);
+            margin-bottom: 5px;
+        }
+        .rsvp-select, .rsvp-textarea, .rsvp-input {
+            width: 100%;
+            border: 1px solid #e2c5cb;
+            border-radius: 10px;
+            padding: 8px 12px;
+            font-family: 'Playfair Display', serif;
+            font-size: 0.85rem;
+            color: var(--text-color);
+            background: white;
+            outline: none;
+        }
+        .rsvp-textarea { resize: none; height: 62px; }
+        .rsvp-submit {
+            width: 100%;
+            padding: 12px;
+            background: var(--dark-pink);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-family: 'Cinzel', serif;
+            font-size: 0.88rem;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+            margin-top: 6px;
+            transition: opacity 0.2s;
+        }
+        .rsvp-submit:disabled { opacity: 0.6; cursor: default; }
+        .rsvp-msg {
+            text-align: center;
+            font-style: italic;
+            font-size: 0.85rem;
+            color: var(--soft-green);
+            margin-top: 8px;
+            min-height: 20px;
+        }
+        /* Ocultar sección de pases si no asiste */
+        .rsvp-attending-only { display: none; }
+
+        /* ───── VINILO MÚSICA ───── */
+        #vinyl-btn {
+            position: fixed;
+            bottom: 22px; right: 22px;
+            width: 56px; height: 56px;
+            border-radius: 50%;
+            background: var(--dark-pink);
+            border: none; cursor: pointer;
+            box-shadow: 0 4px 14px rgba(217,136,150,0.5);
+            z-index: 9000;
+            display: flex; justify-content: center; align-items: center;
             transition: transform 0.2s;
         }
-        #music-btn:hover { transform: scale(1.1); }
-        .vinyl {
-            width: 34px; height: 34px; border-radius: 50%;
-            background: conic-gradient(#3a1810 0deg 45deg,#6a3a30 45deg 90deg,#3a1810 90deg 135deg,#6a3a30 135deg 180deg,#3a1810 180deg 225deg,#6a3a30 225deg 270deg,#3a1810 270deg 315deg,#6a3a30 315deg 360deg);
-            display: flex; align-items: center; justify-content: center;
+        #vinyl-btn:hover { transform: scale(1.08); }
+        #vinyl-btn svg { width: 30px; height: 30px; }
+        #vinyl-btn.spinning svg.vinyl-disc {
+            animation: spin 3s linear infinite;
         }
-        .vinyl::after {
-            content: ''; width: 11px; height: 11px;
-            border-radius: 50%; background: var(--dark-pink);
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to   { transform: rotate(360deg); }
         }
-        #music-btn.playing .vinyl { animation: spin 3s linear infinite; }
-        #music-btn.paused  .vinyl { display: none; }
-        .music-note { font-size: 1rem; position: absolute; display: none; }
-        #music-btn.paused .music-note { display: block; }
-        #yt-player { position: fixed; bottom: -9999px; left: -9999px; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
-        @keyframes spin { to { transform: rotate(360deg); } }
-
-        /* --- SOBRE CERRADO --- */
-        .cover {
-            position: absolute;
-            z-index: 50; width: 340px; height: 480px;
-            background: var(--cream);
-            border: var(--white-border);
-            border-radius: 20px;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            cursor: pointer; filter: var(--paper-shadow);
-            transition: all 0.9s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            background-image:
-                linear-gradient(90deg, rgba(244, 192, 198, 0.25) 50%, transparent 50%),
-                linear-gradient(rgba(244, 192, 198, 0.25) 50%, transparent 50%);
-            background-size: 30px 30px;
-        }
-
-        .cover.open {
-            transform: translateY(-150vh) rotateX(60deg) scale(0.8);
-            opacity: 0; pointer-events: none;
-        }
-
-        .cover-plate {
-            background: var(--cream);
-            padding: 30px 40px;
-            border-radius: 15px;
-            text-align: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            border: 2px dashed var(--pastel-pink);
-        }
-
-        .cover-text {
-            font-family: 'Great Vibes', cursive;
-            font-size: 3.5rem;
-            color: var(--dark-pink);
-            line-height: 1;
-        }
-
-        .cover-instruction {
-            font-family: 'Cinzel', serif; font-size: 0.9rem; font-weight: 700;
-            letter-spacing: 2px; margin-top: 15px; color: var(--text-brown);
-            animation: pulse 1.5s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.05); opacity: 0.6; }
-        }
-
-        /* --- MUNDO 3D (POP-UP) --- */
-        .world {
-            position: relative; width: 360px; height: 520px;
-            transform-style: preserve-3d;
-            transform: rotateX(15deg) rotateY(-10deg);
-            transition: transform 1s ease;
-        }
-
-        .world.floating {
-            animation: floatWorld 6s ease-in-out infinite alternate;
-        }
-
-        @keyframes floatWorld {
-            0% { transform: rotateX(12deg) rotateY(-8deg) translateY(0); }
-            100% { transform: rotateX(16deg) rotateY(-3deg) translateY(-15px); }
-        }
-
-        /* Capas Base */
-        .layer {
-            position: absolute; bottom: 0; left: 0; width: 100%;
-            display: flex; justify-content: center; align-items: flex-end;
-            transform-style: preserve-3d;
-            transform-origin: bottom center;
-            transform: rotateX(-90deg);
-            opacity: 0;
-        }
-
-        .cutout { filter: var(--paper-shadow); }
-
-        .is-open .layer {
-            animation: popUp 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-        }
-
-        /* --- ANIMACIONES DE LAS CAPAS --- */
-
-        .layer-1 { z-index: 1; height: 100%; }
-        .is-open .layer-1 { animation-name: popLayer1; animation-delay: 0.1s; }
-        @keyframes popLayer1 { to { transform: rotateX(0deg) translateZ(-60px); opacity: 1; } }
-
-        .bg-arch {
-            width: 340px; height: 500px;
-            background-color: var(--cream);
-            background-image:
-                linear-gradient(90deg, rgba(244, 192, 198, 0.25) 50%, transparent 50%),
-                linear-gradient(rgba(244, 192, 198, 0.25) 50%, transparent 50%);
-            background-size: 40px 40px;
-            border: var(--white-border);
-            border-top-left-radius: 170px; border-top-right-radius: 170px;
-            position: relative;
-        }
-        .bg-arch-inner {
-            position: absolute; top: 15px; left: 15px; right: 15px; bottom: 15px;
-            background: var(--cream);
-            border-top-left-radius: 155px; border-top-right-radius: 155px;
-            border: 2px dashed var(--pastel-pink);
-        }
-
-        .layer-2 { z-index: 2; bottom: 80px; }
-        .is-open .layer-2 { animation-name: popLayer2; animation-delay: 0.4s; }
-        @keyframes popLayer2 { to { transform: rotateX(0deg) translateZ(-20px); opacity: 1; } }
-
-        .layer-3 { z-index: 3; bottom: 310px; }
-        .is-open .layer-3 { animation-name: popLayer3; animation-delay: 0.7s; }
-        @keyframes popLayer3 { to { transform: rotateX(0deg) translateZ(20px); opacity: 1; } }
-
-        .text-card { text-align: center; }
-        .text-card h2 { font-family: 'Great Vibes', cursive; font-size: 3.5rem; color: var(--dark-pink); font-weight: normal; line-height: 0.8; }
-        .text-card h1 { font-family: 'Cinzel', serif; font-size: 2rem; color: var(--text-brown); letter-spacing: 2px; margin-top: 5px; }
-
-        .layer-4 { z-index: 4; bottom: 70px; }
-        .is-open .layer-4 { animation-name: popLayer4; animation-delay: 1.0s; }
-        @keyframes popLayer4 { to { transform: rotateX(0deg) translateZ(70px); opacity: 1; } }
-
-        .layer-5 { z-index: 5; bottom: 10px; }
-        .is-open .layer-5 { animation-name: popLayer5; animation-delay: 1.2s; }
-        @keyframes popLayer5 { to { transform: rotateX(0deg) translateZ(110px); opacity: 1; } }
-
-        .layer-6 { z-index: 6; bottom: -30px; }
-        .is-open .layer-6 { animation-name: popLayer6; animation-delay: 1.4s; }
-        @keyframes popLayer6 { to { transform: rotateX(0deg) translateZ(160px); opacity: 1; } }
-
-        .layer-7 { z-index: 7; bottom: -70px; }
-        .is-open .layer-7 { animation-name: popLayer7; animation-delay: 1.7s; }
-        @keyframes popLayer7 { to { transform: rotateX(0deg) translateZ(200px); opacity: 1; } }
-
-        .info-card {
-            background: var(--cream); border: var(--white-border);
-            border-radius: 12px; padding: 10px 30px;
-            display: flex; gap: 20px; filter: var(--paper-shadow);
-        }
-        .info-item { text-align: center; }
-        .info-item h3 { font-family: 'Cinzel', serif; font-size: 0.7rem; color: var(--dark-pink); }
-        .info-item p { font-size: 0.85rem; font-weight: 600; color: var(--text-brown); margin-top: 2px; }
-
-        .svg-stroke-white {
-            stroke: white; stroke-width: 6px; stroke-linejoin: round; stroke-linecap: round;
+        /* YouTube player invisible */
+        #yt-player {
+            width: 1px; height: 1px;
+            position: fixed; bottom: -9999px; left: -9999px;
         }
     </style>
 </head>
 <body>
 
-    <!-- Hidden YT player -->
-    <div id="yt-player"></div>
-
-    <!-- Filtro de Textura de Papel -->
-    <svg class="paper-texture">
-        <filter id="noise">
-            <feTurbulence type="fractalNoise" baseFrequency="0.75" numOctaves="3" stitchTiles="stitch"/>
-            <feColorMatrix type="matrix" values="1 0 0 0 0, 0 1 0 0 0, 0 0 1 0 0, 0 0 0 0.08 0" />
-        </filter>
-        <rect width="100%" height="100%" filter="url(#noise)"></rect>
-    </svg>
-
-    <!-- Pantalla de Privacidad -->
+    <!-- ───── PANTALLA PRIVACIDAD ───── -->
     <div id="privacy-screen">
-        <div class="priv-plate">
-            <span class="priv-icon">🎀</span>
-            <h2>Invitación Privada</h2>
-            <p>Esta invitación es personal.<br>Ingresa desde el enlace<br>que recibiste por WhatsApp.</p>
-        </div>
+        <div class="lock-icon">🔒</div>
+        <h2>Invitación Privada</h2>
+        <p>Esta invitación es personal. Por favor revisá el enlace que recibiste por WhatsApp para acceder.</p>
     </div>
 
-    <!-- Botón de Música -->
-    <button id="music-btn" class="paused" title="Música" aria-label="Música">
-        <div class="vinyl"></div>
-        <span class="music-note">🎵</span>
+    <!-- ───── TARJETA ───── -->
+    <div class="invitation-card" id="invitation-card" style="opacity:0; transition: opacity 0.6s;">
+
+        <!-- Marco Decorativo -->
+        <div class="inner-frame"></div>
+
+        <!-- Lazo Superior -->
+        <svg class="decor-svg top-bow" viewBox="0 0 200 100">
+            <defs>
+                <linearGradient id="bowGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#fad9de" />
+                    <stop offset="100%" stop-color="#e69cac" />
+                </linearGradient>
+            </defs>
+            <path d="M 100 50 Q 70 80 40 90 Q 60 70 90 40 Z" fill="url(#bowGrad)"/>
+            <path d="M 100 50 Q 130 80 160 90 Q 140 70 110 40 Z" fill="url(#bowGrad)"/>
+            <path d="M 100 45 C 50 10 10 50 85 55 C 95 55 100 45 100 45 Z" fill="url(#bowGrad)" />
+            <path d="M 100 45 C 150 10 190 50 115 55 C 105 55 100 45 100 45 Z" fill="url(#bowGrad)" />
+            <ellipse cx="100" cy="48" rx="12" ry="15" fill="#d98896" />
+            <path d="M 80 50 Q 50 35 30 45" fill="none" stroke="#c4707e" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+            <path d="M 120 50 Q 150 35 170 45" fill="none" stroke="#c4707e" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+        </svg>
+
+        <!-- Texto -->
+        <div class="text-content">
+            <p class="title-pre">Acompáñanos a celebrar el</p>
+            <h1 class="title-main">Baby Shower</h1>
+            <p class="title-pre">en honor a</p>
+            <h2 class="subtitle">Amelia</h2>
+
+            <div class="separator"></div>
+
+            <div id="guest-block" style="display:none; margin-bottom: 10px;">
+                <p class="guest-greeting">Para:</p>
+                <p class="guest-name-display" id="guest-name-el"></p>
+                <p class="guest-passes" id="guest-passes-el"></p>
+            </div>
+
+            <div class="details">
+                <p><strong>DOMINGO, 20 DE JULIO</strong></p>
+                <p>A las 3:00 de la tarde</p>
+            </div>
+            <div class="details" style="font-size: 0.9rem;">
+                <p>Salón Giardino</p>
+                <p>Av. Siempreviva #742</p>
+            </div>
+            <p class="title-pre" style="margin-top: 15px; font-size: 1rem;">¡Te esperamos con cariño!</p>
+        </div>
+
+        <!-- RSVP -->
+        <div class="rsvp-section" id="rsvp-section">
+            <p class="rsvp-title">CONFIRMACIÓN DE ASISTENCIA</p>
+            <div class="rsvp-options">
+                <button class="rsvp-btn" id="btn-yes" onclick="selectAttendance(true)">✓ Asistiré</button>
+                <button class="rsvp-btn" id="btn-no"  onclick="selectAttendance(false)">✗ No podré asistir</button>
+            </div>
+            <div class="rsvp-attending-only" id="rsvp-passes-row">
+                <div class="rsvp-row">
+                    <label class="rsvp-label">Número de pases</label>
+                    <select class="rsvp-select" id="rsvp-passes">
+                        <option value="1">1</option>
+                    </select>
+                </div>
+                <div class="rsvp-row">
+                    <label class="rsvp-label">¿Tienes restricción o alergia alimentaria?</label>
+                    <select class="rsvp-select" id="rsvp-diet" onchange="toggleDietDetail()">
+                        <option value="no">No</option>
+                        <option value="si">Sí</option>
+                    </select>
+                </div>
+                <div class="rsvp-row" id="diet-detail-row" style="display:none;">
+                    <label class="rsvp-label">¿Cuál?</label>
+                    <input class="rsvp-input" type="text" id="rsvp-diet-detail" placeholder="ej: vegetariana, sin gluten..." />
+                </div>
+            </div>
+            <div class="rsvp-row">
+                <label class="rsvp-label">Dedicatoria para Amanda 💕</label>
+                <textarea class="rsvp-textarea" id="rsvp-note" placeholder="Un mensaje especial..."></textarea>
+            </div>
+            <button class="rsvp-submit" id="rsvp-submit-btn" onclick="submitRSVP()" disabled>Enviar confirmación</button>
+            <p class="rsvp-msg" id="rsvp-msg"></p>
+        </div>
+
+        <!-- Patito -->
+        <svg class="decor-svg duck-container" viewBox="0 0 250 300">
+            <defs>
+                <radialGradient id="duckBody" cx="40%" cy="40%" r="60%">
+                    <stop offset="0%" stop-color="#ffffff" />
+                    <stop offset="70%" stop-color="#fcf7ea" />
+                    <stop offset="100%" stop-color="#e8ddc5" />
+                </radialGradient>
+                <radialGradient id="blush" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stop-color="rgba(247, 163, 175, 0.7)" />
+                    <stop offset="100%" stop-color="rgba(247, 163, 175, 0)" />
+                </radialGradient>
+                <linearGradient id="beak" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#ffd57a" />
+                    <stop offset="100%" stop-color="#f59a38" />
+                </linearGradient>
+            </defs>
+            <path d="M 100 250 L 80 275 L 110 275 Z" fill="url(#beak)" />
+            <path d="M 130 245 L 120 275 L 150 275 Z" fill="url(#beak)" />
+            <path d="M 70 230 C 20 180, 50 120, 110 130 C 160 130, 170 190, 140 230 C 120 250, 90 250, 70 230 Z" fill="url(#duckBody)" />
+            <path d="M 70 210 C 30 220, 20 180, 50 160 C 40 180, 55 195, 70 210 Z" fill="url(#duckBody)" />
+            <circle cx="125" cy="100" r="55" fill="url(#duckBody)" />
+            <path d="M 170 100 C 205 105, 200 125, 180 125 C 165 125, 155 110, 170 100 Z" fill="url(#beak)" />
+            <path d="M 175 115 C 190 120, 180 135, 165 125 Z" fill="#e08022" />
+            <circle cx="150" cy="85" r="10" fill="#3a2e2f" />
+            <circle cx="147" cy="81" r="3.5" fill="#ffffff" />
+            <circle cx="153" cy="88" r="1.5" fill="#ffffff" />
+            <path d="M 155 75 Q 160 70 165 76" fill="none" stroke="#3a2e2f" stroke-width="1.5" stroke-linecap="round"/>
+            <circle cx="120" cy="115" r="18" fill="url(#blush)" />
+            <path d="M 100 160 C 140 160, 160 185, 155 210 C 125 195, 100 180, 100 160 Z" fill="url(#duckBody)" />
+            <g transform="translate(90, 25) rotate(-15)">
+                <path d="M 45 45 C 5 -10, -20 50, 30 55 Z" fill="#f4aeb9" />
+                <path d="M 45 45 C 85 -10, 110 50, 60 55 Z" fill="#f4aeb9" />
+                <circle cx="20" cy="25" r="3.5" fill="white" opacity="0.8"/>
+                <circle cx="30" cy="40" r="4" fill="white" opacity="0.8"/>
+                <circle cx="10" cy="45" r="3" fill="white" opacity="0.8"/>
+                <circle cx="65" cy="25" r="3.5" fill="white" opacity="0.8"/>
+                <circle cx="75" cy="45" r="4" fill="white" opacity="0.8"/>
+                <circle cx="55" cy="38" r="3" fill="white" opacity="0.8"/>
+                <ellipse cx="45" cy="48" rx="10" ry="12" fill="#e691a0" />
+            </g>
+            <g transform="translate(135, 160)">
+                <path d="M 10 10 Q 20 40 5 60 M 15 15 Q 30 45 20 65 M 5 20 Q 5 50 -10 60" fill="none" stroke="#8ba87e" stroke-width="2.5" stroke-linecap="round"/>
+                <g transform="translate(0, 5) scale(0.8)">
+                    <circle cx="0" cy="-12" r="6" fill="white"/> <circle cx="0" cy="12" r="6" fill="white"/>
+                    <circle cx="-12" cy="0" r="6" fill="white"/> <circle cx="12" cy="0" r="6" fill="white"/>
+                    <circle cx="-9" cy="-9" r="6" fill="white"/> <circle cx="9" cy="9" r="6" fill="white"/>
+                    <circle cx="9" cy="-9" r="6" fill="white"/> <circle cx="-9" cy="9" r="6" fill="white"/>
+                    <circle cx="0" cy="0" r="6" fill="#f4c95d"/>
+                </g>
+                <g transform="translate(18, 15) scale(0.9)">
+                    <circle cx="0" cy="-12" r="6" fill="white"/> <circle cx="0" cy="12" r="6" fill="white"/>
+                    <circle cx="-12" cy="0" r="6" fill="white"/> <circle cx="12" cy="0" r="6" fill="white"/>
+                    <circle cx="-9" cy="-9" r="6" fill="white"/> <circle cx="9" cy="9" r="6" fill="white"/>
+                    <circle cx="9" cy="-9" r="6" fill="white"/> <circle cx="-9" cy="9" r="6" fill="white"/>
+                    <circle cx="0" cy="0" r="6" fill="#f4c95d"/>
+                </g>
+                <g transform="translate(-5, 25) scale(0.7)">
+                    <circle cx="0" cy="-12" r="6" fill="white"/> <circle cx="0" cy="12" r="6" fill="white"/>
+                    <circle cx="-12" cy="0" r="6" fill="white"/> <circle cx="12" cy="0" r="6" fill="white"/>
+                    <circle cx="-9" cy="-9" r="6" fill="white"/> <circle cx="9" cy="9" r="6" fill="white"/>
+                    <circle cx="9" cy="-9" r="6" fill="white"/> <circle cx="-9" cy="9" r="6" fill="white"/>
+                    <circle cx="0" cy="0" r="6" fill="#f4c95d"/>
+                </g>
+            </g>
+        </svg>
+
+        <!-- Arreglo Floral Derecho -->
+        <svg class="decor-svg floral-right" viewBox="0 0 150 250">
+            <path d="M 120 200 Q 80 150 140 120 Q 150 160 120 200 Z" fill="#b9c9b0" />
+            <path d="M 130 180 Q 90 120 150 80 Q 160 130 130 180 Z" fill="#9db391" />
+            <circle cx="120" cy="140" r="18" fill="#f2b6c1" opacity="0.9"/>
+            <circle cx="120" cy="140" r="10" fill="#e693a3" opacity="0.8"/>
+            <circle cx="140" cy="100" r="15" fill="#f7d4d9" opacity="0.9"/>
+            <circle cx="140" cy="100" r="8" fill="#f2b6c1" opacity="0.8"/>
+            <g transform="translate(100, 180) scale(1.2)">
+                <circle cx="0" cy="-12" r="6" fill="white"/> <circle cx="0" cy="12" r="6" fill="white"/>
+                <circle cx="-12" cy="0" r="6" fill="white"/> <circle cx="12" cy="0" r="6" fill="white"/>
+                <circle cx="-9" cy="-9" r="6" fill="white"/> <circle cx="9" cy="9" r="6" fill="white"/>
+                <circle cx="9" cy="-9" r="6" fill="white"/> <circle cx="-9" cy="9" r="6" fill="white"/>
+                <circle cx="0" cy="0" r="6" fill="#f4c95d"/>
+            </g>
+        </svg>
+
+        <!-- Lazo Inferior -->
+        <svg class="decor-svg bottom-bow" viewBox="0 0 350 150">
+            <defs>
+                <linearGradient id="hugeBow" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#fcdde2" />
+                    <stop offset="50%" stop-color="#f0b6c2" />
+                    <stop offset="100%" stop-color="#de8e9e" />
+                </linearGradient>
+            </defs>
+            <path d="M 175 60 Q 70 100, 20 140 Q 90 120, 140 80 Z" fill="url(#hugeBow)"/>
+            <path d="M 175 60 Q 280 100, 330 140 Q 260 120, 210 80 Z" fill="url(#hugeBow)"/>
+            <path d="M 175 70 C 40 -20, -30 90, 145 85 C 155 85, 175 70, 175 70 Z" fill="url(#hugeBow)" />
+            <path d="M 175 70 C 310 -20, 380 90, 205 85 C 195 85, 175 70, 175 70 Z" fill="url(#hugeBow)" />
+            <rect x="155" y="55" width="40" height="35" rx="15" fill="#d98896" />
+            <path d="M 165 55 L 165 90 M 185 55 L 185 90" stroke="#c4707e" stroke-width="2" opacity="0.5"/>
+            <path d="M 145 80 Q 80 40, 50 60" fill="none" stroke="#c4707e" stroke-width="3" stroke-linecap="round" opacity="0.4"/>
+            <path d="M 205 80 Q 270 40, 300 60" fill="none" stroke="#c4707e" stroke-width="3" stroke-linecap="round" opacity="0.4"/>
+        </svg>
+
+    </div>
+
+    <!-- ───── BOTÓN VINILO ───── -->
+    <button id="vinyl-btn" onclick="toggleMusic()" title="Música" style="display:none;">
+        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle class="vinyl-disc" cx="20" cy="20" r="18" fill="#2c1a1d" stroke="#f7d4d9" stroke-width="1.5"/>
+            <circle cx="20" cy="20" r="6" fill="#f7d4d9" opacity="0.2"/>
+            <circle cx="20" cy="20" r="3" fill="#f7d4d9" opacity="0.6"/>
+            <circle cx="20" cy="20" r="1.5" fill="#d98896"/>
+        </svg>
     </button>
 
-    <div class="scene-container">
-
-        <!-- SOBRE CERRADO -->
-        <div class="cover" id="cover" onclick="openInvitation()">
-            <div class="cover-plate">
-                <div class="cover-text" id="cover-text">Baby Shower</div>
-                <div class="cover-instruction">Toca para abrir</div>
-            </div>
-            <svg width="100" height="60" viewBox="0 0 100 60" style="position: absolute; top: -25px; filter: drop-shadow(0 5px 5px rgba(0,0,0,0.1));">
-                <path d="M 50 30 C 20 0, 0 20, 30 40 C 40 45, 50 30, 50 30 C 50 30, 60 45, 70 40 C 100 20, 80 0, 50 30 Z" fill="var(--pastel-pink)" class="svg-stroke-white"/>
-                <circle cx="50" cy="30" r="8" fill="var(--dark-pink)" class="svg-stroke-white"/>
-            </svg>
-        </div>
-
-        <!-- MUNDO 3D POP-UP -->
-        <div class="world" id="world">
-
-            <!-- 1. Fondo Arco Gingham -->
-            <div class="layer layer-1 cutout">
-                <div class="bg-arch">
-                    <div class="bg-arch-inner"></div>
-                </div>
-            </div>
-
-            <!-- 2. Margaritas de Fondo -->
-            <div class="layer layer-2 cutout">
-                <svg width="340" height="150" viewBox="0 0 340 150">
-                    <g transform="translate(30, 50)">
-                        <path d="M 0 100 Q -10 50 20 20" fill="none" stroke="var(--soft-green)" stroke-width="4" class="svg-stroke-white"/>
-                        <circle cx="20" cy="20" r="15" fill="white" class="svg-stroke-white"/>
-                        <circle cx="20" cy="20" r="5" fill="#f4d03f" stroke="none"/>
-                        <circle cx="5" cy="50" r="12" fill="white" class="svg-stroke-white"/>
-                        <circle cx="5" cy="50" r="4" fill="#f4d03f" stroke="none"/>
-                    </g>
-                    <g transform="translate(290, 40)">
-                        <path d="M 0 110 Q 10 60 -20 30" fill="none" stroke="var(--soft-green)" stroke-width="4" class="svg-stroke-white"/>
-                        <circle cx="-20" cy="30" r="15" fill="white" class="svg-stroke-white"/>
-                        <circle cx="-20" cy="30" r="5" fill="#f4d03f" stroke="none"/>
-                        <circle cx="-5" cy="70" r="10" fill="white" class="svg-stroke-white"/>
-                        <circle cx="-5" cy="70" r="3" fill="#f4d03f" stroke="none"/>
-                    </g>
-                </svg>
-            </div>
-
-            <!-- 3. Texto Baby Shower · AMELIA -->
-            <div class="layer layer-3 cutout">
-                <div class="text-card">
-                    <h2>Baby Shower</h2>
-                    <h1>Amelia</h1>
-                </div>
-            </div>
-
-            <!-- 4. La Patita Bebé -->
-            <div class="layer layer-4 cutout">
-                <svg width="200" height="240" viewBox="0 0 200 240" style="overflow: visible;">
-                    <g class="svg-stroke-white">
-                        <path d="M 60 200 C 30 160, 50 110, 100 110 C 140 110, 160 160, 130 200 Z" fill="#fffaf0" />
-                        <path d="M 60 180 C 30 185, 20 160, 45 150 C 40 170, 60 175, 60 180 Z" fill="#fffaf0" />
-                        <circle cx="115" cy="75" r="45" fill="#fffaf0" />
-                        <path d="M 155 75 Q 180 80, 165 92 Q 145 95, 155 75 Z" fill="#fdb850" />
-                        <path d="M 90 140 C 120 140, 140 160, 130 180 C 110 170, 90 160, 90 140 Z" fill="#fffaf0" />
-                        <path d="M 85 200 L 75 220 L 95 220 Z" fill="#fdb850" />
-                        <path d="M 115 195 L 105 220 L 125 220 Z" fill="#fdb850" />
-                    </g>
-                    <circle cx="130" cy="65" r="7" fill="#4a3b3c" />
-                    <circle cx="128" cy="63" r="2.5" fill="white" />
-                    <circle cx="105" cy="85" r="12" fill="#ffb6c1" opacity="0.6" />
-                    <g transform="translate(70, 10) rotate(-15)">
-                        <path d="M 50 40 C 20 10, -10 30, 20 60 C 35 70, 50 40, 50 40 C 50 40, 65 70, 80 60 C 110 30, 80 10, 50 40 Z" fill="var(--pastel-pink)" class="svg-stroke-white"/>
-                        <circle cx="50" cy="40" r="10" fill="var(--dark-pink)" class="svg-stroke-white"/>
-                        <circle cx="20" cy="35" r="3" fill="white" />
-                        <circle cx="35" cy="50" r="3" fill="white" />
-                        <circle cx="25" cy="20" r="2.5" fill="white" />
-                        <circle cx="70" cy="30" r="3" fill="white" />
-                        <circle cx="80" cy="45" r="2.5" fill="white" />
-                        <circle cx="60" cy="55" r="3" fill="white" />
-                    </g>
-                    <g transform="translate(115, 140)" class="svg-stroke-white">
-                        <path d="M 0 0 L 20 40 M 10 -10 L 25 35 M 25 -5 L 30 35" stroke="var(--soft-green)" stroke-width="3"/>
-                        <circle cx="0" cy="0" r="12" fill="white"/> <circle cx="0" cy="0" r="4" fill="#f4d03f" stroke="none"/>
-                        <circle cx="15" cy="-10" r="10" fill="white"/> <circle cx="15" cy="-10" r="3" fill="#f4d03f" stroke="none"/>
-                        <circle cx="25" cy="5" r="12" fill="white"/> <circle cx="25" cy="5" r="4" fill="#f4d03f" stroke="none"/>
-                    </g>
-                </svg>
-            </div>
-
-            <!-- 5. Follaje Frontal -->
-            <div class="layer layer-5 cutout">
-                <svg width="360" height="120" viewBox="0 0 360 120">
-                    <g class="svg-stroke-white">
-                        <path d="M -20 120 Q 180 60, 380 120 Z" fill="var(--cream)" />
-                        <path d="M 30 120 Q 10 70 50 50 Q 70 80 50 120 Z" fill="var(--soft-green)" />
-                        <path d="M 320 120 Q 340 70 300 50 Q 280 80 300 120 Z" fill="var(--soft-green)" />
-                        <circle cx="60" cy="65" r="12" fill="white"/> <circle cx="60" cy="65" r="4" fill="#f4d03f" stroke="none"/>
-                        <circle cx="300" cy="60" r="14" fill="white"/> <circle cx="300" cy="60" r="5" fill="#f4d03f" stroke="none"/>
-                    </g>
-                </svg>
-            </div>
-
-            <!-- 6. Gran Lazo Frontal -->
-            <div class="layer layer-6 cutout">
-                <svg width="280" height="130" viewBox="0 0 280 130">
-                    <g class="svg-stroke-white">
-                        <path d="M 140 60 Q 60 90, 20 120 Q 60 100, 100 70 Z" fill="var(--pastel-pink)"/>
-                        <path d="M 140 60 Q 220 90, 260 120 Q 220 100, 180 70 Z" fill="var(--pastel-pink)"/>
-                        <path d="M 140 60 C 50 -10, -20 70, 120 75 C 130 75, 140 60, 140 60 Z" fill="var(--pastel-pink)" />
-                        <path d="M 140 60 C 230 -10, 300 70, 160 75 C 150 75, 140 60, 140 60 Z" fill="var(--pastel-pink)" />
-                        <circle cx="140" cy="60" r="18" fill="var(--dark-pink)" />
-                        <path d="M 120 70 Q 60 30, 40 50" fill="none" stroke="var(--dark-pink)" stroke-width="2" stroke-linecap="round" />
-                        <path d="M 160 70 Q 220 30, 240 50" fill="none" stroke="var(--dark-pink)" stroke-width="2" stroke-linecap="round" />
-                    </g>
-                </svg>
-            </div>
-
-            <!-- 7. Tarjeta de Datos · AMELIA -->
-            <div class="layer layer-7 cutout">
-                <div class="info-card">
-                    <div class="info-item">
-                        <h3>DÍA</h3>
-                        <p>22 NOV</p>
-                    </div>
-                    <div class="info-item">
-                        <h3>HORA</h3>
-                        <p>10:00 AM</p>
-                    </div>
-                    <div class="info-item">
-                        <h3>INVITADO</h3>
-                        <p id="info-guest">—</p>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
+    <!-- ───── YouTube Player invisible ───── -->
+    <div id="yt-player"></div>
+    <script src="https://www.youtube.com/iframe_api"></script>
 
     <script>
-        // ── Config ──
-        const BACKEND = window.location.origin;
-        const YT_ID   = 'wqnmSN8UMrk'; // A Thousand Years - Piano Instrumental
+    /* ══════════════════════════════════════════════
+       PRIVACIDAD + CARGA DE DATOS DEL INVITADO
+    ══════════════════════════════════════════════ */
+    let guestData = null;
+    let attendanceChoice = null;
 
-        // ── State ──
-        let ytPlayer = null, ytReady = false, ytPlaying = false, interacted = false;
+    async function init() {
+        const params = new URLSearchParams(window.location.search);
+        const id = params.get('id');
 
-        // ── Privacy / ID check ──
-        (function() {
-            const id = new URLSearchParams(window.location.search).get('id');
-            if (!id) return; // privacy screen stays
-
-            fetch(BACKEND + '/api/invitation/' + id)
-                .then(r => r.json())
-                .then(data => {
-                    if (!data.success) return;
-                    const name = (data.invitation.name || '').trim();
-
-                    // Personalise cover & info card
-                    if (name) {
-                        document.getElementById('cover-text').textContent = 'Para ' + name;
-                        document.getElementById('info-guest').textContent = name.split(' ')[0].toUpperCase();
-                    }
-
-                    // Unlock scene
-                    document.getElementById('privacy-screen').style.display = 'none';
-                    loadYT();
-                })
-                .catch(() => { /* privacy screen stays */ });
-        })();
-
-        // ── Open animation ──
-        function openInvitation() {
-            if (!interacted) { interacted = true; tryPlay(); }
-            document.getElementById('cover').classList.add('open');
-            setTimeout(() => {
-                document.getElementById('world').classList.add('is-open');
-                setTimeout(() => document.getElementById('world').classList.add('floating'), 2800);
-            }, 250);
+        if (!id) {
+            showPrivacyScreen();
+            return;
         }
 
-        // ── YouTube ──
-        function loadYT() {
-            const tag = document.createElement('script');
-            tag.src   = 'https://www.youtube.com/iframe_api';
-            document.head.appendChild(tag);
+        try {
+            const res = await fetch(`/api/invitation/${id}`);
+            if (!res.ok) throw new Error('not found');
+            const data = await res.json();
+            guestData = data;
+            renderGuest(data);
+            showCard();
+        } catch (e) {
+            showPrivacyScreen();
         }
-        window.onYouTubeIframeAPIReady = function() {
-            ytPlayer = new YT.Player('yt-player', {
-                height: '1', width: '1',
-                videoId: YT_ID,
-                playerVars: { autoplay: 0, loop: 1, playlist: YT_ID },
-                events: {
-                    onReady: () => { ytReady = true; if (interacted) tryPlay(); },
-                    onStateChange: e => {
-                        const btn = document.getElementById('music-btn');
-                        if (e.data === YT.PlayerState.PLAYING) { ytPlaying = true;  btn.className = 'playing'; }
-                        else                                    { ytPlaying = false; btn.className = 'paused';  }
-                    }
-                }
-            });
+    }
+
+    function showPrivacyScreen() {
+        const ps = document.getElementById('privacy-screen');
+        ps.style.display = 'flex';
+    }
+
+    function renderGuest(data) {
+        const nameEl = document.getElementById('guest-name-el');
+        const passesEl = document.getElementById('guest-passes-el');
+        const guestBlock = document.getElementById('guest-block');
+
+        if (data.name) {
+            nameEl.textContent = data.name;
+            const passes = data.passes || 1;
+            passesEl.textContent = passes === 1
+                ? '1 pase incluido'
+                : `${passes} pases incluidos`;
+
+            // Poblar select de pases
+            const sel = document.getElementById('rsvp-passes');
+            sel.innerHTML = '';
+            for (let i = 1; i <= passes; i++) {
+                const opt = document.createElement('option');
+                opt.value = i;
+                opt.textContent = i;
+                sel.appendChild(opt);
+            }
+
+            guestBlock.style.display = 'block';
+        }
+
+        // Si ya respondió, mostrar respuesta previa
+        if (data.rsvp) {
+            prefillRSVP(data.rsvp);
+        }
+    }
+
+    function showCard() {
+        const card = document.getElementById('invitation-card');
+        card.style.opacity = '1';
+        document.getElementById('vinyl-btn').style.display = 'flex';
+    }
+
+    function prefillRSVP(rsvp) {
+        selectAttendance(rsvp.attending);
+        if (rsvp.attending) {
+            document.getElementById('rsvp-passes').value = rsvp.guestsCount || 1;
+            document.getElementById('rsvp-diet').value = rsvp.dietaryRestriction ? 'si' : 'no';
+            if (rsvp.dietaryRestriction) {
+                document.getElementById('diet-detail-row').style.display = 'block';
+                document.getElementById('rsvp-diet-detail').value = rsvp.dietaryRestriction;
+            }
+        }
+        if (rsvp.note) document.getElementById('rsvp-note').value = rsvp.note;
+        document.getElementById('rsvp-msg').textContent = '✓ Ya enviaste tu confirmación — podés actualizarla.';
+        document.getElementById('rsvp-submit-btn').textContent = 'Actualizar confirmación';
+        document.getElementById('rsvp-submit-btn').disabled = false;
+    }
+
+    /* ══════════════════════════════════════════════
+       RSVP LOGIC
+    ══════════════════════════════════════════════ */
+    function selectAttendance(attending) {
+        attendanceChoice = attending;
+        document.getElementById('btn-yes').classList.toggle('selected', attending);
+        document.getElementById('btn-no').classList.toggle('selected', !attending);
+
+        const passesRow = document.getElementById('rsvp-passes-row');
+        passesRow.style.display = attending ? 'block' : 'none';
+        document.getElementById('rsvp-submit-btn').disabled = false;
+    }
+
+    function toggleDietDetail() {
+        const val = document.getElementById('rsvp-diet').value;
+        document.getElementById('diet-detail-row').style.display = val === 'si' ? 'block' : 'none';
+    }
+
+    async function submitRSVP() {
+        if (attendanceChoice === null) return;
+        const btn = document.getElementById('rsvp-submit-btn');
+        const msg = document.getElementById('rsvp-msg');
+        btn.disabled = true;
+        msg.textContent = 'Enviando...';
+
+        const params = new URLSearchParams(window.location.search);
+        const id = params.get('id');
+
+        const dietVal = document.getElementById('rsvp-diet').value;
+        const payload = {
+            attending: attendanceChoice,
+            guestsCount: attendanceChoice ? parseInt(document.getElementById('rsvp-passes').value) : 0,
+            dietaryRestriction: (attendanceChoice && dietVal === 'si')
+                ? document.getElementById('rsvp-diet-detail').value
+                : '',
+            note: document.getElementById('rsvp-note').value.trim()
         };
-        function tryPlay() { if (ytReady && ytPlayer) { ytPlayer.setVolume(65); ytPlayer.playVideo(); } }
 
-        document.getElementById('music-btn').addEventListener('click', () => {
-            interacted = true;
-            if (!ytReady) return;
-            ytPlaying ? ytPlayer.pauseVideo() : tryPlay();
+        try {
+            const res = await fetch(`/api/invitation/${id}/rsvp`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            if (!res.ok) throw new Error();
+            msg.textContent = attendanceChoice
+                ? '🌸 ¡Gracias! Te esperamos con mucho cariño.'
+                : '💛 Gracias por avisarnos. ¡Será en otra ocasión!';
+            btn.textContent = 'Actualizar confirmación';
+            btn.disabled = false;
+        } catch (e) {
+            msg.textContent = 'Hubo un error. Por favor intentá de nuevo.';
+            btn.disabled = false;
+        }
+    }
+
+    /* ══════════════════════════════════════════════
+       MÚSICA — YouTube IFrame API
+    ══════════════════════════════════════════════ */
+    let ytPlayer = null;
+    let musicReady = false;
+    let musicPlaying = false;
+    let musicUnlocked = false;
+
+    function onYouTubeIframeAPIReady() {
+        ytPlayer = new YT.Player('yt-player', {
+            videoId: 'wqnmSN8UMrk',
+            playerVars: { autoplay: 0, controls: 0, loop: 1, playlist: 'wqnmSN8UMrk' },
+            events: {
+                onReady: () => { musicReady = true; }
+            }
         });
+    }
+
+    function unlockMusic() {
+        if (!musicUnlocked && musicReady && ytPlayer) {
+            ytPlayer.playVideo();
+            musicUnlocked = true;
+            musicPlaying = true;
+            document.getElementById('vinyl-btn').classList.add('spinning');
+        }
+    }
+
+    function toggleMusic() {
+        if (!musicReady || !ytPlayer) return;
+        if (!musicUnlocked) {
+            unlockMusic();
+            return;
+        }
+        if (musicPlaying) {
+            ytPlayer.pauseVideo();
+            musicPlaying = false;
+            document.getElementById('vinyl-btn').classList.remove('spinning');
+        } else {
+            ytPlayer.playVideo();
+            musicPlaying = true;
+            document.getElementById('vinyl-btn').classList.add('spinning');
+        }
+    }
+
+    // Desbloquear con primera interacción
+    document.addEventListener('click', function onFirstClick() {
+        unlockMusic();
+        document.removeEventListener('click', onFirstClick);
+    }, { once: true });
+
+    /* ══════════════════════════════════════════════
+       ARRANCAR
+    ══════════════════════════════════════════════ */
+    init();
     </script>
 </body>
 </html>
