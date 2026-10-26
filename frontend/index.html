@@ -65,10 +65,11 @@
     }
 
     /* ─── HERO (marco festoneado con moño) ─── */
+    .vichy-band.hero { padding: 0; justify-content: stretch; align-items: stretch; }
     .frame {
       position: relative;
-      width: min(100%, calc((100svh - 28px) * 557 / 771));
-      aspect-ratio: 557 / 771;
+      width: 100%;
+      flex: 1;
       background: url('marco_principal.png') center / 100% 100% no-repeat;
       container-type: inline-size;
     }
@@ -428,7 +429,7 @@
   <div class="card">
 
     <!-- Portada: marco festoneado -->
-    <div class="vichy-band screen" style="background-image:none;">
+    <div class="vichy-band screen hero" style="background-image:none;">
       <div class="frame">
         <div class="frame-inner">
           <div class="sub-sub">Baby Shower de</div>
