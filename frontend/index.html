@@ -126,11 +126,10 @@
     .guest-passes { font-size: 0.78rem; color: var(--verde-salvia); font-style: italic; margin-top: 2px; }
 
     /* ─── CUANDO / DONDE (marco con ganso y globo) ─── */
-    .sec { padding: 24px 8px; position: relative; }
+    .sec { padding: 18px 16px 6px; position: relative; }
     .frame-sm {
       position: relative;
-      width: 96%;
-      max-width: 460px;
+      width: 94%;
       margin: 0 auto;
       aspect-ratio: 381 / 450;
       background: url('marco_feston.png') center / 100% 100% no-repeat;
@@ -155,8 +154,7 @@
     /* ─── MUESTRAS DE CARIÑO (arco) ─── */
     .frame-arch {
       position: relative;
-      width: 92%;
-      max-width: 440px;
+      width: 85%;
       margin: 0 auto;
       aspect-ratio: 448 / 520;
       background: url('marco_arco.png') center / 100% 100% no-repeat;
@@ -166,34 +164,29 @@
     .frame-arch img.basket { width: 38cqw; margin-bottom: 2cqw; }
     .frame-arch .h-script { font-size: 9cqw; }
     .frame-arch .info-line { font-size: 3.6cqw; }
-    .deco-bike { display: block; width: 62%; max-width: 280px; margin: 18px auto 0; }
+    .deco-bike { display: block; width: 53%; margin: 6px auto 0; }
 
     /* ─── COUNTDOWN ─── */
-    .countdown-bow { width: 46%; max-width: 190px; margin: 0 auto 14px; display: block; }
-    .countdown-section { background: #fff; border-radius: 18px; padding: 26px 10px; width: 94%; border: 1px dashed var(--rosa-palo); }
+    .countdown-section { background: #fff; border-radius: 18px; padding: 18px 10px; border: 1px dashed var(--rosa-palo); }
     .countdown-title { font-size: 0.72rem; letter-spacing: 3px; text-transform: uppercase; color: var(--verde-salvia); margin-bottom: 4px; font-weight: 600; }
     .countdown-sub { font-family: 'Great Vibes', cursive; font-size: 1.6rem; color: var(--rosa); margin-bottom: 10px; }
     .timer { display: flex; justify-content: center; gap: 10px; }
-    .time-box { background: var(--rosa-suave); min-width: 64px; padding: 14px 6px; border-radius: 12px; }
-    .time-number { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: var(--rosa); }
+    .time-box { background: var(--rosa-suave); min-width: 71px; padding: 11px 6px; border-radius: 12px; }
+    .time-number { font-family: 'Playfair Display', serif; font-size: 1.84rem; font-weight: 700; color: var(--rosa); }
     .time-label { font-size: 0.62rem; color: var(--verde-salvia); text-transform: uppercase; letter-spacing: 1px; }
 
     /* ─── RSVP: sobre ─── */
-    .rsvp-envelope { display: block; width: 52%; max-width: 220px; margin: 4px auto 0; transform: rotate(-4deg); }
+    .rsvp-envelope { display: block; width: 60%; margin: 4px auto 0; transform: rotate(-4deg); }
     .section-divider { display: none; }
-    @media (max-height: 700px) {
-      .rsvp-envelope { width: 34%; margin-top: 0; }
-      .section-rsvp { padding-bottom: 12px; }
-      .rsvp-textarea { height: 56px; }
-    }
+
 
     /* ─── FOOTER ─── */
-    .section-footer { padding: 0; text-align: center; justify-content: space-between; }
-    .footer-body { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px; width: 100%; }
+    .section-footer { padding: 6px 20px 0; text-align: center; }
+    .footer-body { padding: 0; }
     .deco-sign { display: block; width: 100%; max-width: 340px; margin: 0 auto; }
-    .footer-text { font-family: 'Great Vibes', cursive; font-size: 2.8rem; color: var(--rosa); margin-top: 4px; }
+    .footer-text { font-family: 'Great Vibes', cursive; font-size: 2.5rem; color: var(--rosa); margin-top: 4px; }
     .footer-sub { font-size: 0.78rem; color: var(--verde-salvia); letter-spacing: 1px; padding-bottom: 18px; }
-    .vichy-foot { height: 90px; width: 100%; background-image: url('vichy.jpg'); background-size: 150px 150px; }
+    .vichy-foot { height: 80px; width: 100%; background-image: url('vichy.jpg'); background-size: 150px 150px; }
 /* ─── PANTALLA PRIVACIDAD ─── */
     #privacy-screen {
       display: none;
@@ -232,13 +225,11 @@
       background: var(--rosa-suave);
       border: 1px dashed var(--verde-salvia);
       border-radius: 16px;
-      padding: 24px 20px;
-      margin: 0 8px 18px;
-      width: calc(100% - 16px);
-      max-width: 440px;
+      padding: 16px 18px;
+      margin: 0 0 18px;
     }
     .detail-card.reverse { flex-direction: row-reverse; text-align: right; }
-    .detail-card img { width: 112px; flex-shrink: 0; }
+    .detail-card img { width: 97px; flex-shrink: 0; }
     .detail-card .detail-kicker {
       font-size: 0.7rem;
       letter-spacing: 3px;
@@ -248,13 +239,13 @@
     }
     .detail-card .detail-title {
       font-family: 'Playfair Display', serif;
-      font-size: 1.35rem;
+      font-size: 1.27rem;
       color: #4f2c37;
-      margin: 4px 0 6px;
+      margin: 2px 0 4px;
     }
     .detail-card .detail-text {
-      font-size: 0.95rem;
-      line-height: 1.6;
+      font-size: 0.98rem;
+      line-height: 1.55;
       color: #6e4451;
     }
     .deco-center { display: block; margin: 6px auto 14px; }
@@ -264,10 +255,8 @@
 
     /* ─── RSVP ─── */
     .section-rsvp {
-      padding: 0 24px 24px;
-      width: 100%;
+      padding: 0 24px 30px;
     }
-    .section-rsvp > * { width: 100%; max-width: 440px; }
     .section-title {
       font-family: 'Playfair Display', serif;
       font-size: 1.1rem;
@@ -460,7 +449,7 @@
     </div>
 
     <!-- Cuándo y dónde -->
-    <div class="sec screen">
+    <div class="sec">
       <div class="frame-sm">
         <img src="margaritas.png" alt="" class="deco-daisies">
         <div class="frame-inner">
@@ -475,7 +464,7 @@
     </div>
 
     <!-- Muestras de cariño -->
-    <div class="sec screen">
+    <div class="sec">
       <div class="frame-arch">
         <div class="frame-inner">
           <img src="canasta.png" alt="" class="basket">
@@ -486,7 +475,7 @@
     </div>
 
     <!-- Rifa -->
-    <div class="sec screen">
+    <div class="sec">
       <div class="detail-card">
         <img src="ganso_globo.png" alt="">
         <div>
@@ -499,8 +488,7 @@
     </div>
 
     <!-- Countdown -->
-    <div class="vichy-band screen">
-      <img src="mono_rosa.png" alt="" class="countdown-bow">
+    <div class="vichy-band">
       <div class="countdown-section">
         <div class="countdown-title">La cuenta regresiva</div>
         <div class="countdown-sub">¡Ya casi celebramos!</div>
@@ -514,7 +502,7 @@
     </div>
 
     <!-- RSVP -->
-    <div class="section-rsvp screen" style="padding-top:14px;">
+    <div class="section-rsvp" style="padding-top:22px;">
       <img src="sobre_rsvp.png" alt="" class="rsvp-envelope">
       <p class="section-title" style="margin-top:14px;">Confirmación de Asistencia</p>
 
@@ -555,7 +543,7 @@
     </div>
 
     <!-- Footer -->
-    <div class="section-footer screen">
+    <div class="section-footer">
       <div class="footer-body">
         <img src="letrero_patitos.png" alt="" class="deco-sign">
         <p class="footer-text">¡Con amor!</p>
