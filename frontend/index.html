@@ -34,6 +34,21 @@
     }
     img { max-width: 100%; }
 
+    /* Cada sección ocupa una pantalla completa de celular */
+    .screen {
+      min-height: 100vh;
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+    }
+    @media (max-width: 520px) {
+      body { padding: 0; }
+      .card { border-radius: 0; max-width: none; }
+    }
+
     /* ─── CARD ─── */
     .card {
       background: #fff;
@@ -47,14 +62,14 @@
     }
     .vichy-band {
       background-image: url('vichy.jpg');
-      background-size: 200px 200px;
+      background-size: 150px 150px;
       padding: 14px 12px;
     }
 
     /* ─── HERO (marco festoneado con moño) ─── */
     .frame {
       position: relative;
-      width: 100%;
+      width: min(100%, calc((100svh - 28px) * 557 / 771));
       aspect-ratio: 557 / 771;
       background: url('marco_principal.png') center / 100% 100% no-repeat;
       container-type: inline-size;
@@ -111,10 +126,11 @@
     .guest-passes { font-size: 0.78rem; color: var(--verde-salvia); font-style: italic; margin-top: 2px; }
 
     /* ─── CUANDO / DONDE (marco con ganso y globo) ─── */
-    .sec { padding: 18px 16px 6px; position: relative; }
+    .sec { padding: 24px 8px; position: relative; }
     .frame-sm {
       position: relative;
-      width: 82%;
+      width: 96%;
+      max-width: 460px;
       margin: 0 auto;
       aspect-ratio: 381 / 450;
       background: url('marco_feston.png') center / 100% 100% no-repeat;
@@ -139,7 +155,8 @@
     /* ─── MUESTRAS DE CARIÑO (arco) ─── */
     .frame-arch {
       position: relative;
-      width: 74%;
+      width: 92%;
+      max-width: 440px;
       margin: 0 auto;
       aspect-ratio: 448 / 520;
       background: url('marco_arco.png') center / 100% 100% no-repeat;
@@ -149,27 +166,34 @@
     .frame-arch img.basket { width: 38cqw; margin-bottom: 2cqw; }
     .frame-arch .h-script { font-size: 9cqw; }
     .frame-arch .info-line { font-size: 3.6cqw; }
-    .deco-bike { display: block; width: 46%; margin: 6px auto 0; }
+    .deco-bike { display: block; width: 62%; max-width: 280px; margin: 18px auto 0; }
 
     /* ─── COUNTDOWN ─── */
-    .countdown-section { background: #fff; border-radius: 18px; padding: 16px 10px; border: 1px dashed var(--rosa-palo); }
+    .countdown-bow { width: 46%; max-width: 190px; margin: 0 auto 14px; display: block; }
+    .countdown-section { background: #fff; border-radius: 18px; padding: 26px 10px; width: 94%; border: 1px dashed var(--rosa-palo); }
     .countdown-title { font-size: 0.72rem; letter-spacing: 3px; text-transform: uppercase; color: var(--verde-salvia); margin-bottom: 4px; font-weight: 600; }
     .countdown-sub { font-family: 'Great Vibes', cursive; font-size: 1.6rem; color: var(--rosa); margin-bottom: 10px; }
     .timer { display: flex; justify-content: center; gap: 10px; }
-    .time-box { background: var(--rosa-suave); min-width: 62px; padding: 10px 5px; border-radius: 12px; }
-    .time-number { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 700; color: var(--rosa); }
+    .time-box { background: var(--rosa-suave); min-width: 64px; padding: 14px 6px; border-radius: 12px; }
+    .time-number { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: var(--rosa); }
     .time-label { font-size: 0.62rem; color: var(--verde-salvia); text-transform: uppercase; letter-spacing: 1px; }
 
     /* ─── RSVP: sobre ─── */
-    .rsvp-envelope { display: block; width: 52%; margin: 4px auto 0; transform: rotate(-4deg); }
+    .rsvp-envelope { display: block; width: 52%; max-width: 220px; margin: 4px auto 0; transform: rotate(-4deg); }
     .section-divider { display: none; }
+    @media (max-height: 700px) {
+      .rsvp-envelope { width: 34%; margin-top: 0; }
+      .section-rsvp { padding-bottom: 12px; }
+      .rsvp-textarea { height: 56px; }
+    }
 
     /* ─── FOOTER ─── */
-    .section-footer { padding: 6px 20px 0; text-align: center; }
+    .section-footer { padding: 0; text-align: center; justify-content: space-between; }
+    .footer-body { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px; width: 100%; }
     .deco-sign { display: block; width: 100%; max-width: 340px; margin: 0 auto; }
-    .footer-text { font-family: 'Great Vibes', cursive; font-size: 2.2rem; color: var(--rosa); margin-top: 4px; }
+    .footer-text { font-family: 'Great Vibes', cursive; font-size: 2.8rem; color: var(--rosa); margin-top: 4px; }
     .footer-sub { font-size: 0.78rem; color: var(--verde-salvia); letter-spacing: 1px; padding-bottom: 18px; }
-    .vichy-foot { height: 70px; background-image: url('vichy.jpg'); background-size: 200px 200px; }
+    .vichy-foot { height: 90px; width: 100%; background-image: url('vichy.jpg'); background-size: 150px 150px; }
 /* ─── PANTALLA PRIVACIDAD ─── */
     #privacy-screen {
       display: none;
@@ -208,11 +232,13 @@
       background: var(--rosa-suave);
       border: 1px dashed var(--verde-salvia);
       border-radius: 16px;
-      padding: 14px 16px;
-      margin-bottom: 18px;
+      padding: 24px 20px;
+      margin: 0 8px 18px;
+      width: calc(100% - 16px);
+      max-width: 440px;
     }
     .detail-card.reverse { flex-direction: row-reverse; text-align: right; }
-    .detail-card img { width: 84px; flex-shrink: 0; }
+    .detail-card img { width: 112px; flex-shrink: 0; }
     .detail-card .detail-kicker {
       font-size: 0.7rem;
       letter-spacing: 3px;
@@ -222,14 +248,14 @@
     }
     .detail-card .detail-title {
       font-family: 'Playfair Display', serif;
-      font-size: 1.1rem;
-      color: #3b3534;
-      margin: 2px 0 4px;
+      font-size: 1.35rem;
+      color: #4f2c37;
+      margin: 4px 0 6px;
     }
     .detail-card .detail-text {
-      font-size: 0.85rem;
-      line-height: 1.55;
-      color: #6e6563;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: #6e4451;
     }
     .deco-center { display: block; margin: 6px auto 14px; }
     .deco-daisies { width: 120px; }
@@ -238,8 +264,10 @@
 
     /* ─── RSVP ─── */
     .section-rsvp {
-      padding: 0 24px 30px;
+      padding: 0 24px 24px;
+      width: 100%;
     }
+    .section-rsvp > * { width: 100%; max-width: 440px; }
     .section-title {
       font-family: 'Playfair Display', serif;
       font-size: 1.1rem;
@@ -413,7 +441,7 @@
   <div class="card">
 
     <!-- Portada: marco festoneado -->
-    <div class="vichy-band">
+    <div class="vichy-band screen">
       <div class="frame">
         <div class="frame-inner">
           <div class="sub-sub">Baby Shower de</div>
@@ -432,7 +460,7 @@
     </div>
 
     <!-- Cuándo y dónde -->
-    <div class="sec">
+    <div class="sec screen">
       <div class="frame-sm">
         <img src="margaritas.png" alt="" class="deco-daisies">
         <div class="frame-inner">
@@ -446,8 +474,8 @@
       </div>
     </div>
 
-    <!-- Muestras de cariño + rifa -->
-    <div class="sec">
+    <!-- Muestras de cariño -->
+    <div class="sec screen">
       <div class="frame-arch">
         <div class="frame-inner">
           <img src="canasta.png" alt="" class="basket">
@@ -457,7 +485,8 @@
       </div>
     </div>
 
-    <div class="sec">
+    <!-- Rifa -->
+    <div class="sec screen">
       <div class="detail-card">
         <img src="ganso_globo.png" alt="">
         <div>
@@ -470,7 +499,8 @@
     </div>
 
     <!-- Countdown -->
-    <div class="vichy-band">
+    <div class="vichy-band screen">
+      <img src="mono_rosa.png" alt="" class="countdown-bow">
       <div class="countdown-section">
         <div class="countdown-title">La cuenta regresiva</div>
         <div class="countdown-sub">¡Ya casi celebramos!</div>
@@ -484,7 +514,7 @@
     </div>
 
     <!-- RSVP -->
-    <div class="section-rsvp" style="padding-top:22px;">
+    <div class="section-rsvp screen" style="padding-top:14px;">
       <img src="sobre_rsvp.png" alt="" class="rsvp-envelope">
       <p class="section-title" style="margin-top:14px;">Confirmación de Asistencia</p>
 
@@ -525,12 +555,14 @@
     </div>
 
     <!-- Footer -->
-    <div class="section-footer">
-      <img src="letrero_patitos.png" alt="" class="deco-sign">
-      <p class="footer-text">¡Con amor!</p>
-      <p class="footer-sub">Amanda &amp; Familia 🌼</p>
+    <div class="section-footer screen">
+      <div class="footer-body">
+        <img src="letrero_patitos.png" alt="" class="deco-sign">
+        <p class="footer-text">¡Con amor!</p>
+        <p class="footer-sub">Amanda &amp; Familia 🌼</p>
+      </div>
+      <div class="vichy-foot"></div>
     </div>
-    <div class="vichy-foot"></div>
 
   </div><!-- /card -->
 
